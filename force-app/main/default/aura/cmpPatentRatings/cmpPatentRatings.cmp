@@ -1,0 +1,185 @@
+<aura:component description="cmpPatentRatings" extends="c:base" controller="PatentRatingController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="ratings" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="disableForm" type="Boolean" default="true"/>
+
+    <aura:attribute name="InnovationTypes" type="List"/>
+    <aura:attribute name="Taxonomy" type="List"/>
+    <aura:attribute name="CaseRatings" type="List"/>
+    <aura:attribute name="productLines" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="x-accordion-heading">
+        <lightning:accordion allowMultipleSectionsOpen="true">
+            <aura:iteration items="{!v.ratings}" var="rating">
+                <lightning:accordionSection title="{!rating.CreatedBy.Name}"
+                                            label="{!rating.CreatedBy.Name}">
+                    <aura:set attribute="body">
+                        <div class="slds-p-around_medium">
+                            <aura:if
+                                    isTrue="{!or(rating.Profile_Name__c == 'System Administrator', not(rating.Profile_Name__c))}">
+                                <p class="slds-text-heading_small">CSO Program Data</p>
+                                <!--                                <lightning:input type="toggle" label="Intensifying Innovation"-->
+                                <!--                                                 checked="{!rating.Intensifying_Innovation__c}"-->
+                                <!--                                                 disabled="{!v.disableForm}" messageToggleActive="Yes"-->
+                                <!--                                                 messageToggleInactive="No"/>-->
+                                <!--                                <lightning:input type="text" label="CSO Program Name"-->
+                                <!--                                                 value="{!rating.CSO_Program_Name__c}" disabled="{!v.disableForm}"/>-->
+
+<!--                                <lightning:combobox label="CSO Innovation Type" value="{!rating.CSO_Innovative_Type__c}"-->
+<!--                                                    options="{! v.InnovationTypes }" disabled="{!v.disableForm}"/>-->
+<!--                                <br/>-->
+<!--                                <lightning:input type="toggle" label="CSO Top Program"-->
+<!--                                                 checked="{!rating.CSO_Top_Program__c}" disabled="{!v.disableForm}"-->
+<!--                                                 messageToggleActive="Yes" messageToggleInactive="No"/>-->
+<!--                                <lightning:input type="text" label="CSO NPI Number" value="{!rating.CSO_NPI_Number__c}"-->
+<!--                                                 disabled="{!v.disableForm}"/>-->
+<!--                                <lightning:input type="text" label="CSO Tech Area 1"-->
+<!--                                                 value="{!rating.CSO_Tech_Area_1__c}" disabled="{!v.disableForm}"/>-->
+<!--                                <lightning:input type="text" label="CSO Tech Area 2"-->
+<!--                                                 value="{!rating.CSO_Tech_Area_2__c}" disabled="{!v.disableForm}"/>-->
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>Intensifying Innovation</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <aura:if isTrue="{!v.rating.Intensifying_Innovation__c}">
+                                            <p>Yes</p>
+                                            <aura:set attribute="else">
+                                                <p>No</p>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO Program Name</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.CSO_Program_Name__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO Innovation Type</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.CSO_Innovative_Type__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO Top Program</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <aura:if isTrue="{!v.rating.CSO_Top_Program__c}">
+                                            <p>Yes</p>
+                                            <aura:set attribute="else">
+                                                <p>No</p>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO NPI Number</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.CSO_NPI_Number__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO Tech Area 1</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.CSO_Tech_Area_1__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div  class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>CSO Tech Area 2</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.CSO_Tech_Area_2__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </aura:if>
+                            <aura:if
+                                    isTrue="{!or(rating.Profile_Name__c == 'System Administrator', or(rating.Profile_Name__c == 'Paralegal', or(rating.Profile_Name__c == 'IP Paralegal 1', or( rating.Profile_Name__c == 'IP Paralegal 2', not(rating.Profile_Name__c)))))}">
+                                <p class="slds-text-heading_small">P2P Program Data</p><br/>
+                                <!--                            <label class="slds-form-element__label" for="productLines">Product Line</label>-->
+                                <!--                            <lightning:pillContainer id="productLines" items="{!v.rating.Product_Lines__c}" onitemremove="{!c.removeSelectedInventorsController}"/>-->
+<!--                                <lightning:textarea label="Product Lines" value="{!rating.Product_Lines__c}"-->
+<!--                                                    disabled="{!v.disableForm}"/>-->
+<!--                                <lightning:textarea label="Products" value="{!rating.Product_multiple__c}"-->
+<!--                                                    disabled="{!v.disableForm}"/>-->
+<!--                                &lt;!&ndash;                            <lightning:input type="text" label="Product Line" value="{!rating.Product_Line__c}" disabled="{!v.disableForm}"/>&ndash;&gt;-->
+<!--                                <lightning:combobox label="Taxonomy" value="{!rating.Taxonomy__c}"-->
+<!--                                                    options="{! v.Taxonomy }" disabled="{!v.disableForm}"/>-->
+                                <br/>
+                                <div  class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>Product Lines</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.Product_Lines__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div  class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>Products</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.Product_multiple__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div  class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>Taxonomy</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.Taxonomy__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                            </aura:if>
+                            <aura:if
+                                    isTrue="{!or(rating.Profile_Name__c == 'System Administrator', or(rating.Profile_Name__c == 'Paralegal', or(rating.Profile_Name__c == 'IP Paralegal 1', or( rating.Profile_Name__c == 'IP Paralegal 2', or(not(rating.Profile_Name__c), rating.Profile_Name__c == 'IP Responsible Manager')))))}">
+                                <p class="slds-text-heading_small">Patent Rating</p><br/>
+<!--                                <lightning:combobox label="Case Rating" value="{!rating.Case_Rating__c}"-->
+<!--                                                    options="{! v.CaseRatings }" disabled="{!v.disableForm}"/>-->
+                                <br/>
+                                <div  class="slds-grid slds-gutters slds-border_bottom">
+                                    <div class="slds-col slds-size_1-of-6">
+                                        <p>Case Rating</p>
+                                    </div>
+                                    <div class="slds-col slds-size_5-of-6">
+                                        <p>{!rating.Case_Rating__c}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                            </aura:if>
+                        </div>
+                    </aura:set>
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </div>
+
+</aura:component>

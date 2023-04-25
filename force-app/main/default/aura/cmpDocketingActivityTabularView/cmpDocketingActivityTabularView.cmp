@@ -1,0 +1,50 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForRecordHome"
+                description="cmpDocketingActivityTabularView">
+
+    <aura:attribute name="recordId" type="String"></aura:attribute>
+    <aura:attribute name="sObjectApiName" type="String"></aura:attribute>
+    <aura:attribute name="parentLookupField" type="String"></aura:attribute>
+    <aura:attribute name="fieldSet" type="String"></aura:attribute>
+    <aura:attribute name="nameAsUrl" type="Boolean"></aura:attribute>
+    <aura:attribute name="columnWidthOverride" type="String"></aura:attribute>
+    <aura:attribute name="header" type="String"></aura:attribute>
+    <aura:attribute name="collapseButtonHelpText" type="String"></aura:attribute>
+    <aura:attribute name="tableHeight" type="Integer"></aura:attribute>
+
+    <aura:attribute name="pageReference" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+
+    <lightning:navigation aura:id="navService"/>
+
+    <lightning:card>
+        <div class="slds-m-around_medium">
+            <lightning:layout verticalAlign="end">
+                <lightning:layoutItem size="11">
+                    <h1 class="header">{!v.header}</h1>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1">
+                    <div class="expandButton">
+                        <lightning:buttonIcon
+                                iconName="utility:expand"
+                                alternativeText="Click to open as full screen"
+                                onclick="{!c.redirect}"
+                        ></lightning:buttonIcon>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+
+
+            <c:relatedListTableEditable
+                    recordId="{!v.recordId}"
+                    parentLookupField="{!v.parentLookupField}"
+                    sObjectApiName="{!v.sObjectApiName}"
+                    fieldSet="{!v.fieldSet}"
+                    nameAsUrl="{!v.nameAsUrl}"
+                    columnWidthOverride="{!v.columnWidthOverride}"
+                    tableHeight="{!v.tableHeight}"
+            ></c:relatedListTableEditable>
+        </div>
+    </lightning:card>
+
+
+</aura:component>

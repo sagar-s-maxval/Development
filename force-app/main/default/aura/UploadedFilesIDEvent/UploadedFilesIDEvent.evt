@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="ListOfUploadedFiles" type="list"/>
+	<aura:attribute name="count" type="integer"/>
+</aura:event>

@@ -1,0 +1,15 @@
+<aura:component description="cmpLitigationOnHoldMessage" implements="flexipage:availableForAllPageTypes">
+
+    <aura:attribute name="message" type="String"/>
+
+
+    <div class="slds-card">
+        <div class="slds-p-around_medium">
+            <div class="container">
+                <div class="slds-text-heading_label">
+                    <p><strong>{!v.message}</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

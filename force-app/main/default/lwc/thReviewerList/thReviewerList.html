@@ -1,0 +1,19 @@
+<template>
+    <div if:true={reviewers.data}>
+        <div if:true={reviewers.data.length}>
+            <div class="slds-m-vertical_medium">
+                <b>Additional Recipients </b>
+                <lightning-helptext content="Additional recipients for Signature or CCs"></lightning-helptext>
+            </div>
+
+            <lightning-datatable if:true={reviewers.data}
+                                 key-field="Person__c"
+                                 data={data}
+                                 columns={columns}
+                                 onrowselection={rowSelected}
+                                 onrowaction={handleRowAction}
+                                 onchange={handleRowAction}
+            ></lightning-datatable>
+        </div>
+    </div>
+</template>

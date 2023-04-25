@@ -1,0 +1,284 @@
+<aura:component description="cmpIDFSubmissionPageFour"
+                controller="RemunerationController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="optionValues" type="List"/>
+    <aura:attribute name="abcdOptions" type="List"/>
+    <aura:attribute name="qa" type="String"/>
+    <aura:attribute name="qb" type="String"/>
+    <aura:attribute name="qc" type="String"/>
+    <aura:attribute name="qd" type="String"/>
+    <aura:attribute name="qdRadio" type="String"/>
+    <aura:attribute name="qe" type="String"/>
+    <aura:attribute name="qeRadio" type="String"/>
+    <aura:attribute name="qf" type="String"/>
+    <aura:attribute name="qfRadio" type="String"/>
+    <aura:attribute name="qg" type="String"/>
+    <aura:attribute name="qhLaboratory" type="Boolean"/>
+    <aura:attribute name="qhComputer" type="Boolean"/>
+    <aura:attribute name="qhMaterials" type="Boolean"/>
+    <aura:attribute name="qhDesigns" type="Boolean"/>
+    <aura:attribute name="qhCalculations" type="Boolean"/>
+    <aura:attribute name="qhEvaluations" type="Boolean"/>
+    <aura:attribute name="optionBestSuited" type="String"/>
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="contribution" type="Integer" default="0"/>
+    <aura:attribute name="totalContribution" type="Integer"/>
+    <aura:attribute name="split" type="Boolean"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="showErrors" type="Boolean"/>
+    <aura:attribute name="agreed" type="Boolean"/>
+    <aura:attribute name="maxContributionAllowed" type="Integer"/>
+    <aura:attribute name="isRequired" type="Boolean"/>
+    <aura:attribute name="remId" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
+
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <aura:attribute name="openFlow" type="Boolean"/>
+    <aura:attribute name="idInventors" type="List"/>
+
+    <aura:attribute name="isApproved" type="Boolean"/>
+
+    <aura:attribute name="isSave" type="Boolean" default="true"/>
+    <aura:attribute name="isSubmit" type="Boolean" default="true"/>
+    <aura:attribute name="isCancel" type="Boolean" default="true"/>
+
+    <aura:attribute name="buttonClicked" type="String"/>
+    <aura:attribute name="showModal" type="Boolean"/>
+
+    <aura:handler name="change" value="{!v.qdRadio}" action="{!c.changeQd}"/>
+    <aura:handler name="change" value="{!v.qeRadio}" action="{!c.changeQe}"/>
+    <aura:handler name="change" value="{!v.qfRadio}" action="{!c.changeQf}"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium ">
+        <br/>
+        <div>
+            <div>
+                <div class="slds-text-heading_medium">
+                    <b>Contribution Details</b>
+                </div>
+                <br/>
+                <div >
+                    <div style="margin-bottom: 5px;">
+                        <p class="slds-text-heading_small"><span style="color:#ff0000">* </span>a) First and last name of the inventor.</p>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-3 addPadding" style="margin-bottom:5px;">
+                    <lightning:input label="" variant="label-hidden" value="{!v.qa}" maxlength="255"/>
+                    <br/>
+                </div>
+                <aura:if isTrue="{!equals(v.qa.length, 255)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (255) of the input.</div>
+                </aura:if>
+                <aura:if isTrue="{!and(v.qa == null, v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                </aura:if>
+                <div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small"><span style="color:#ff0000">* </span>b) Is the invention in your field of work?</p>
+                    </div>
+                    <div class="slds-clearfix slds-col" >
+                        <lightning:radioGroup name="options1"
+                                              label=""
+                                              options="{!v.optionValues}"
+                                              value="{!v.qb}"
+                                              type="radio"
+                                              variant="label-inline"
+                                              class="radioGroups"
+                        />
+                    </div>
+                </div>
+                <aura:if isTrue="{!and(v.qb == null, v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                </aura:if>
+                <br/>
+                <div class="slds-col slds-size_1-of-1" style="margin-bottom:5px;">
+                    <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>c) What training did you have and what was your job function
+                        when you made the invention?</p>
+                    <lightning:textarea class="addPadding"
+                            label="" variant="label-hidden" value="{!v.qc}" maxlength="30000"/>
+                    <c:cmpTextLimit isRichText="false" vLimit="30000" vText="{!v.qc}"/>
+                </div>
+                <aura:if isTrue="{!equals(v.qc.length, 30000)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (30,000) of the input.</div>
+                </aura:if>
+                <aura:if isTrue="{!and(v.qc == null, v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                    <br/>
+                </aura:if>
+                <div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small"><span style="color:#ff0000">* </span>d) Was the problem defined by instructions from your superiors?</p>
+                    </div>
+                    <div class="slds-clearfix slds-col">
+                        <lightning:radioGroup name="options2"
+                                              label=""
+                                              options="{!v.optionValues}"
+                                              value="{!v.qdRadio}"
+                                              type="radio"
+                                              variant="label-inline"
+                                              class="radioGroups"
+                        />
+                    </div>
+                </div>
+                <aura:if isTrue="{!and(v.qdRadio == null, v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                </aura:if>
+                <div>
+                    <aura:if isTrue="{!v.qdRadio == 'Yes'}">
+                        <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>What information did the instructions contain?
+                        </p>
+                        <lightning:textarea class="addPadding" label="" variant="label-hidden" value="{!v.qd}" maxlength="30000"/>
+                        <c:cmpTextLimit isRichText="false" vLimit="30000" vText="{!v.qd}"/>
+                        <aura:if isTrue="{!equals(v.qd.length, 30000)}">
+                            <div class="slds-text-color_error">You have reached the maximum size (30,000) of the input.</div>
+                        </aura:if>
+                        <aura:if isTrue="{!and(or(v.qd == null, v.qd.length == 0), v.showErrors)}">
+                            <div class="slds-text-color_error">Please, provide value for this field.</div>
+                        </aura:if>
+                    </aura:if>
+                </div>
+                <br/>
+                <div >
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small"> <span style="color:#ff0000">* </span>e) Was the company already aware of the problem?</p>
+
+                    </div>
+                    <div class="slds-clearfix slds-col">
+                        <lightning:radioGroup name="options3"
+                                              label=""
+                                              options="{!v.optionValues}"
+                                              value="{!v.qeRadio}"
+                                              type="radio"
+                                              variant="label-inline"
+                                              class="radioGroups"
+                        />
+                    </div>
+                </div>
+                <aura:if isTrue="{!and(v.qeRadio == null, v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                </aura:if>
+                <div>
+                    <aura:if isTrue="{!v.qeRadio == 'Yes'}">
+                        <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>Which sources provided you with the information?
+                        </p>
+                        <lightning:textarea class="addPadding" label="" variant="label-hidden" value="{!v.qe}" maxlength="10000"/>
+                        <c:cmpTextLimit isRichText="false" vLimit="10000" vText="{!v.qe}"/>
+                        <aura:if isTrue="{!equals(v.qe.length, 10000)}">
+                            <div class="slds-text-color_error">You have reached the maximum size (10,000) of the input.</div>
+                        </aura:if>
+                        <aura:if isTrue="{!and(or(v.qe == null, v.qe.length == 0), v.showErrors)}">
+                            <div class="slds-text-color_error">Please, provide value for this field.</div>
+                        </aura:if>
+                    </aura:if>
+                </div>
+                <br/>
+                <div >
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small"> <span style="color:#ff0000">* </span>f) Did you become aware of the deficiency or the requirement yourself?</p>
+                    </div>
+                    <div class="slds-clearfix slds-col">
+                        <lightning:radioGroup name="options4"
+                                              label=""
+                                              options="{!v.optionValues}"
+                                              value="{!v.qfRadio}"
+                                              type="radio"
+                                              variant="label-inline"
+                                              class="radioGroups"
+                        />
+                    </div>
+                </div>
+                <aura:if isTrue="{!and(or(v.qfRadio == null, v.qfRadio.length == 0), v.showErrors)}">
+                    <div class="slds-text-color_error">Please, provide value for this field.</div>
+                </aura:if>
+                <div>
+                    <aura:if isTrue="{!v.qfRadio == 'Yes'}">
+                        <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>Which deficiency or requirement did you determine
+                            yourself?</p>
+                        <lightning:textarea class="addPadding" label="" variant="label-hidden" value="{!v.qf}" maxlength="10000"/>
+                        <c:cmpTextLimit isRichText="false" vLimit="10000" vText="{!v.qf}"/>
+                        <aura:if isTrue="{!equals(v.qf.length, 10000)}">
+                            <div class="slds-text-color_error">You have reached the maximum size (10,000) of the input.</div>
+                        </aura:if>
+                    </aura:if>
+                </div>
+                <br/>
+                <div>
+                    <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span>&nbsp;&nbsp;</span>g) What did you contribute to the invention?
+                        Briefly explain your share in the invention.</p>
+                    <lightning:textarea class="addPadding" label="" variant="label-hidden" value="{!v.qg}" maxlength="10000"/>
+                    <c:cmpTextLimit isRichText="false" vLimit="10000" vText="{!v.qg}"/>
+                    <aura:if isTrue="{!equals(v.qg.length, 10000)}">
+                        <div class="slds-text-color_error">You have reached the maximum size (10,000) of the input.</div>
+                    </aura:if>
+                </div>
+                <div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>h) What support did the company provide? <lightning:helptext content="Multiple choices possible."/></p>
+                    </div>
+                    <lightning:input class="boxOptions" label="Laboratory equipment" type="checkbox" checked="{!v.qhLaboratory}"/>
+                    <lightning:input class="boxOptions" label="Computer / Software" type="checkbox" checked="{!v.qhComputer}"/>
+                    <lightning:input class="boxOptions" label="Materials / Prototypes" type="checkbox" checked="{!v.qhMaterials}"/>
+                    <lightning:input class="boxOptions" label="Designs / Planning" type="checkbox" checked="{!v.qhDesigns}"/>
+                    <lightning:input class="boxOptions" label="Calculations / Simulations" type="checkbox" checked="{!v.qhCalculations}"/>
+                    <lightning:input class="boxOptions" label="Evaluations / Test" type="checkbox" checked="{!v.qhEvaluations}"/>
+                    <aura:if
+                            isTrue="{!and(and(!v.qhComputer, and(!v.qhLaboratory, and(!v.qhCalculations, and(!v.qhDesigns, and(!v.qhEvaluations, !v.qhMaterials))))), v.showErrors)}">
+                        <div class="slds-text-color_error">Please, provide value for this field.</div>
+                    </aura:if>
+                </div>
+                <br/>
+                <div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>i) Please select an option that is best suited based on your contribution to the invention.</p>
+                    </div>
+                    <div>
+                        <lightning:radioGroup label=""
+                                              options="{!v.abcdOptions}"
+                                              type="radio"
+                                              variant="label-hidden"
+                                              class="boxOptions slds-form-element"
+                                              value="{!v.optionBestSuited}"
+                        />
+                    </div>
+                    <aura:if isTrue="{!and(or(v.optionBestSuited == null, v.qf.optionBestSuited == 0), v.showErrors)}">
+                        <div class="slds-text-color_error">Please, provide value for this field.</div>
+                    </aura:if>
+                </div>
+                <br/>
+                <div class="slds-col slds-size_1-of-1">
+                    <p class="slds-text-heading_small" style="margin-bottom: 5px;">Comments, If any.</p>
+                    <lightning:textarea label="" variant="label-hidden" value="{!v.comments}" maxlength="255"/>
+                    <c:cmpTextLimit isRichText="false" vLimit="255" vText="{!v.comments}"/>
+                </div>
+                <div>
+                    <p class="slds-text-heading_small">j) Please confirm the contribution percentage that were entered during IDF Submission.
+                        If there is any change, edit the percentage number that reflects your share of work towards the invention.</p>
+                    <br/>
+                    <div class="slds-col slds-size_1-of-1">
+                        <c:cmpContributionApproval recordId="{!v.IDF}" isApproved="{!v.isApproved}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aura:id="actionButtonBar" class="slds-p-around_medium slds-clearfix slds-col">
+        <div class="slds-float_right">
+            <aura:if isTrue="{!v.isSave}">
+                <lightning:button aura:id="SAVE" label="Save as draft"
+                                  variant="neutral" onclick="{!c.onButtonPressed}"/>
+            </aura:if>
+            <aura:if isTrue="{! v.isSubmit}">
+                <lightning:button aura:id="FINISH" label="Submit" disabled="{!not (v.isApproved)}"
+                                  variant="brand" onclick="{!c.submitDetails}"/>
+            </aura:if>
+
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,38 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!-- Variables -->
+    <aura:attribute name="name" type="String" access="global"/>
+    <aura:attribute name="label" type="String" access="global"/>
+    <aura:attribute name="placeholder" type="String" access="global"/>
+    <aura:attribute name="required" type="Boolean" access="global" default="false"/>
+    <aura:attribute name="options" type="List" access="global"/>
+    <aura:attribute name="value" type="List" access="global"/>
+    <aura:attribute name="isSucess" type="Boolean" default="false" />
+    <aura:attribute name="tagType" type="String" access="global"/>
+    <aura:attribute name="customErrorMessage" type="String" access="global"/>
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> -->
+    
+    <aura:registerEvent name="change" type="c:evtMultiSelectPicklistChange"/>
+
+    <!-- <label style="font-weight:bold">{!v.label}</label> -->
+    <div onkeyup="{! c.search }" onclick="{! c.search }">
+        <label class="slds-form-element__label"><span class="slds-required">*</span>{!v.label}</label>
+        <lightning:input
+                aura:id="txtSearch"	
+                name="{!v.name}"
+                type="Search"
+                placeholder="{!v.placeholder}"
+                autocomplete="false"/>
+    </div>
+    <aura:if isTrue="{!v.isSucess == true}">
+        <ui:scrollerWrapper class="scrollerSize">
+            <ui:inputSelect multiple="true" 
+                            class="multiple" 
+                            aura:id="InputSelectMultiple" 
+                            change="{!c.onSelect}" >
+            </ui:inputSelect>
+        </ui:scrollerWrapper>
+    </aura:if>
+    <p>
+        <lightning:pillContainer items="{!v.value}" onitemremove="{!c.onRemove}"></lightning:pillContainer>
+    </p>
+</aura:component>

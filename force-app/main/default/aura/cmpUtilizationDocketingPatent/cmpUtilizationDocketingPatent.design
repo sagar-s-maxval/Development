@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="patentId" label="Patent ID"/>
+    <design:attribute name="isFirstYear" label="Is First Year"/>
+</design:component>

@@ -1,0 +1,3 @@
+<design:component>
+    <design:attribute name="showModal1" label="showModal1"/>
+</design:component>

@@ -1,0 +1,11 @@
+<design:component>
+    <design:attribute name="objectName" label="Object Name"/>
+    <design:attribute name="fieldName" label="Field Name"/>
+    <design:attribute name="fieldName2" label="Field Name2"/>
+    <design:attribute name="value" label="Value"/>
+    <design:attribute name="recordCount" label="Record Count"/>
+    <design:attribute name="iconName" label="icon Name"/>
+    <design:attribute name="label" label="Label"/>
+    <design:attribute name="placeholder" label="Placeholder"/>
+    <design:attribute name="recordId" label="Record Id"/>
+</design:component>

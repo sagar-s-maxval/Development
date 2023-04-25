@@ -1,0 +1,75 @@
+<aura:component description="externalInventors" controller="ExternalInventorsController" extends="c:base">
+
+    <aura:attribute name="inventors" type="SymphonyIPM__Inventor__c[]"/>
+    <aura:attribute name="idfId" type="String"/>
+    <aura:attribute name="isExternalInventor" type="Boolean"/>
+    <aura:attribute name="name" type="String"/>
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="invalidEmail" type="Boolean"/>
+    <aura:attribute name="inventorsCreated" type="SymphonyIPM__Inventor__c[]"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="isError" type="Boolean"/>
+    <aura:attribute name="primaryInventor" type="String"/>
+    <aura:attribute name="coInventors" type="String" default=""/>
+    <aura:attribute name="coInventorEmails" type="List" default=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div>
+        <div>
+            <div>
+                <p style="font-size:14px;">Add External Inventor(s) (if any)</p>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input type="toggle" label="" onchange="{!c.onToggleChange}"
+                                 messageToggleActive="Yes" messageToggleInactive="No" value="{!v.isExternalInventor}"
+                                 checked="{!v.isExternalInventor}"/>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.isError}">
+            <div class="slds-text-color_error">Please add at least one external inventor.
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.isExternalInventor}">
+            <br/>
+            <div class="slds-col slds-size_1-of-3">
+                <p style="font-size:14px;"><span style="color:#ff0000">* </span>Name</p>
+                <lightning:input variant="label-hidden" type="text" label="" value="{!v.name}"/>
+            </div>
+            <br/>
+            <div class="slds-col slds-size_1-of-3">
+                <p style="font-size:14px;"><span style="color:#ff0000">* </span>Email</p>
+                <lightning:input variant="label-hidden" type="text" label="" value="{!v.email}"/>
+                <aura:if isTrue="{!v.invalidEmail}">
+                    <div class="slds-text-color_error">Email has incorrect format.</div>
+                </aura:if>
+            </div>
+            <br/>
+            <div  class="slds-col slds-size_1-of-2">
+                <p style="font-size:14px;">Any other information
+                    <lightning:helptext content="You can add any relevant information regarding the external inventors."/>
+                </p>
+                <lightning:input variant="label-hidden" type="text" label="" value="{!v.comments}"/>
+                <br/>
+                <div class="slds-float_right">
+                    <lightning:button label="Add" iconName="utility:add" iconPosition="left" variant="brand"
+                                      disabled="{! or(not(v.name), not(v.email))}" onclick="{!c.addInventor}"/>
+                </div>
+                <br/>
+                <div>
+                    <div class="slds-text-heading_medium">
+                        <b>External Inventors</b>
+                    </div>
+                    <br/>
+                    <lightning:datatable data="{! v.inventors }"
+                                         columns="{! v.columns }"
+                                         showRowNumberColumn="true"
+                                         keyField="Id"
+                                         hideCheckboxColumn="true"
+                                         onrowaction="{!c.deleteRecord}"/>
+                </div>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

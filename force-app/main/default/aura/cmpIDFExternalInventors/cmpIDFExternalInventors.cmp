@@ -1,0 +1,38 @@
+<aura:component description="cmpIDFExternalInventors">
+
+    <aura:attribute name="isExternalInventor" type="Boolean"/>
+    <aura:attribute name="emails" type="String"/>
+    <aura:attribute name="names" type="String"/>
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="showError" type="Boolean"/>
+
+    <div>
+        <div>
+            <div>
+                <p style="font-size:14px;">Add External inventors (if any)</p>
+            </div>
+            <div class="slds-col slds-size_1-of-7">
+                <lightning:input type="toggle" label=""
+                             messageToggleActive="Yes" messageToggleInactive="No" checked="{!v.isExternalInventor}"/>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.isExternalInventor}">
+            <br/>
+            <p style="font-size:14px;"> <span style="color:#ff0000">* </span>Name <lightning:helptext content="You can add multiple external inventors separated by a comma."/></p>
+            <lightning:input type="text" label="" value="{!v.names}"/>
+            <aura:if isTrue="{!and(v.showError, not(v.names))}">
+                <div class="slds-text-color_error">Please provide name.</div>
+            </aura:if>
+            <br/>
+            <p style="font-size:14px;"> <span style="color:#ff0000">* </span>Email <lightning:helptext content="You can add multiple email IDs for external inventors separated by a comma. "/></p>
+            <lightning:input type="text" label="" value="{!v.emails}"/>
+            <aura:if isTrue="{!and(v.showError, not(v.emails))}">
+                <div class="slds-text-color_error">Please provide email.</div>
+            </aura:if>
+            <br/>
+            <p style="font-size:14px;">Any other information <lightning:helptext content="You can add any relevant information regarding the external inventors."/></p>
+            <lightning:input type="text" label="" value="{!v.comments}"/>
+            <br/>
+        </aura:if>
+    </div>
+</aura:component>

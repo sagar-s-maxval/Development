@@ -1,0 +1,40 @@
+.THIS.c-container 
+{
+    border: 1px solid #d8dde6;
+    margin: 10px 10px 20px 10px;
+}
+.THIS .header-column 
+{
+    padding: 0 5rem;
+}
+.THIS .field-title 
+{
+    font-size: .75rem;
+    line-height: 1.25;
+    margin-bottom: .25rem;
+}
+.THIS .buttonBackgroundcolour
+{
+    color: black;
+    background-color: orange; 
+}
+.THIS .x-large
+{
+    max-width: 150px;
+}
+.THIS .Custom-card{
+    min-width:320px;
+    max-width:38px;
+    left: 0px;
+}
+.THIS .customfields
+{
+    padding-left: 26px;
+}
+.THIS .row
+{
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+}

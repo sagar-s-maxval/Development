@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="selectedLawfirm" label="selectedLawfirm"></design:attribute>
+    <design:attribute name="OutputParam" label="OutputParam"></design:attribute>
+    <design:attribute name="selectedConfirmLawfirm" label="selectedConfirmLawfirm"></design:attribute>
+</design:component>

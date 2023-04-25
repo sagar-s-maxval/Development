@@ -1,0 +1,102 @@
+<aura:component controller="RecommendationOpinionController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+                access="global">
+
+    <aura:attribute name="wrapperRecommendationOpinion" type="List"/>
+    <aura:attribute name="reSendDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="isModalOpen" type="Boolean" default="false"/>
+    <aura:attribute name="reSendDisabled1" type="String"/>
+    <aura:attribute name="recordId" type="String"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+<!--    <aura:handler event="force:refreshView" action="{!c.refreshAction}" />-->
+
+<!--    <aura:handler event="force:showToast" action="{!c.refreshAction}"/>-->
+
+    <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="Recommendation Opinion"
+                         class="slds-theme_shade slds-truncate">
+        <lightning:accordionSection name="Recommendation Opinion" label="Recommendation Opinion">
+            <aura:iteration items="{!v.wrapperRecommendationOpinion}" var="opinion" indexVar="i">
+                <lightning:recordViewForm recordId="{!opinion.recommendationOpinion.Id}"
+                                          objectApiName="Recommendation_Opinion__c"
+                                          class="slds-p-around_large background_white">
+                    <lightning:layout horizontalAlign="space">
+                        <lightning:layoutItem padding="around-large" size="2">
+                            #{!i+1}
+                            <aura:if isTrue="{!opinion.recommendationOpinion.Is_Final_Answer__c}">
+                                <lightning:outputField fieldName="Is_Final_Answer__c"/>
+                            </aura:if>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="wordSpaces" padding="around-large" size="3">
+                            <lightning:outputField fieldName="Persons__c"/>
+                            <lightning:outputField fieldName="Comments__c"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="wordSpaces" padding="around-large" size="4">
+                            <lightning:outputField fieldName="Final_Recommendation__c"/>
+                            <lightning:outputField fieldName="Recommendation_Status__c"/>
+                            <aura:if isTrue="{!notequals(opinion.recommendationOpinion.Revisit_Date__c, undefined)}">
+                            <lightning:outputField fieldName="Revisit_Date__c"/>
+                            </aura:if>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-large" size="3">
+                            <aura:if
+                                    isTrue="{!and(and(!opinion.recommendationOpinion.Is_Final_Answer__c, opinion.recommendationOpinion.Is_User_Have_Access_to_edit__c),
+                                    notequals(opinion.recommendationOpinion.D_O_Recommendation__r.Status__c , 'Completed'))}">
+                                <div>
+                                    <lightning:button class="slds-size_1-of-1" label="Edit" value="{!opinion.recommendationOpinion.Id}"
+                                                      name="{!i}" onclick="{!c.edit}"/>
+                                </div>
+                                <br></br>
+                                <aura:if isTrue="{!and(opinion.recommendationOpinion.Is_User_Have_Access_to_send_Email__c, equals(opinion.recommendationOpinion.Recommendation_Status__c, 'Completed'))}">
+                                    <div>
+                                        <lightning:button label="Re-send Email"
+                                                          value="{!opinion.recommendationOpinion.Id}"
+                                                          name="{!i}" onclick="{!c.reSendEmail}"
+                                                          disabled="{!equals(i, v.reSendDisabled1)}"
+                                                          title="Email will be sent to the user to revisit the recommendation."
+                                                          class="slds-size_1-of-1"
+                                        />
+                                    </div>
+                                </aura:if>
+                            </aura:if>
+
+                            <aura:if isTrue="{!and(opinion.recommendationOpinion.Is_Final_Answer__c, opinion.recommendationOpinion.D_O_Recommendation__r.Is_Docketer_SysAdmin__c)}">
+                            <div>
+                                <lightning:button class="slds-size_1-of-1" label="Edit" value="{!opinion.recommendationOpinion.Id}"
+                                                  name="{!i}" onclick="{!c.edit}"/>
+                            </div>
+                            </aura:if>
+
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                    <lightning:layout horizontalAlign="space">
+                        <lightning:layoutItem size="12">
+                            <hr style="margin: 0"></hr>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:recordViewForm>
+            </aura:iteration>
+        </lightning:accordionSection>
+    </lightning:accordion>
+
+    <aura:if isTrue="{!v.isModalOpen}">
+        <div class="modal-min-width modal">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="modal-container slds-modal__container modal-min-width">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <lightning:buttonIcon iconName="utility:close" class="slds-modal__close" onclick="{!c.closeFlowModal}"/>
+                    </header>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Send Email</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium modal-max-width" style="overflow-y: scroll;">
+                        <lightning:flow aura:id="flow" onstatuschange="{!c.closeModalOnFinish}" />
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+
+</aura:component>

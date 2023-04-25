@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+     <lightning:navigation aura:id="navService"/>
+     <aura:attribute name="pageReference" type="Object"/>
+      <aura:attribute name="caseid" type="string" />
+   <article class="slds-card">
+        <div class="slds-card__header slds-grid" style="margin-top:5px;margin-bottom:5px;">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title slds-text-link">
+                            <a href="{!'/' + v.caseid}" target="_self" class="slds-card__header-link slds-truncate"
+                               title="Open Patent Record">
+                                <span>Click here to go back to the patent detail view</span>
+                              <!--  <span>Patent - {!v.docketNumber}</span> -->
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+    <lightning:flow aura:id="flowId" />
+    
+    </article>
+</aura:component>

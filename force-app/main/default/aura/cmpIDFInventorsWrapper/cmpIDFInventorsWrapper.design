@@ -1,0 +1,19 @@
+<design:component>
+    <design:attribute name="coInventors" label="Co-Inventors"/>
+    <design:attribute name="primaryInventor" label="Primary Inventor"/>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="Group" label="Group"/>
+    <design:attribute name="Division" label="Division"/>
+    <design:attribute name="BusinessUnit" label="Business Unit"/>
+    <design:attribute name="titleName" label="Title Name"/>
+    <design:attribute name="buError" label="BU Error"/>
+    <design:attribute name="title" label="Title"/>
+    <design:attribute name="showTitleError" label="Show title Error"/>
+    <design:attribute name="userEmail" label="User email"/>
+    <design:attribute name="external_names" label="External names"/>
+    <design:attribute name="external_emails" label="External emails"/>
+    <design:attribute name="external_comments" label="External comments"/>
+    <design:attribute name="external_exists" label="External exists"/>
+    <design:attribute name="showExternalError" label="External Error"/>
+    <design:attribute name="externalInventors" label="External inventors"/>
+</design:component>

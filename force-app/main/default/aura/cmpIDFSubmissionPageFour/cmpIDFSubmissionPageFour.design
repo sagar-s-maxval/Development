@@ -1,0 +1,30 @@
+<design:component>
+    <design:attribute name="qa" label="Question a"/>
+    <design:attribute name="qb" label="Question b"/>
+    <design:attribute name="qc" label="Question c"/>
+    <design:attribute name="qd" label="Question d"/>
+    <design:attribute name="qdRadio" label="Question d radio"/>
+    <design:attribute name="qe" label="Question e"/>
+    <design:attribute name="qeRadio" label="Question e radio"/>
+    <design:attribute name="qf" label="Question f"/>
+    <design:attribute name="qfRadio" label="Question f radio"/>
+    <design:attribute name="qg" label="Question g"/>
+    <design:attribute name="qhLaboratory" label="Question h Laboratory"/>
+    <design:attribute name="qhComputer" label="Question h Computer"/>
+    <design:attribute name="qhMaterials" label="Question h Materials"/>
+    <design:attribute name="qhDesigns" label="Question h Designs"/>
+    <design:attribute name="qhCalculations" label="Question h Calculations"/>
+    <design:attribute name="qhEvaluations" label="Question h Evaluations"/>
+    <design:attribute name="comments" label="Comments"/>
+    <design:attribute name="contribution" label="Contribution"/>
+    <design:attribute name="totalContribution" label="Total contribution"/>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="showErrors" label="showErrors"/>
+    <design:attribute name="agreed" label="Agreed"/>
+    <design:attribute name="maxContributionAllowed" label="Max contribution allowed"/>
+    <design:attribute name="optionBestSuited" label="Option best suited"/>
+    <design:attribute name="isRequired" label="Is required"/>
+    <design:attribute name="remId" label="Remuneration Id"/>
+    <design:attribute name="userId" label="User Id"/>
+    <design:attribute name="buttonClicked" label="Button Clicked"/>
+</design:component>

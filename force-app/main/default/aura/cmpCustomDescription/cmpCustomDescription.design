@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="label" label="Label" description="Label of comment box" />
+    <design:attribute name="description" label="Description" description="Will store description value" />
+</design:component>

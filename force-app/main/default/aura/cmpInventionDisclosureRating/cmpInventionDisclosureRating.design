@@ -1,0 +1,18 @@
+<design:component>
+    <design:attribute name="q1" label="q1"/>
+    <design:attribute name="q2" label="q2"/>
+    <design:attribute name="q3" label="q3"/>
+    <design:attribute name="q4" label="q4"/>
+    <design:attribute name="q5" label="q5"/>
+    <design:attribute name="q6" label="q6"/>
+    <design:attribute name="q7" label="q7"/>
+    <design:attribute name="q8" label="q8"/>
+    <design:attribute name="q9" label="q9"/>
+    <design:attribute name="q10" label="q10"/>
+    <design:attribute name="q11" label="q11"/>
+    <design:attribute name="comments" label="Comments"/>
+    <design:attribute name="reviewId" label="ReviewId"/>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="status" label="Status"/>
+    <design:attribute name="showRecErrors" label="showRecErrors"/>
+</design:component>

@@ -1,0 +1,39 @@
+<design:component>
+    <design:attribute name="q6" label="q6 radio" />
+    <design:attribute name="q7" label="q7 radio"/>
+    <design:attribute name="q8" label="q8 radio"/>
+    <design:attribute name="q10" label="q10 radio"/>
+    <design:attribute name="q12" label="q12 radio"/>
+    <design:attribute name="q14" label="q14 radio"/>
+    <design:attribute name="q15" label="q15 radio"/>
+    <design:attribute name="q16" label="q16 radio"/>
+    <design:attribute name="q17" label="q17 radio"/>
+
+    <design:attribute name="q6answer" label="Question 6"/>
+    <design:attribute name="q7answer" label="Question 7"/>
+    <design:attribute name="q8answer" label="Question 8"/>
+    <design:attribute name="q10answer" label="Question 10"/>
+    <design:attribute name="q11answer" label="Question 11"/>
+    <design:attribute name="q12answer" label="Question 12"/>
+    <design:attribute name="q13answer" label="Question 13"/>
+    <design:attribute name="q14answer" label="Question 14"/>
+    <design:attribute name="q15answer" label="Question 15"/>
+    <design:attribute name="q16answer" label="Question 16"/>
+    <design:attribute name="q17answer" label="Question 17"/>
+    <design:attribute name="q9Instrument" label="Question 9 Instrument"/>
+    <design:attribute name="q9Software" label="Question 9 Software"/>
+    <design:attribute name="q9Reagent" label="Question 9 Reagent"/>
+    <design:attribute name="q9Consumable" label="Question 9 Consumable"/>
+    <design:attribute name="q9Method" label="Question 9 Method"/>
+    <design:attribute name="q9Other" label="Question 9 Other"/>
+    <design:attribute name="q9String" label="Question 9 String"/>
+
+    <design:attribute name="otherComment" label="Other Comment"/>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="showErrors" label="showErrors"/>
+    <design:attribute name="agreed" label="agreed"/>
+    <design:attribute name="showContribution" label="Show Contribution"/>
+    <design:attribute name="totalContribution" label="Total Contribution"/>
+
+    <design:attribute name="myIdeas" label="My Ideas"/>
+</design:component>

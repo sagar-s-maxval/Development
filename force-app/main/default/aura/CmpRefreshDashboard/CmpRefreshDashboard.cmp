@@ -1,0 +1,6 @@
+<aura:component controller="RefreshDashboardController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:attribute name="iterator" type="Integer" default="0"/>
+    <aura:attribute name="asyncId" type="String"/>
+     <aura:attribute name="DashboardId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="buttonClicked" label="Button Clicked"/>
+    <design:attribute name="isSave" label="isSave" />
+    <design:attribute name="isSubmit" label="isSubmit" />
+    <design:attribute name="isCancel" label="isCancel" />
+</design:component>

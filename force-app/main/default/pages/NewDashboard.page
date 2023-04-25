@@ -1,0 +1,89 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <apex:includeScript value="{!URLFOR($Resource.SymphonyIPM__JQuery_2_1_3_MinJS)}" />
+        <script src="../../soap/ajax/35.0/connection.js" type="text/javascript"></script>
+        <apex:includeScript value="{!URLFOR($Resource.SymphonyIPM__SvgScript, 'SvgScript/svg4everybody.js')}" />
+        <apex:stylesheet value="{!URLFOR($Resource.SymphonyIPM__SLDS231, 'assets/styles/salesforce-lightning-design-system.css')}" />
+            <script></script>
+    </head>
+    <body>
+        <div class="slds">
+        <!--------------------------------------------------------------------------------------------------------------------------------->
+            <!-- PAGE HEADER -->
+            <!--<div class="slds-page-header" role="banner" style="padding: 8px 6px 0px 6px;background-colr:white;">-->
+            <div role="banner" style="padding: 8px 6px 0px 6px;background-colr:white;">
+            
+                <table cellspacing="0" cellpadding="0" style="width:99%;" border="0" align="center">
+                <tr>
+                    <!--<td/>-->
+                    <td style="text-align:center;" colspan="3"><img src="{!$Resource.NewSymphonyBanner}"  style="padding-top:0px;"/></td>
+                    <!--<td/> width="200px"-->
+                </tr>
+                <tr>
+                    <td style="width:33%;" valign="bottom">
+                        <table cellspacing="0" cellpadding="0" style="width:auto;" border="0">
+                        <tr>
+                            <!--<td>padding-bottom:10px;
+                                <svg aria-hidden="true" class="slds-icon slds-icon--large slds-icon-standard-user">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS100, 'assets/icons/standard-sprite/svg/symbols.svg#home')}"></use>
+                                </svg>        
+                            </td>-->
+                            <td valign="bottom">
+                                <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" id="lblTitle" style="color:gray">&nbsp;Welcome, {!$User.FirstName} {!$User.LastName}</h1>                             
+                            </td>
+                        </tr>
+                        </table>
+                    </td>
+                    <!--<td style="text-align:center;"><img src="{!$Resource.SymphonyNewPNG}" width="200px" style="padding-top:0px;"/></td>-->
+                    <td/>
+                    <td style="width:33%;text-align:right;padding-bottom:10px;" valign="bottom">
+                        <a href="https://www.maxval.com/location.html" target="_blank">Contact Us</a>&nbsp;|&nbsp;
+                        <!--<a href="javascript:OpenPage('/{!JSENCODE(URL_InventorHomeHelp)}')">Help</a>&nbsp;|&nbsp;-->
+                        <!--<a href="http://site.maxval-soft.com/symphony-help" target="_blank">Help</a>&nbsp;|&nbsp;-->
+                        <!--<a id="helpTag" href="{https://www.maxval.com/about.html}" target="_blank">Help</a>&nbsp;|&nbsp;-->
+                       <!-- <apex:outputpanel rendered="{!$Profile.Name=="System Administrator"}">
+                        <a id="helpTag"  href="{!$Resource.SystemAdminHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>
+                        <apex:outputpanel rendered="{!$Profile.Name=="Platform Inventor"}">
+                        <a id="helpTag"  href="{!$Resource.ReviewerHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>
+                        <apex:outputpanel rendered="{!$Profile.Name=="Platform Reviewer"}">    
+                        <a id="helpTag"  href="{!$Resource.InventorHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>
+                        <apex:outputpanel rendered="{!$Profile.Name=="Outside Counsel"}">
+                        <a id="helpTag"  href="{!$Resource.OutsideCounselHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>
+                        <apex:outputpanel rendered="{!$Profile.Name=="In-house Counsel"}">
+                        <a id="helpTag"  href="{!$Resource.InhouseCounselHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>-->
+                        <apex:outputpanel rendered="{!$Profile.Name=="TEST Trademarks TEST"}">
+                        <a id="helpTag"  href="{!$Resource.InhouseCounselHelpDocument}" target="_blank">Help</a>&nbsp;|&nbsp; </apex:outputpanel>
+                        <!--<a id="helpTag" href="{https://www.maxval.com/about.html}">Help</a>&nbsp;|&nbsp;-->
+                        <a href="https://www.maxval.com/about.html" target="_blank">About Maxval</a>
+                    </td>
+                </tr>
+                </table>
+            </div>
+            <!-- / PAGE HEADER -->
+        <!-----------------------------------------------------------------------------------------------------> 
+        </div>   
+    </body>
+    <script>
+        var j$ = jQuery.noConflict();
+        var html_encode = secureFilters.html;
+        j$(document).ready(function() 
+        {
+            //document.getElementById("helpTag").href={https://www.maxval.com/about.html};
+            //alert('1');
+        });
+        function OpenPage(strURL)
+        {
+            sforce.one.navigateToURL(strURL);
+        }
+        
+        function helpAnchorLink()
+        {
+            //alert('1');
+            //myWindow=window.open({https://www.maxval.com/about.html},'myWin','width=400,height=650');
+            //history.pushState({https://www.maxval.com/about.html},null, http://www.sampleurl.com)
+        }
+        
+    </script>
+</html>
+</apex:page>

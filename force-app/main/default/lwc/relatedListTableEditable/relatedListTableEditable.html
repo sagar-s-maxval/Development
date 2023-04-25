@@ -1,0 +1,41 @@
+<template>
+    <lightning-card class="slds-m-around_medium">
+        <div if:true={response.data}>
+            <div data-my-id="tableDiv"
+                 class="slds-border_top slds-border_left slds-border_bottom slds-border_right">
+                <lightning-datatable
+                        key-field="Id"
+                        columns={columns}
+                        data={data}
+                        suppress-bottom-bar="false"
+                        onsort={sortChange}
+                        sorted-by={sortedBy}
+                        sorted-direction={sortDirection}
+                ></lightning-datatable>
+            </div>
+
+            <div class="slds-m-vertical_medium slds-text-align_right">
+                <button
+                        class="slds-truncate slds-button slds-button_outline-brand"
+                        onclick={cancel}
+                >Cancel
+                </button>
+                <button
+                        class="slds-truncate slds-button slds-button_brand"
+                        onclick={save}
+                >Save
+                </button>
+            </div>
+        </div>
+        <div if:false={response.data}>
+            <div if:false={response.error}>
+                <lightning-spinner></lightning-spinner>
+            </div>
+        </div>
+        <div if:true={response.error}>
+            <c-error-panel
+                    errors={response.error}
+            ></c-error-panel>
+        </div>
+    </lightning-card>
+</template>

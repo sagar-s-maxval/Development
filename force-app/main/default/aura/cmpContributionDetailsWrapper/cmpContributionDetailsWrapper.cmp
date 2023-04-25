@@ -1,0 +1,18 @@
+<aura:component description="cmpContributionDetailsWrapper"
+                controller="RemunerationController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:attribute name="showFlow" type="Boolean"/>
+    <aura:attribute name="showContribution" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.showContribution}">
+        <aura:if isTrue="{!not(v.showFlow)}">
+            <c:cmpCreateRemuneration recordId="{!v.recordId}" flowIsOpened="{!v.showFlow}"/>
+            <aura:set attribute="else">
+                <c:openContributionFlow idfId="{!v.recordId}" openFlow="{!v.showFlow}"/>
+            </aura:set>
+        </aura:if>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,46 @@
+<template>
+    <div if:true={isInputCheckbox}>
+        <span if:true={required} style="color:#ff0000">* </span><label class="slds-form-element__label slds-no-flex">Select
+        Jurisdictions</label>
+        <lightning-helptext content={helpText}></lightning-helptext>
+        <lightning-checkbox-group
+                if:true={isInputCheckbox}
+                name="Select Jurisdictions"
+                options={options}
+                value={value}
+                onchange={handleChange}
+        ></lightning-checkbox-group>
+        <div if:true={jurPresent}>
+            <c-custom-lookup onsearch={handleSearch} is-multi-entry='true' label="Additional Jurisdictions"
+                             placeholder="Search Countries" onselectionchange={setJurisdictionIds}>
+            </c-custom-lookup>
+        </div>
+
+    </div>
+
+    <div if:true={isInputText}>
+        <div class="slds-form-element">
+            <div style="padding-bottom: 0;"><span if:true={required} style="color:#ff0000">* </span><label
+                    class="slds-form-element__label slds-no-flex">{textInputLabel}</label>
+                <lightning-helptext content={textInputHelpText}></lightning-helptext>
+            </div>
+            <div class="slds-form-element__control"><input class="slds-input" type="text" value={textInputDefaultValue}
+                                                           placeholder="type here..."
+                                                           onchange={handleTextInputChange}></div>
+        </div>
+    </div>
+
+    <div if:true={isInputRichText}>
+            <lightning-input-rich-text value={richTextInputDefaultValue}
+                                       label={richTextInputLabel}
+                                       label-visible
+                                       required={required}
+                                       formats={allowedFormats}
+                                       class="visibleLines"
+                                       onchange={handleRichTextInputChange}
+                                       onclick={handleClick}
+                                       >
+            </lightning-input-rich-text>
+
+    </div>
+</template>

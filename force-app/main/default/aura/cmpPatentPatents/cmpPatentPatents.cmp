@@ -1,0 +1,48 @@
+<aura:component description="cmpPatentPatents"
+                controller="PatentController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="patentsIds" type="List" default="[]"/>
+    <aura:attribute name="options" type="List" default="[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Search patent"
+                    label="Search patent"
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <div class="slds-box">
+                <div class="slds-scrollable" style="height:15rem;width: 100%">
+                    <div class="slds-text-longform">
+                        <aura:iteration items="{!v.options}" var="option">
+                            <li class="{!'slds-dropdown__item ' + (option.selected ? 'slds-is-selected' : '')}"
+                                role="presentation" onclick="{!c.getSelectedInventorsController}"
+                                data-value="{!option.value}" data-selected="{!option.selected}">
+                                <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0">
+                                <span class="slds-truncate">
+                                    <lightning:icon iconName="utility:check" size="x-small"
+                                                    class="slds-icon slds-icon_selected slds-icon_x-small slds-icon-text-default slds-m-right_x-small"/>
+                                    {!option.label}
+                                </span>
+                                </a>
+                            </li>
+                        </aura:iteration>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </div>
+    <br/>
+</aura:component>

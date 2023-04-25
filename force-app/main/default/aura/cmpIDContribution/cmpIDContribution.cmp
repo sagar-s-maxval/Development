@@ -1,0 +1,29 @@
+<aura:component description="cmpIDContribution" controller="RemunerationController" implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <aura:attribute name="showModal1" type="Boolean"/>
+    <aura:attribute name="showModal2" type="Boolean"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="totalContribution" type="Integer"/>
+    <aura:attribute name="showToast" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+
+    <div class="slds-table_bordered">
+        <lightning:datatable
+                aura:id="contrTable"
+                class="table-inventors"
+                showRowNumberColumn="true"
+                keyField="Id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                oncellchange="{!c.countTotalContribution}"
+                onsave="{!c.saveContributions}"
+                oncancel="{!c.cancelContributions}"
+                hideCheckboxColumn="true"/>
+    </div>
+    <br/>
+    <p class="slds-text-heading_small slds-text-align_right">Total contribution is <b>{!v.totalContribution} %</b></p>
+</aura:component>

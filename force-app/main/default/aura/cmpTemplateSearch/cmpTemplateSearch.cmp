@@ -1,0 +1,36 @@
+<aura:component description="cmpOtherMattersPatents"
+                controller="PatentRatingController"
+                extends="c:base"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="product" type="String"/>
+    <aura:attribute name="availableProducts" type="List"/>
+    <aura:attribute name="selectedProducts" type="List" default="[]"/>
+    <aura:attribute name="lstSelectedProducts" type="List" default="[]"/>
+    <aura:attribute name="products" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Or search"
+                    label=""
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+    </div><br/>
+</aura:component>

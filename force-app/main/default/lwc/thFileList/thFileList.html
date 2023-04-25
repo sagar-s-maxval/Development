@@ -1,0 +1,9 @@
+<template>
+    <lightning-datatable if:true={response.data}
+                         key-field="Id"
+                         data={data}
+                         columns={columns}
+                         onrowselection={rowSelected}
+                         onrowaction={handleRowAction}
+    ></lightning-datatable>
+</template>

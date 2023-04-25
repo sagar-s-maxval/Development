@@ -1,0 +1,68 @@
+<aura:component controller="IFWProsecutionHistoryNew"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="ListofIFW" type="SymphonyIPM__IFW_Data_v1__c[]" />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="PatentId" type="Id" access="global"/> 
+    <aura:attribute name="lastSyncedDate" type="Datetime" access="global"/> 
+    <aura:attribute name="lastUpdatedDate" type="Datetime" access="global"/> 
+    <aura:attribute name="completed" type="Boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.loadifwProsecutionList}"/>
+    <!--<aura:handler name="init" value="{!this}" action="{!c.lastSyncedDateCal}"/>-->
+    <aura:attribute name="showOCR" type="Boolean" default="false"/>
+    <aura:attribute name="showPDF" type="Boolean" default="false"/>
+    <table  class="slds-table slds-table_bordered slds-table_resizable-cols slds-table_fixed-layout" role="grid">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps Pad10" aria-label="Name" scope="col" width="15%">       
+                    <span class="slds-truncate" title="MAIL ROOM DATE"><b>MAIL <br/>ROOM DATE</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="DOC. DESCRIPTION"><b>DOC. DESCRIPTION</b></span>
+                </th> 
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col" width="12%">
+                    <span class="slds-truncate" title="DOCUMENT CODE"><b>DOC. <br/>CODE</b></span> 
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col" width="12%">
+                    <div class="slds-truncate" title="PTO DOCUMENT"><b>PTO <br/>DOCUMENT</b></div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.ListofIFW}" var="ifw">
+                <tr class="slds-hint-parent">
+                    <td srole="gridcell">
+                        <div class="slds-truncate">
+                            <lightning:formattedDateTime value="{!ifw.SymphonyIPM__Mail_Room_Date__c}" year="numeric" month="short" day="2-digit" timeZone="UTC"/>
+                        </div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!ifw.SymphonyIPM__Document_Description__c}"><a href="{!'/one/one.app?#/sObject/'+ ifw.Id + '/view'}" target="_blank">{!ifw.SymphonyIPM__Document_Description__c}</a></div>
+                    </td> 
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!ifw.SymphonyIPM__Document_Code__c}">{!ifw.SymphonyIPM__Document_Code__c}</div>
+                    </td>  
+                    <td role="gridcell">
+                        <aura:renderIf isTrue="{!ifw.SymphonyIPM__OCR_File_Name__c != '-'}">
+                            <div class="slds-truncate" title="{!ifw.SymphonyIPM__OCR_File_Name__c}"><a href="{!ifw.SymphonyIPM__OCR_File_Name__c}" target="_blank"><img src="{!$Resource.SymphonyIPM__OCR_PDF_logo}" height="30" width="20"/></a></div>                   
+                        </aura:renderIf>                   
+                        <aura:renderIf isTrue="{!ifw.SymphonyIPM__PDFFileName__c != '-'}">
+                            <div class="slds-truncate" title="{!ifw.SymphonyIPM__PDFFileName__c}"><a href="{!ifw.SymphonyIPM__PDFFileName__c}" target="_blank"><img src="{!$Resource.SymphonyIPM__pdfImage}" height="30" width="20"/></a></div>                   
+                        </aura:renderIf>
+                    </td>                
+                </tr>
+            </aura:iteration>           
+        </tbody>
+    </table><br/>
+    <div align="left">
+        <b>Last synced date</b> : 
+        <lightning:formattedDateTime value="{!v.lastSyncedDate}" year="numeric" month="short" day="2-digit" timeZone="UTC"/>
+    </div>	
+    <div align="Right">
+        <!--<lightning:recordViewForm recordId="{!v.recordId}" objectApiName="SymphonyIPM__Patent__c">
+            <b><lightning:outputField fieldName="SymphonyIPM__IFW_Sync_Date__c"/></b>
+        </lightning:recordViewForm>	             -->
+        
+        <lightning:button variant="brand" label="Refresh" onclick="{!c.IfwRefereshwin }" />
+        <lightning:button variant="brand" label="Sync IFW" onclick="{!c.datasync}" />
+        <lightning:button variant="brand" label="Application Mapping" onclick="{!c.applicationsync}" /> 
+    </div>
+</aura:component>

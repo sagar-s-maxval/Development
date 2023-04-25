@@ -1,0 +1,325 @@
+<!-- cmpDisputeGoodsServices -->
+<aura:component controller="DisputeOppositionController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:hasSObjectName,force:lightningQuickAction,force:appHostable" access="global">
+	<!-- Variables -->
+    <aura:attribute name="trademarkId" type="Id"/>
+    <aura:attribute name="objGoodsServiceList" type="wrapperTrademarkGoodsService[]"/>
+    <aura:attribute name="createModal" type="boolean" default="false"/> 			<!-- Modal for Creating Trademarks goods and services -->
+    
+    <aura:attribute name="classList" type="list"/>
+    <aura:attribute name="goodsLandgist" type="list"/>
+    <aura:attribute name="fillingBasisList" type="list"/>
+    <aura:attribute name="error" type="boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="boolean" default="false"/>
+    
+    <aura:attribute name="editTrademarkGS" type="DisputeOpposition_Goods_Services__c"/>
+    
+     <aura:attribute name="newTrademarkGS" type="DisputeOpposition_Goods_Services__c"
+                    default="{ 'sobjectType': 'DisputeOpposition_Goods_Services__c',
+                             'Class__c': '',
+                             'Goods_Description__c': '',
+                             'Domestic_Classes__c': '',
+                             'Good_s_Language__c': '',
+                             'Filing_Basis__c': '',
+                             'First_Use_Date__c': '',
+                             'First_Use_in_Commerce_Date__c': '',
+                             }"/>													<!--Creating Trademarks goods and services -->
+    <!-- EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadGoodsAndServices}"/>
+    
+    <!--
+    <aura:attribute name="newTrademarkGS" type="Object"/>
+    <aura:attribute name="simplenewTrademarkGS" type="Object"/>
+    <aura:attribute name="newTrademarkGSError" type="String"/>
+    
+    <force:recordData aura:id="tgsRecordCreator"
+                      layoutType="FULL"
+                      targetRecord="{!v.newTrademarkGS}"
+                      targetFields="{!v.simplenewTrademarkGSt}"
+                      targetError="{!v.newTrademarkGSError}"
+                      />    
+    -->
+    
+    <div >        
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.createModal}">            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeCreateModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Trademark Goods and Services</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <aura:if isTrue="{!v.error}">
+                        <div class="slds-box errorMsg slds-theme_shade slds-box slds-text-heading_medium">
+                            <lightning:icon iconName="utility:error" size="xx-small"/>{!v.errorMsg}
+                        </div>
+                    </aura:if>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:select aura:id="classField" label="class" value="{!v.newTrademarkGS.Class__c}">
+                        <aura:iteration items="{!v.classList}" var="val">
+                                    <option value="{!val}">{!val}</option>
+                                </aura:iteration>
+                        </lightning:select>
+                        <lightning:input aura:id="goodsDescField" name="Goods Description" label="Goods Description" value="{!v.newTrademarkGS.Goods_Description__c}"/>
+                        <lightning:input aura:id="domesticClassField" name="Domestic Classes" label="Domestic Classes" value="{!v.newTrademarkGS.Domestic_Classes__c}"/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select aura:id="goodsLangField" label="Good's Language" value="{!v.newTrademarkGS.Good_s_Language__c}">
+                                    <aura:iteration items="{!v.goodsLandgist}" var="val">
+                                        <option value="{!val}">{!val}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select aura:id="fillingBasisField" label="Filing Basis" value="{!v.newTrademarkGS.Filing_Basis__c}">  
+                                <aura:iteration items="{!v.fillingBasisList}" var="val">
+                                        <option value="{!val}">{!val}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input aura:id="firstUseDatesField" name="First Use Date" label="First Use Date" value="{!v.newTrademarkGS.First_Use_Date__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input aura:id="CommerceDateField" name="First Use in Commerce Date" label="First Use in Commerce Date" value="{!v.newTrademarkGS.First_Use_in_Commerce_Date__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeCreateModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Save"
+                                          title="Save and Close"
+                                          onclick="{!c.createTrademarkGS}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+    </div>
+    
+    <div>        
+        <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+        <aura:if isTrue="{!v.createModal}">            
+            <!--###### MODAL BOX Start######--> 
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Start ######-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeCreateModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Create Dispute/Opposition Goods and Services</h2>
+                    </header>
+                    <!--###### MODAL BOX BODY Part Start######-->
+                    <aura:if isTrue="{!v.error}">
+                        <div class="slds-box errorMsg slds-theme_shade slds-box slds-text-heading_medium">
+                            <lightning:icon iconName="utility:error" size="xx-small"/>{!v.errorMsg}
+                        </div>
+                    </aura:if>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:select aura:id="classField" label="class" value="{!v.newTrademarkGS.Class__c}">
+                        <aura:iteration items="{!v.classList}" var="val">
+                                    <option value="{!val}">{!val}</option>
+                                </aura:iteration>
+                        </lightning:select>
+                        <lightning:input aura:id="goodsDescField" name="Goods Description" label="Goods Description" value="{!v.newTrademarkGS.Goods_Description__c}"/>
+                        <lightning:input aura:id="domesticClassField" name="Domestic Classes" label="Domestic Classes" value="{!v.newTrademarkGS.Domestic_Classes__c}"/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select aura:id="goodsLangField" label="Good's Language" value="{!v.newTrademarkGS.Good_s_Language__c}">
+                                    <aura:iteration items="{!v.goodsLandgist}" var="val">
+                                        <option value="{!val}">{!val}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:select aura:id="fillingBasisField" label="Filing Basis" value="{!v.newTrademarkGS.Filing_Basis__c}">  
+                                <aura:iteration items="{!v.fillingBasisList}" var="val">
+                                        <option value="{!val}">{!val}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input aura:id="firstUseDatesField" name="First Use Date" label="First Use Date" value="{!v.newTrademarkGS.First_Use_Date__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning:input aura:id="CommerceDateField" name="First Use in Commerce Date" label="First Use in Commerce Date" value="{!v.newTrademarkGS.First_Use_in_Commerce_Date__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start ######-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeCreateModel }"/>
+                        <lightning:button variant="brand" 
+                                          label="Save"
+                                          title="Save and Close"
+                                          onclick="{!c.createTrademarkGS}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+            
+        </aura:if>
+    </div>
+    
+    
+    <!-- Body -->
+    <lightning:card title="Mark Information">
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:record" size="small"/>&nbsp;&nbsp;<b>Goods and Services</b>
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:buttonIcon iconName="utility:new" variant="border-filled" alternativeText="New Goods &amp; Services" onclick="{!c.newRecordController}"/>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <div class="slds-form" role="list">
+                <lightning:accordion >
+                    <aura:iteration items="{!v.objGoodsServiceList}" var="objGoodsAndService">
+                        <lightning:accordionSection label="{!objGoodsAndService.classValue + ' | ' +  objGoodsAndService.classHeading}">
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <div class="slds-text-title_caps">Class: {!objGoodsAndService.classValue}</div>
+                                            </span>
+                                            <span>
+                                                <lightning:buttonIcon iconName="utility:edit" variant="bare" alternativeText="Edit" onclick="{!c.editRecordController}" value="{!objGoodsAndService.goodsServicesId }"/>
+                                                
+                                            </span>
+                                            <span>
+                                                <lightning:buttonIcon iconName="utility:delete" variant="bare" alternativeText="Delete" onclick="{!c.deleteRecordController}" value="{!objGoodsAndService.goodsServicesId }"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">Class Heading</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.classHeading}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">Goods Description</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.goodsDescription}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">US Classes</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.usClasses}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">Goods Language</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.goodsLanguage }</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">Filing Basis</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.filingBasis}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-grid full forcePageBlockSectionRow" data-aura-class="forcePageBlockSectionRow">
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">First Use Date</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.firstUseDate}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="slds-has-flexi-truncate slds-p-horizontal_x-small full forcePageBlockItem forcePageBlockItemView" role="listitem" data-aura-class="forcePageBlockItem forcePageBlockItemView">
+                                    <div class="slds-form-element slds-m-bottom_xx-small slds-form-element_edit slds-grow slds-hint-parent override--slds-form-element">
+                                        <div class="test-id__field-label-container">
+                                            <span class="test-id__field-label slds-form-element__label">First Use in Commerce Date</span>
+                                        </div>
+                                        <div class="slds-form-element__control slds-grid itemBody">
+                                            <span class="test-id__field-value slds-form-element__static slds-grow slds-form-element_separator">
+                                                <span class="uiOutputText" data-aura-class="uiOutputText">{!objGoodsAndService.firstUseInCommerceDate}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </lightning:accordionSection>
+                        <br/>
+                    </aura:iteration>
+                </lightning:accordion>
+                
+            </div>
+        </p>
+    </lightning:card>
+    
+</aura:component>

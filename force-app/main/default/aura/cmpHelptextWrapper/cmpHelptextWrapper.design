@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="mainText" label="Main Text"/>
+    <design:attribute name="helpText" label="Help Text"/>
+    <design:attribute name="position" label="Position"/>
+    <design:attribute name="styleFont" label="Style Font"/>
+</design:component>

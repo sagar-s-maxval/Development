@@ -1,0 +1,6 @@
+<design:component>
+    <design:attribute name="actions" label="actions"/>
+    <design:attribute name="eventDate" label="eventDate"/>
+    <design:attribute name="dueDate" label="dueDate"/>
+    <design:attribute name="comments" label="comments"/>
+</design:component>

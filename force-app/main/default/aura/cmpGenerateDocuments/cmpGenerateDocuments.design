@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute label="isPatent" name="isPatent"/>
+    <design:attribute label="View list developer name" name="viewListLabel"/>
+</design:component>

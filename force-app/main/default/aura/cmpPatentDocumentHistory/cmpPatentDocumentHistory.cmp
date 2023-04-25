@@ -1,0 +1,200 @@
+<aura:component controller="PatentDocument" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickAction,lightning:actionOverride,force:hasRecordId" access="global">
+    <aura:attribute name="records" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:iteration items="{!v.records}" var="history">
+        <aura:if isTrue="{!history.actorStatus == 'Submitted' || history.actorStatus == 'Draft' || history.actorStatus == ''}">
+            <lightning:card>
+                <aura:set attribute="title">
+                    Version: {! history.version }
+                </aura:set>
+                <aura:set attribute="actions">
+                    <span style="font-weight: bold;">Submitted On
+                        <ui:outputDateTime value="{! history.submittedOn }" />
+                    </span>
+                </aura:set>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size--1-of-12">
+                        <lightning:avatar src="/bad/image/url.jpg" initials="" fallbackIconName="standard:document"
+                            alternativeText="Salesforce" class="slds-m-right_small" />
+                    </div>
+                    <div class="slds-col slds-size--11-of-12">
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size--1-of-2">
+                                <span class="slds-form-element__label">Review By</span>
+                                <div class="slds-border_bottom">{! history.reviewBy }</div>
+                            </div>
+                            <div class="slds-col slds-size--1-of-2">
+                                <span class="slds-form-element__label">Status</span>
+                                <div class="slds-border_bottom">{! history.status }</div>
+                            </div>
+                            <div class="slds-col slds-size--1-of-2">
+                                <span class="slds-form-element__label">Respond by Date</span>
+                                <div class="slds-border_bottom">
+                                    <ui:outputDate value="{! history.responseByDate }" />
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size--1-of-2">
+                                <span class="slds-form-element__label">PTO Due Date</span>
+                                <div class="slds-border_bottom">
+                                    <ui:outputDate value="{! history.PTODueDate }" />
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size--1-of-1">
+                                <span class="slds-form-element__label">Comments</span>
+                                <div class="slds-border_bottom">
+                                    <lightning:formattedRichText value="{! history.comments }" />
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size--1-of-1">
+                                <span class="slds-form-element__label">Uploaded Files</span>
+                                <aura:iteration items="{!history.uploadedFiles}" var="file">
+                                    <div class="slds-border_bottom">
+                                        <a href="{! '/sfc/servlet.shepherd/document/download/' + file.ContentDocumentId }"
+                                            target="_blank">
+                                            <lightning:icon iconName="utility:download" alternativeText="Utility image"
+                                                title="Image" size="xx-small" />
+                                        </a> &nbsp;&nbsp;&nbsp;&nbsp; {! file.ContentDocument.Title }
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </lightning:card>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!history.actorStatus == 'Review Pending'}">
+                    <div style="width:100%;background-color:#F3F3F3;padding:20px;border-radius: 7px;">
+                        <div style="text-align: right; width:100%">
+                            <span style="font-weight: bold;">Reviewed On <ui:outputDateTime value="{! history.reviewedOn }" /></span>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size--1-of-12">
+                                <lightning:avatar src="/bad/image/url.jpg" initials="" fallbackIconName="standard:document"
+                                    alternativeText="Salesforce" class="slds-m-right_small" />
+                            </div>
+                            <div class="slds-col slds-size--11-of-12">
+                                <div class="slds-grid slds-gutters slds-wrap">
+                                    <div class="slds-col slds-size--1-of-2">
+                                        <span class="slds-form-element__label">To be Reviewed by</span>
+                                        <div class="slds-border_bottom">{! history.reviewBy }</div>
+                                    </div>
+                                    <div class="slds-col slds-size--1-of-2">
+                                        <span class="slds-form-element__label">Status</span>
+                                        <div class="slds-border_bottom">{! history.actorStatus }</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!history.version == 'Final'}">
+                            <lightning:card>
+                                <aura:set attribute="title">
+                                    Version: {! history.version }
+                                </aura:set>
+                                <aura:set attribute="actions">
+                                    <span style="font-weight: bold;">Submitted On
+                                        <ui:outputDateTime value="{! history.submittedOn }" />
+                                    </span>
+                                </aura:set>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size--1-of-12">
+                                        <lightning:avatar src="/bad/image/url.jpg" initials="" fallbackIconName="standard:document"
+                                            alternativeText="Salesforce" class="slds-m-right_small" />
+                                    </div>
+                                    <div class="slds-col slds-size--11-of-12">
+                                        <div class="slds-grid slds-gutters slds-wrap">
+                                            <div class="slds-col slds-size--1-of-2">
+                                                <span class="slds-form-element__label">Review By</span>
+                                                <div class="slds-border_bottom">{! history.reviewBy }</div>
+                                            </div>
+                                            <div class="slds-col slds-size--1-of-2">
+                                                <span class="slds-form-element__label">Status</span>
+                                                <div class="slds-border_bottom">{! history.status }</div>
+                                            </div>
+                                            <div class="slds-col slds-size--1-of-2">
+                                                <span class="slds-form-element__label">Respond by Date</span>
+                                                <div class="slds-border_bottom">
+                                                    <ui:outputDate value="{! history.responseByDate }" />
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size--1-of-2">
+                                                <span class="slds-form-element__label">PTO Due Date</span>
+                                                <div class="slds-border_bottom">
+                                                    <ui:outputDate value="{! history.PTODueDate }" />
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size--1-of-1">
+                                                <span class="slds-form-element__label">Comments</span>
+                                                <div class="slds-border_bottom">
+                                                    <lightning:formattedRichText value="{! history.comments }" />
+                                                </div>
+                                            </div>
+                                            <div class="slds-col slds-size--1-of-1">
+                                                <span class="slds-form-element__label">Uploaded Files</span>
+                                                <aura:iteration items="{!history.uploadedFiles}" var="file">
+                                                    <div class="slds-border_bottom">
+                                                        <a href="{! '/sfc/servlet.shepherd/document/download/' + file.ContentDocumentId }"
+                                                            target="_blank">
+                                                            <lightning:icon iconName="utility:download" alternativeText="Utility image"
+                                                                title="Image" size="xx-small" />
+                                                        </a> &nbsp;&nbsp;&nbsp;&nbsp; {! file.ContentDocument.Title }
+                                                    </div>
+                                                </aura:iteration>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </lightning:card>
+                            <aura:set attribute="else">
+                                <div style="width:100%;background-color:#F3F3F3;padding:20px;border-radius: 7px;">
+                                    <div style="text-align: right; width:100%">
+                                        <span style="font-weight: bold;">Reviewed On <ui:outputDateTime value="{! history.reviewedOn }" /></span>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size--1-of-12">
+                                            <lightning:avatar src="/bad/image/url.jpg" initials="" fallbackIconName="standard:document"
+                                                alternativeText="Salesforce" class="slds-m-right_small" />
+                                        </div>
+                                        <div class="slds-col slds-size--11-of-12">
+                                            <div class="slds-grid slds-gutters slds-wrap">
+                                                <div class="slds-col slds-size--1-of-2">
+                                                    <span class="slds-form-element__label">Reviewed by</span>
+                                                    <div class="slds-border_bottom">{! history.reviewedBy }</div>
+                                                </div>
+                                                <div class="slds-col slds-size--1-of-2">
+                                                    <span class="slds-form-element__label">Status</span>
+                                                    <div class="slds-border_bottom">{! history.actorStatus }</div>
+                                                </div>
+                                                <div class="slds-col slds-size--1-of-1">
+                                                    <span class="slds-form-element__label">Comments</span>
+                                                    <div class="slds-border_bottom">
+                                                        <lightning:formattedRichText value="{! history.comments }" />
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-size--1-of-1">
+                                                    <span class="slds-form-element__label">Uploaded Files</span>
+                                                    <aura:iteration items="{!history.uploadedFiles}" var="file">
+                                                        <div class="slds-border_bottom">
+                                                            <a href="{! '/sfc/servlet.shepherd/document/download/' + file.ContentDocumentId }"
+                                                                target="_blank">
+                                                                <lightning:icon iconName="utility:download" alternativeText="Utility image"
+                                                                    title="Image" size="xx-small" />
+                                                            </a> &nbsp;&nbsp;&nbsp;&nbsp; {! file.ContentDocument.Title }
+                                                        </div>
+                                                    </aura:iteration>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+        <br/><br/>
+    </aura:iteration>
+</aura:component>

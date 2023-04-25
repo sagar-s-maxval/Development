@@ -1,0 +1,10 @@
+<aura:component description="cmpRemunerationRichText"
+                implements="lightning:availableForFlowScreens,lightning:availableForFlowActions,force:hasRecordId"
+                access="global">
+    <div class="slds-text-title">
+        Mail body
+    </div>
+    <aura:attribute name="richText" type="String"/>
+
+    <lightning:inputRichText value="{!v.richText}"/>
+</aura:component>

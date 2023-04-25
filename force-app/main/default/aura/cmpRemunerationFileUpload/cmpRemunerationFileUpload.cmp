@@ -1,0 +1,92 @@
+<aura:component description="cmpRemunerationFileUpload"
+                controller="RemunerationController"
+                implements="lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="fileName" type="String"/>
+    <aura:attribute name="inventors" type="List"/>
+    <aura:attribute name="fileToBeUploaded" type="Object[]"/>
+    <aura:attribute name="docType" type="String"/>
+    <aura:attribute name="showError" type="Boolean"/>
+
+    <lightning:spinner aura:id="mySpinner" class="slds-hide"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div>
+        You can see the copy of uploaded documents under Contribution Details tab in Contribution Documents section.
+    </div>
+    <div class="slds-p-around_medium">
+        <aura:if isTrue="{!v.docType != 'Compensation Agreement'}">
+            <br/>
+            <div class="slds-grid slds-gutters">
+                <div class=" slds-col slds-size_1-of-8 slds-border_bottom slds-border_top slds-border_left">
+                    <b>S.No.</b>
+                </div>
+                <div class=" slds-col slds-size_3-of-8 slds-border_bottom slds-border_top slds-border_left slds-border_right">
+                    <b>Inventor</b>
+                </div>
+                <div class="slds-col slds-size_4-of-8 slds-border_bottom slds-border_top slds-border_right">
+                    <b>Document</b>
+                </div>
+            </div>
+            <aura:iteration items="{!v.inventors}" var="inventor" indexVar="index">
+                <div class="slds-grid slds-gutters">
+                    <div class=" slds-col slds-size_1-of-8 slds-border_bottom slds-border_left">
+                        {!(index * 1) + 1}
+                    </div>
+                    <div class=" slds-col slds-size_3-of-8 slds-border_bottom slds-border_left slds-border_right">
+                        {!inventor.inventorName}
+                    </div>
+                    <div class="slds-col slds-size_4-of-8 slds-border_bottom slds-border_right">
+                        <aura:if isTrue="{!inventor.documentName}">
+                            <div class=" slds-col" style="float:left;">
+                                <a href="" id="{!inventor.documentId}" onclick="{!c.openFile}"><p class="slds-truncate" style="width:8rem;">{!inventor.documentName}</p></a>
+                            </div>
+                            <div id="{!inventor.documentId}" class=" slds-col delete-icon">
+                                <a href="" id="{!inventor.documentId}" onclick="{!c.deleteFile}">
+                                    <lightning:icon class="slds-icon_x-small" iconName="utility:delete"/>
+                                </a>
+                            </div>
+                            <aura:set attribute="else">
+                                <div class="file-uploader slds-col">
+                                    <lightning:fileUpload label="" recordId="{!inventor.contributionDocumentId}"
+                                                          onuploadfinished="{!c.handleUploadFinished}" multiple="false" accept="['.pdf', '.doc', '.docx]"/>
+                                </div>
+                                <aura:if isTrue="{!v.showError}">
+                                    <div class="slds-text-color_error">You need to upload the document to proceed.</div>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                </div>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <aura:iteration items="{!v.inventors}" var="inventor" indexVar="index">
+                    <aura:if isTrue="{!inventor.documentName}">
+                        <br/>
+                        <div class=" slds-col" style="float:left;">
+                            <a href="" id="{!inventor.documentId}" onclick="{!c.openFile}"><p class="slds-wrap">{!inventor.documentName}</p></a>
+                        </div>
+                        <div id="{!inventor.documentId}" class=" slds-col delete-icon">
+                            <a href="" id="{!inventor.documentId}" onclick="{!c.deleteFile}">
+                                <lightning:icon class="slds-icon_x-small" iconName="utility:delete"/>
+                            </a>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="file-uploader slds-col">
+                                <lightning:fileUpload label="" recordId="{!inventor.contributionDocumentId}"
+                                                      onuploadfinished="{!c.handleUploadFinished}" multiple="false" accept="['.pdf', '.doc', '.docx]"/>
+                                <br/>
+                                <aura:if isTrue="{!v.showError}">
+                                    <div class="slds-text-color_error">You need to upload the document to proceed.</div>
+                                </aura:if>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

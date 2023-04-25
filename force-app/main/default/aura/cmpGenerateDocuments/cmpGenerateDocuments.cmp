@@ -1,0 +1,43 @@
+<aura:component controller="DocuSignGenerateDocumentsForID"
+                implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+                access="global">
+    <aura:attribute name="availableSDocsAgreements" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="isPatent" type="Boolean" default="false"/>
+    <aura:attribute name="viewListLabel" type="String" default=""/>
+    <aura:attribute name="viewListLink" type="String" default=""/>
+
+    <aura:attribute name="selectedSDocsAgreements" type="List"/>
+    <aura:attribute name="availableIDFAddtachedFiles" type="List"/>
+
+    <aura:attribute name="isButtonDisabled" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.templateValue}" action="{!c.onTemplateChange}"/>
+
+    <lightning:card>
+        <div class="slds-grid slds-grid_vertical slds-p-bottom_x-small">
+            <div class="slds-col">
+            <span class="slds-form-element__legend slds-form-element__label slds-m-left_x-small">{!v.viewListLabel}: &nbsp;<a
+                        href="{!v.viewListLink}" target="_blank">View/Edit</a></span>
+                <div class="slds-form-element__control">
+                    <div class="slds-scrollable_y" style="max-height: 200px">
+                        <lightning:datatable
+                                keyField="id"
+                                data="{!v.availableSDocsAgreements }"
+                                columns="{!v.columns }"
+                                maxRowSelection="1"
+                                onrowselection="{! c.updateSelectedRows }"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <lightning:button class="slds-align_absolute-center" label="Generate" variant="brand"
+                          onclick="{!c.generateDocument}"
+                          disabled="{!v.isButtonDisabled}"/>
+        <!--    <aura:set attribute="footer">-->
+        <!--       -->
+        <!--    </aura:set>-->
+    </lightning:card>
+
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="SelectedButton" label="SelectedButton" />
+    <design:attribute name="screen" label="Selectedscreen" />
+</design:component>

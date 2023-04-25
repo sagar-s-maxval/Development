@@ -1,0 +1,15 @@
+<design:component>
+    <design:attribute name="q1" label="Question 1"/>
+    <design:attribute name="q2" label="Question 2"/>
+    <design:attribute name="q2a" label="Question 2a"/>
+    <design:attribute name="q2b" label="Question 2b"/>
+    <design:attribute name="q2c" label="Question 2c"/>
+    <design:attribute name="q2d" label="Question 2d"/>
+    <design:attribute name="q3" label="Question 3"/>
+    <design:attribute name="q4" label="Question 4"/>
+    <design:attribute name="q5" label="Question 5"/>
+    <design:attribute name="q6" label="Question 6"/>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="showErrors" label="showErrors"/>
+    <design:attribute name="documents" label="documents"/>
+</design:component>

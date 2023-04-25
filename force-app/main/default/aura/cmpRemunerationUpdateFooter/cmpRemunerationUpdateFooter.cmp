@@ -1,0 +1,40 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+
+    <!-- Determine which actions are available -->
+    <aura:attribute name="isCancel" type="Boolean" />
+    <aura:attribute name="isNext" type="Boolean" />
+    <aura:attribute name="isEdit" type="Boolean" />
+    <aura:attribute name="isSend" type="Boolean" />
+
+    <aura:attribute name="buttonClicked" type="String" />
+    <aura:attribute name="allowEdit" type="Boolean" />
+
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <!-- If Previous is available, display to the left -->
+        <!--        <div class="slds-float_left">-->
+        <!--            <aura:if isTrue="{!v.canBack}">-->
+        <!--                <lightning:button aura:id="BACK" label="Previous"-->
+        <!--                                  variant="neutral" onclick="{!c.onButtonPressed}" />-->
+        <!--            </aura:if>-->
+        <!--        </div>-->
+        <div class="slds-float_right">
+            <aura:if isTrue="{!v.isCancel}">
+                <lightning:button aura:id="CANCEL" label="Cancel"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+
+            <aura:if isTrue="{!v.isEdit}">
+                <lightning:button aura:id="EDIT" label="Edit"
+                                  variant="neutral" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.isSend}">
+                <lightning:button aura:id="SEND" label="Send"
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+            <aura:if isTrue="{!v.isNext}">
+                <lightning:button aura:id="NEXT" label="Next"
+                                  variant="brand" onclick="{!c.onButtonPressed}" />
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

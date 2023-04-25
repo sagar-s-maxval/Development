@@ -1,0 +1,2 @@
+<apex:page controller="RedirectionCtrl" action="{!init}">
+</apex:page>

@@ -1,0 +1,47 @@
+<aura:component implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!--Boolean attribute to indicate if modal is open or not 
+       default value is false as modal is closed when page is loaded 
+    -->
+    <aura:attribute name="isModalOpen" type="boolean" default="true"/>
+    <aura:attribute name="projX" type="boolean" default="false"/>
+    <aura:attribute name="projY" type="boolean" default="false"/>
+    <aura:attribute name="projZ" type="boolean" default="false"/>
+     <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:attribute name="fields" type="String[]" default="['Name','Status__c','Title__c','Product__c','Asset_Type__c','FTO_Complexity_Rating__c','Country__c','Filing_Date__c','Project_Name__c','Primary_Inventor__c','Abstract__c','Comments__c','Business_Unit_c__c','Outside_Counsel_Firm_Names__c','IP_Responsible_Manager_Name__c','IP_Coordinator_Names_c1__c','IP_Paralegal_Names_c__c','IP_Associate_Names_c1__c']"/>
+    
+    
+     
+    <div class="slds-m-around_xx-large">
+        
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <p style="font-size:160%;">New Other Matters</p>
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:recordForm
+                    objectApiName="Other_Matters__c"
+                    fields="{!v.fields}"
+                    onsuccess="{!c.handleSuccess}" columns="2" oncancel ="{!c.closeModel}" density ="auto"/>
+                    
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+                </aura:if>             
+        
+    </div>
+</aura:component>

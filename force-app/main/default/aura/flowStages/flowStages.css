@@ -1,0 +1,9 @@
+.THIS .slds-path__nav { margin-right: 0; }
+.THIS .slds-path__item:only-child { border-radius: 15rem; }
+.THIS .icon-check svg {
+    fill: white;
+}
+
+.THIS .icon-check {
+    --sds-c-icon-color-foreground-default: white;
+}

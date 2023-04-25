@@ -1,0 +1,140 @@
+<aura:component description="cmpInventionDisclosureRatingTable"
+                controller="InventionRatingController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="recommendations" type="List"/>
+    <aura:attribute name="review" type="Object"/>
+    <aura:attribute name="reviews" type="List"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="showMessage" type="Boolean" default="false"/>
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="allowAddRating" type="Boolean" default="false"/>
+    <aura:attribute name="UserhasRole" type="Boolean" default="false"/>
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:accordion aura:id="accordion">
+        <div class="x-accordion-heading">
+            <aura:iteration items="{!v.reviews}" var="review">
+                <lightning:accordionSection label="{!review.SymphonyIPM__Reviewed_By__c}">
+                    <div class="slds-p-around_medium">
+                        <p>How novel is the invention in comparison to the known prior art?
+                            <lightning:helptext content="Originality"/>
+                        </p>
+                        <lightning:combobox label=""
+                                            value="{!review.How_novel_is_the_invention__c}"
+                                            options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Does the invention solve a long-standing problem in its technical field?
+                            <lightning:helptext content="Problem Resolution"/>
+                        </p>
+                        <lightning:combobox label=""
+                                            value="{!review.Does_the_invention_solve_problem__c}"
+                                            options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Does the invention achieve unexpected favorable results?
+                            <lightning:helptext content="Favorable Results"/>
+                        </p>
+                        <lightning:combobox label=""
+                                            value="{!review.Does_the_invention_achieve_results__c}"
+                                            options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Does the invention represent a technology differentiator that gives us a competitive
+                            advantage in
+                            the market?
+                            <lightning:helptext content="Competitive Advantage"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.Does_the_invention_represent_technology__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Is it likely that one or more of our competitors will practice the invention?
+                            <lightning:helptext content="Competitors Usage"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.Is_it_likely_competitors_will_practice__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Does the invention have significant applicability outside of our core business?
+                            <lightning:helptext content="Applicability"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.Does_the_invention_have_applicability__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>Based on the foregoing, what is the business value of the invention to us?
+                            <lightning:helptext content="Business Value"/>
+                        </p>
+                        <lightning:combobox label=""
+                                            value="{!review.Business_value_of_the_invention__c}"
+                                            options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>How difficult will it be for others to design around the invention if it is patented?
+                            <lightning:helptext content="Invention Design Complexity"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.How_difficult_will_it_be_to_design__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>How difficult will it be to detect use of the invention by others without extensive
+                            reverse-engineering?
+                            <lightning:helptext content="Invention Complexity"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.How_difficult_will_it_be_to_detect_use__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>What is the likelihood that invention can be implemented as a product, in view of technical
+                            challenges?
+                            <lightning:helptext content="Commercial Use"/>
+                        </p>
+                        <lightning:combobox
+                                label=""
+                                value="{!review.Likelihood_that_invention_implementable__c}"
+                                options="{! v.options }" disabled="true"/>
+                        <br/>
+                        <p>
+                            Recommendations
+                        </p>
+                        <lightning:combobox label="" options="{!v.recommendations}"
+                                            value="{!review.Recommendations__c}"
+                                            disabled="true"/>
+                        <br/>
+                        <p>
+                            Review comments
+                        </p>
+                        <lightning:textarea label="" value="{!review.SymphonyIPM__Review_Comments__c}"
+                                            disabled="true"/>
+                    </div>
+                </lightning:accordionSection>
+            </aura:iteration>
+             <aura:if isTrue="{!v.UserhasRole}">
+            <aura:if isTrue="{! v.allowAddRating}"> 
+                <aura:if isTrue="{! v.showMessage}">
+                <p class="slds-text-heading_small">Please update your Disclosure Rating by clicking the '<b>Add/Edit Rating</b>' button below.</p>
+                </aura:if>
+                </aura:if>
+            </aura:if>
+            <hr/>
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <br/>
+                    <lightning:button variant="neutral" label="View Rating Summary" onclick="{!c.openSummary}"/>
+                     <aura:if isTrue="{!v.UserhasRole}">
+                    <aura:if isTrue="{!v.allowAddRating}">
+                        <lightning:button variant="brand" label="Add/Edit Rating" onclick="{!c.editRating}"/>
+                    </aura:if>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </lightning:accordion>
+</aura:component>

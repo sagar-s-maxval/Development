@@ -1,0 +1,14 @@
+<aura:component implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="canNext" type="Boolean" />
+    <aura:attribute name="SelectedButton" type="string" />
+    <aura:attribute name="screen" type="string" />
+    
+      <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="pageReference" type="Object"/>
+    <div class="slds-clearfix slds-p-bottom_medium">
+        <div class="slds-float_right" style="margin-top:10px;">
+                <lightning:button aura:id="BACK" label="Click Here For Full View" variant="neutral" onclick="{!c.onButtonPressed}"/>
+                     
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,123 @@
+<aura:component controller="AttachmentControllerNew" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!-- Local Variables -->
+    <aura:attribute name="lstDocumentId" type="List[]"/>
+    <aura:attribute name="objAttachments" type="List[]"/>
+    <aura:attribute name="filescount" type="Integer" default="0"/>
+     <aura:attribute name="count" type="Integer" default="0"/>
+     <aura:registerEvent name="cmpEvent" type="c:isUploadEvent"/>
+     <aura:attribute name="Error" type="Boolean" />
+    <aura:attribute name="IsButtonShow" type="boolean" default="false" access="global"/>
+    <aura:attribute name="ErrorMessage" type="string" />
+    
+   <!--  Input Variables -->
+    <aura:attribute name="isHeaderName" type="string" default="true" access="global"/>
+    <aura:attribute name="linkedEntityId" type="string" default="" access="global"/>
+    <aura:attribute name="isFileUploaded" type="boolean" default="false" access="global"/>
+    <aura:attribute name="canUploadSingleFiles" type="boolean" default="false" access="global"/> 
+    <aura:attribute name="canUploadMultipleFiles" type="boolean" default="false" access="global"/>
+    <aura:attribute name="canDeleteFiles" type="boolean" default="false" access="global"/>
+    <aura:attribute name="canViewAllFiles" type="boolean" default="false" access="global"/>
+    <aura:attribute name="canViewCurrentAttachedFiles" type="boolean" default="true" access="global"/>
+    <aura:registerEvent name="isUploadEvent" type="c:isUploadEvent"/>
+    <aura:registerEvent name="uploadedfiles" type="c:UploadedFilesIDEvent"/>
+    <!-- Output Variables -->
+    <aura:attribute name="idAvailable" type="string" access="global"/>
+    <aura:attribute name="contentDocumentIds" type="string" access="global"/>
+    <!-- EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.getAttachedDocumentsController}"/>
+    <aura:registerEvent name="UploadedFilesIDEvent" type="c:UploadedFilesIDEvent" />
+    <aura:attribute name="DisclosureStatus" type="string" default=""/>                                                  
+    <aura:attribute name="canBack" type="Boolean" default="false" access="global"/>
+    
+    <div class="slds-grid">
+         <div class="slds-col">
+    <aura:if isTrue="{!or(v.canUploadSingleFiles==true, v.canUploadMultipleFiles==true)}">
+        <p>
+            	<label class="slds-form-element__label">
+                   <abbr class="slds-required" title="required">* </abbr>
+                    <b>Upload Documents</b>
+                </label>
+            
+             <aura:if isTrue="{!and(or(v.canUploadSingleFiles==false,v.canUploadSingleFiles==true), v.canUploadMultipleFiles==true)}">
+                 
+                <lightning:fileUpload label=""
+                                      name="fileUploader" 
+                                      variant="label-hidden"
+                                      multiple="true" 
+                                      recordId="{!v.linkedEntityId}" 
+                                      onuploadfinished="{!c.handleUploadFinished}" />
+               
+                 
+             </aura:if>
+            
+            <aura:if isTrue="{!and(v.canUploadSingleFiles==true, v.canUploadMultipleFiles==false)}">
+                <lightning:fileUpload label=""
+                                      name="fileUploader"
+                                      variant="label-hidden"
+                                      recordId="{!v.linkedEntityId}" 
+                                      onuploadfinished="{!c.handleUploadFinished}" />
+            </aura:if>
+        </p>
+     </aura:if>
+    <aura:if isTrue="{!v.objAttachments!=null}">
+        <table cellspacing="10" cellpadding="10" class="maintable" style="width:60%;" align="left" id="tblPending">
+            
+            <aura:if isTrue="{!v.isHeaderName==true}">
+            	<tr>
+                	<td colspan="3"><b>Uploaded Files</b></td>
+            	</tr>
+            </aura:if> 
+            <aura:iteration items="{!v.objAttachments}" var="objAttachment">
+                <tr>
+                    <td style="width:10%;" ><a href="{!'/sfc/servlet.shepherd/version/download/' + objAttachment.Id}" target="_blank"><lightning:buttonIcon iconName="utility:download" variant="bare" size="small" /></a></td>
+                    <td style="width:30%;" >
+                        <a href="javascript:void()" title="{!objAttachment.Title + '.' + objAttachment.FileExtension}" Id="{!objAttachment.ContentDocumentId}" onclick="{!c.PreviewFile}">  {!objAttachment.Title + '.' + objAttachment.FileExtension}</a> 
+                    </td>
+                    <td style="width:20%;" >
+                        <aura:if isTrue="{!v.canDeleteFiles==true}">
+                        	<lightning:buttonIcon iconName="utility:delete" variant="bare" size="small" value="{!objAttachment.Id}" onclick="{!c.deleteAttachmentsController}" />
+                        </aura:if>    
+                    </td>
+                </tr>
+            </aura:iteration>
+        </table>
+    </aura:if>    
+      </div>
+   </div>
+    
+   
+    <aura:if isTrue="{!v.IsButtonShow}">
+   <div class="slds-grid">
+         <div class="slds-col">
+                                                    
+       <div  class="slds-clearfix slds-p-top_medium">
+          
+        <aura:if isTrue="{!v.canBack}">
+      		<div class="slds-float_left">
+              		<div class="outer-div">  
+            			<lightning:button aura:id="NEXT" label="Cancel" variant="neutral" onclick="{!c.onButtonPressed}" />
+      				</div>
+            </div>
+        </aura:if> 
+           
+         <div class="slds-float_right"> 
+         <div class="outer-div">
+             
+             <aura:if isTrue="{!v.Error}">
+        		<article class="slds-card">
+            		<p style="color:red;text-align:left">Please Upload File !</p>
+                    <br/>
+        		</article>
+     		</aura:if>
+             
+          	 <lightning:button aura:id="NEXT" label="Submit" variant="brand" onclick="{!c.OnSubmitted}" />
+             <lightning:button aura:id="NEXT" label="Save as Draft" variant="brand-outline" onclick="{!c.onSaveDraft}" />
+        </div>
+      </div>
+    </div>
+        </div>
+      </div>
+        
+     </aura:if>
+    
+</aura:component>

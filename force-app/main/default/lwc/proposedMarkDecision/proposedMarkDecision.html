@@ -1,0 +1,26 @@
+<template>
+
+  <div class="slds-is-relative">
+    <lightning-spinner if:true={isLoading} variant="brand"></lightning-spinner>
+    <lightning-card title="Proposed Mark Decision">
+
+      <div class="slds-var-m-horizontal_medium">
+        <lightning-radio-group name="status" label="Use the below options to log the decision/next step for the proposed mark" class="validate" required options={options} value={data.status} onchange={handleChange}></lightning-radio-group>
+      </div><br>
+
+
+      <div if:true={isPromoted} class="slds-var-m-horizontal_medium">
+        <lightning-input type="checkbox" label="Will be used under Common Law" data-id="checkbox" value={data.isCommonLaw} onchange={handleCheckboxChange}></lightning-input>
+      </div>
+
+      <div slot="footer">
+        <div class="slds-clearfix">
+          <div class="slds-float_right">
+            <lightning-button class="slds-text-align_right" variant="brand" label="Submit" onclick={handleSubmit}></lightning-button>
+          </div>
+        </div>
+      </div>
+    </lightning-card>
+  </div>
+
+</template>

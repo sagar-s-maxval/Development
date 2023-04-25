@@ -1,0 +1,84 @@
+<aura:component controller ="searchInstructionController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="objSearchInsList" type="List" />
+    <aura:attribute name="WrapperSearchInstructionList" type="List" />
+    <aura:attribute name="objSearchInstructionList" type="List"/>
+    <aura:attribute name="JurisdictionsList" type="List"/>
+
+    <lightning:accordion allowMultipleSectionsOpen="true">
+        <aura:iteration items="{!v.JurisdictionsList}" var="jurisdiction" indexVar="j">
+            <lightning:accordionSection name="{!jurisdiction}" label="{!jurisdiction}">
+                <aura:set attribute="body">
+                    <aura:iteration items="{!v.WrapperSearchInstructionList}" var="searchInstruction"  indexVar="i">
+                     <aura:if isTrue="{!searchInstruction.TMSearchInstruction.Primary_Jurisdiction__c == jurisdiction}">
+                        <lightning:recordViewForm recordId="{!searchInstruction.TMSearchInstruction.Id}" objectApiName="SymphonyIPMExt__TM_Search_Instruction__c" class="slds-p-around_large">
+                        <lightning:layout horizontalAlign="space">
+                            <lightning:layoutItem padding="around-small" size="1">
+                                #{!i+1}
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="around-small" size="3">
+                                <a href="{!'/' + searchInstruction.TMSearchInstruction.Id}" target="_blank"><lightning:outputField fieldName="SymphonyIPMExt__Search_Type__c" /></a>
+                                <lightning:outputField fieldName="SymphonyIPMExt__Responsible_OC_Atty__c" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="around-small" size="3">
+                                <lightning:outputField fieldName="SymphonyIPMExt__Search_Status__c" />
+                                <lightning:outputField fieldName="SymphonyIPMExt__Date_Instructed__c" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="around-small" size="3">
+                                <lightning:outputField fieldName="SymphonyIPMExt__Completion_Date__c" />
+                                <lightning:outputField fieldName="Primary_Jurisdiction__c" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="around-small" size="3">
+                                <lightning:outputField fieldName="Final_Recommendation__c" />
+                            </lightning:layoutItem>
+                            <lightning:layoutItem padding="around-small" size="2">
+                                <aura:if isTrue="{!and(searchInstruction.TMSearchInstruction.Is_Final_Recommendation_Approved__c,searchInstruction.TMSearchInstruction.SymphonyIPMExt__Search_Status__c == 'Completed')}">
+                                    <lightning:icon iconName="utility:like" variant="success" size="small" alternativeText="Not recommended for filing" title="Not recommended for filing" />
+                                </aura:if>
+                                <aura:if isTrue="{!and(not(searchInstruction.TMSearchInstruction.Is_Final_Recommendation_Approved__c),searchInstruction.TMSearchInstruction.SymphonyIPMExt__Search_Status__c == 'Completed')}">
+                                    <lightning:icon iconName="utility:dislike" variant="error" size="small" alternativeText="Recommended for filing" title="Recommended for filing" />
+                                </aura:if>
+                                <aura:if isTrue="{!searchInstruction.TMSearchInstruction.SymphonyIPMExt__Search_Status__c == 'In Process'}">
+                                    <lightning:icon iconName="utility:spinner" variant="warning" size="small" alternativeText="Waiting for report" title="Waiting for report" />
+                                </aura:if>
+                                <aura:if isTrue="{!searchInstruction.TMSearchInstruction.SymphonyIPMExt__Search_Status__c == 'Completed'}">
+                                    <aura:if isTrue="{!searchInstruction.IsShow == false}">
+                                        <lightning:button title="more" label="more" variant="base" class="row" value ="{!searchInstruction}" name ="{!i}"  onclick="{! c.OnClickMoreController }" />
+                                    </aura:if>
+                                    <aura:if isTrue="{!searchInstruction.IsShow == true}">
+                                        <lightning:button title="Less" label="Less" variant="base" class="row" value ="{!searchInstruction}" name ="{!i}"  onclick="{! c.OnClickLessController }" />
+                                    </aura:if>
+                                </aura:if>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                            <aura:if isTrue="{!searchInstruction.IsShow == true}">
+                                    <lightning:layout horizontalAlign="space">
+                                        <lightning:layoutItem padding="around-small" size="4">
+                                            <lightning:outputField fieldName="Search_Result__c" />
+                                            <lightning:outputField fieldName="Available_for_use_and_registration__c" />
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem padding="around-small" size="4">
+                                            <lightning:outputField fieldName="Consider_mark_to_be__c" />
+                                            <lightning:outputField fieldName="Mark_Classes__c" />
+                                        </lightning:layoutItem>
+                                        <lightning:layoutItem padding="around-small" size="4">
+                                            <lightning:outputField fieldName="Goods_and_Services__c" />
+                                            <lightning:outputField fieldName="Brief_description__c" />
+                                        </lightning:layoutItem>
+                                    </lightning:layout>
+                            </aura:if>
+                        <lightning:layout horizontalAlign="space">
+                            <lightning:layoutItem padding="around-small" size="12">
+                                <hr></hr>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:recordViewForm>
+                     </aura:if>
+                </aura:iteration>
+                </aura:set>
+            </lightning:accordionSection>
+        </aura:iteration>
+    </lightning:accordion>
+
+</aura:component>

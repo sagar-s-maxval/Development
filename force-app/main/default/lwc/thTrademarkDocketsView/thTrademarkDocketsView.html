@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="Trademark Docketing Activities" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template if:true={docketActivities.data}>
+                <lightning-datatable
+                        data-id="tabularView"
+                        key-field="Id"
+                        data={docketActivities.data}
+                        columns={columns}
+                        draft-values={draftValues}
+                        suppress-bottom-bar="false">
+                </lightning-datatable>
+            </template>
+            <div class="slds-clearfix" style="padding-top: 20px;">
+                <div class="slds-float_right">
+                    <lightning-button-group >
+                    <lightning-button variant="brand-outline" label="Cancel"
+                                      onclick={handleCancel}></lightning-button>
+                    <lightning-button  variant="brand" label="Save"
+                                      onclick={handleSave}></lightning-button>
+                    </lightning-button-group>
+                </div>
+            </div>
+
+            <template if:true={docketActivities.error}>
+                <!-- handle Apex error -->
+            </template>
+        </div>
+    </lightning-card>
+</template>

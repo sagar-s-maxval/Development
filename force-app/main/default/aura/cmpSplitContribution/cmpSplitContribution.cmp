@@ -1,0 +1,6 @@
+<aura:component description="cmpSplitContribution"
+                controller="RemunerationController"
+                implements="force:lightningQuickAction,lightning:availableForFlowActions,lightning:availableForFlowScreens,lightning:availableForFlowScreens">
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="contribution" type="Decimal"/>
+</aura:component>

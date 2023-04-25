@@ -1,0 +1,4 @@
+<aura:component description="cmpForceDeleteRecord" implements="force:lightningQuickAction,force:hasRecordId"
+                controller="forceDeleteRecordController">
+    <aura:handler name="init" value="{!this}" action="{!c.deleteRecord}"></aura:handler>
+</aura:component>

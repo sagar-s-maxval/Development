@@ -1,0 +1,31 @@
+<aura:component description="cmpIDFSubmissionInventors" controller="IDFSubmissionController"
+                implements="lightning:availableForFlowScreens,lightning:availableForFlowActions" access="global">
+
+    <aura:attribute name="selectedInventors" type="List" default="[]"/>
+    <aura:attribute name="coInventorList" type="List" default="[]"/>
+    <aura:attribute name="coInventors" type="String" default=""/>
+    <aura:attribute name="primaryInventor" type="String" default=""/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.primaryInventor}" action="{!c.itemsChanged}"/>
+    <aura:handler name="change" value="{!v.coInventors}" action="{!c.itemsChanged}"/>
+
+    <aura:registerEvent name="removeInventorEvent" type="c:removeInventorEvent"/>
+
+    <div class="slds-p-around_medium slds-text-body_small">
+
+        <div class="slds-table_bordered">
+            <lightning:datatable
+                    class="table-inventors"
+                    showRowNumberColumn="true"
+                    keyField="id"
+                    data="{! v.data }"
+                    columns="{! v.columns }"
+                    hideCheckboxColumn="true"
+                    onrowaction="{!c.removeInventor}"
+            />
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="isNoAction" label="isNoAction" />
+    <design:attribute name="isAction" label="isAction" />
+    <design:attribute name="actionSelected" label="actionSelected" />
+</design:component>

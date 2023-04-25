@@ -1,0 +1,56 @@
+<aura:component description="cmpContributionTable"
+                controller="IDFFlowController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="date1" type="Date"/>
+    <aura:attribute name="date2" type="Date"/>
+    <aura:attribute name="date3" type="Date"/>
+    <aura:attribute name="inventionDisclosure" type="SymphonyIPM__Invention_Disclosure_New__c[]"/>
+    <aura:attribute name="canUserAdd" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium">
+        <table>
+            <tr>
+                <th class="serialNumber"><b>Serial Number</b></th>
+                <th><b>Document Name</b></th>
+                <th><b>Document sent?</b></th>
+                <th><b>Date sent</b></th>
+            </tr>
+            <tr>
+                <td class="serialNumber">1</td>
+                <td>Purchase of Rights Agreement</td>
+                <td><lightning:input type="checkbox" label="" checked="{!not(equals(v.date1, null))}" disabled="{!not(v.canUserAdd)}"/></td>
+                <td><lightning:input type="date" label="" value="{!v.date1}" disabled="{!not(v.canUserAdd)}"/></td>
+            </tr>
+            <tr>
+                <td class="serialNumber">2</td>
+                <td>Utilization Declaration</td>
+                <td><lightning:input type="checkbox" label="" checked="{!not(equals(v.date2, null))}" disabled="{!not(v.canUserAdd)}"/></td>
+                <td><lightning:input type="date" label="" value="{!v.date2}" disabled="{!not(v.canUserAdd)}"/></td>
+            </tr>
+            <tr>
+                <td class="serialNumber">3</td>
+                <td>Remuneration Agreement</td>
+                <td><lightning:input type="checkbox" label="" checked="{!not(equals(v.date3, null))}" disabled="{!not(v.canUserAdd)}"/></td>
+                <td><lightning:input type="date" label="" value="{!v.date3}" disabled="{!not(v.canUserAdd)}"/></td>
+            </tr>
+        </table>
+        <br/>
+        <aura:if isTrue="{!v.canUserAdd}">
+            <div style="float:right;">
+                <lightning:button variant="brand" label="Save" onclick="{!c.updateDocumentsInfo}"/>
+            </div>
+            <aura:set attribute="else">
+                <div style="float:right;">
+                    <lightning:button variant="brand" label="Edit" onclick="{!c.editDocument}"/>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+    <br/>
+    <br/>
+</aura:component>

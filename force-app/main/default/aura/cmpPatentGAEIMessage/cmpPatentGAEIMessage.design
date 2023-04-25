@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="message1" label="Message 1"/>
+    <design:attribute name="message2" label="Message 2"/>
+
+</design:component>

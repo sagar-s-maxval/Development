@@ -1,0 +1,35 @@
+<aura:component description="cmpHelptextWrapper" implements="lightning:availableForFlowScreens">
+
+    <aura:attribute name="mainText" type="String"/>
+    <aura:attribute name="helpText" type="String"/>
+    <aura:attribute name="position" type="String" default="left"/>
+    <aura:attribute name="positionClass" type="String"/>
+    <aura:attribute name="passwordHintClass" type="String"/>
+    <aura:attribute name="styleFont" type="String" default="font-size:12px;"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div>
+        <!--        <p>{!v.mainText} <lightning:helpText content={!v.helpText}/></p>-->
+        <div style="position:relative;" class="slds-scope">
+            <div class="slds-form-element">
+                <label class="slds-form-element__label" style="{!v.styleFont}">{!v.mainText}
+                    <div class="slds-form-element__icon" onmouseover="{!c.togglePasswordHint}"
+                         onmouseout="{!c.togglePasswordHint}">
+                        <button class="slds-button slds-button_icon" aria-describedby="help" style="margin-left:5px;">
+                            <lightning:icon iconName="utility:info" alternativeText="Info" size="xx-small"
+                                            title="">
+                            </lightning:icon>
+                        </button>
+                        <div class="{!v.passwordHintClass}" role="tooltip" id="help"
+                             style="{!v.positionClass}">
+                            <div class="slds-popover__body">
+                                <lightning:formattedRichText value="{!v.helpText}"/>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,26 @@
+<aura:component
+        implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,force:lightningQuickAction"
+        access="global"
+        controller="IDFFlowController">
+    <aura:attribute name="inventionDisclosure" type="Remuneration__c"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="showButton" type="Boolean"/>
+    <aura:attribute name="flowIsOpened" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="cmpEvent" type="c:openContributionDetailsFormEvent"/>
+    <div class="container" style="background-color: white;">
+        <div class="slds-p-around_medium">
+            <div class="slds-text-heading_small">
+                Please click the button below to fill the <b>Contribution Details Form</b> to qualify for <b>Remuneration</b>.
+            </div>
+            <br/>
+            <div class="right">
+                <lightning:button variant="brand" label="Create/Edit Contribution Details" onclick="{!c.openFlow}"/>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+</aura:component>

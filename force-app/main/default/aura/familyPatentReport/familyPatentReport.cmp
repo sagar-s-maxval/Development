@@ -1,0 +1,8 @@
+<aura:component description="familyPatentReport" extends="c:base" controller="FamilyReportController" implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <aura:attribute name="recordId" type="String"/>
+
+    <div class="slds-text-align_right">
+        <lightning:button onclick="{!c.openReport}" label="Open Family Report" variant="brand"/>
+    </div>
+</aura:component>

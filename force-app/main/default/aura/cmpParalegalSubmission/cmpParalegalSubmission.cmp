@@ -1,0 +1,94 @@
+<aura:component description="cmpParalegalSubmission" implements="lightning:availableForFlowScreens">
+    <aura:attribute name="All_Bibliographic" type="boolean"/>
+    <aura:attribute name="Comments1" type="string"/>
+    <aura:attribute name="Declaration_s_for_all" type="boolean"/>
+    <aura:attribute name="dtComments2" type="string"/>
+    <aura:attribute name="Assignment_s_for_all" type="boolean"/>
+    <aura:attribute name="dtComments3" type="string"/>
+    <aura:attribute name="Drawings_are_in_order_d" type="boolean"/>
+    <aura:attribute name="dtComments4" type="string"/>
+    <aura:attribute name="Sequence_Listing_accepted_d" type="boolean"/>
+    <aura:attribute name="dtComments5" type="string"/>
+    <aura:attribute name="Allowed_claims_saved_in" type="boolean"/>
+    <aura:attribute name="dtComments6" type="string"/>
+    <aura:attribute name="IDS_All_SB08_refs" type="boolean"/>
+    <aura:attribute name="dtComments7" type="string"/>
+    <aura:attribute name="IDS_All_art_from_US" type="boolean"/>
+    <aura:attribute name="dtComments8" type="string"/>
+    <aura:attribute name="IDS_Double_check_MaxIDS" type="boolean"/>
+    <aura:attribute name="dtComments9" type="string"/>
+    <aura:attribute name="dtAnyOtherIssues" type="string"/>
+    <aura:attribute name="noa" type="NOA_Checklist__c"/>
+
+    <aura:attribute name="disabled" type="boolean" default="true"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:input type="checkbox" label="All Bibliographic Info in the header is accurate" checked="{!v.noa.All_bib_info_in_head_is_accurate__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_1__c, v.noa.All_bib_info_in_head_is_accurate__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_1__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="Declaration(s) for all inventors signed and filed" checked="{!v.noa.Declaration_for_all_inv_signed_and_filed__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_2__c, v.noa.Declaration_for_all_inv_signed_and_filed__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_2__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="Assignment(s) for all inventors signed and recorded" checked="{!v.noa.Assignment_for_all_inv_signed_recorded__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_3__c, v.noa.Assignment_for_all_inv_signed_recorded__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_3__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="Drawings are in order" checked="{!v.noa.Drawings_are_in_order__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_4__c, v.noa.Drawings_are_in_order__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_4__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="Sequence Listing accepted" checked="{!v.noa.Sequence_Listing_accepted__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_5__c, v.noa.Sequence_Listing_accepted__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_5__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="Allowed claims saved in Word format" checked="{!v.noa.Allowed_claims_saved_to_FTF_in_Word_form__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_6__c, v.noa.Allowed_claims_saved_to_FTF_in_Word_form__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_6__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="IDS - All SB08 refs initialed by Examiner" checked="{!v.noa.IDS_All_SB08_refs_initialed_by_Examine__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_7__c, v.noa.IDS_All_SB08_refs_initialed_by_Examine__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_7__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="IDS - All art from US and foreign counterparts cited" checked="{!v.noa.IDS_All_art_from_US_and_foreign__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_8__c, v.noa.IDS_All_art_from_US_and_foreign__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_8__c}</p>
+    </aura:if>
+    <br/>
+
+    <lightning:input type="checkbox" label="IDS - Double-check MaxIDS for uncited art" checked="{!v.noa.IDS_Doublecheck_MaxIDS_for_uncited_art__c}" disabled="{!v.disabled}"/>
+    <aura:if isTrue="{!and(v.noa.Comments_9__c, v.noa.IDS_Doublecheck_MaxIDS_for_uncited_art__c)}">
+        <br/><p>Comments:</p><br/>
+        <p>{!v.noa.Comments_9__c}</p>
+    </aura:if>
+    <br/>
+
+    <aura:if isTrue="{!v.noa.Other_issues_Describe__c}">
+        <br/><p>Any other issues:</p><br/>
+        <p>{!v.noa.Other_issues_Describe__c}</p>
+    </aura:if>
+    <br/>
+</aura:component>

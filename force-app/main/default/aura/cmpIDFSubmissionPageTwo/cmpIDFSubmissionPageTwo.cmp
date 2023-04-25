@@ -1,0 +1,320 @@
+<aura:component description="cmpIDFSubmissionPageTwo"
+                controller="IDFFlowController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="q1" type="string"/>
+    <aura:attribute name="q2" type="string"/>
+    <aura:attribute name="q2a" type="string"/>
+    <aura:attribute name="q2b" type="string"/>
+    <aura:attribute name="q2c" type="string"/>
+    <aura:attribute name="q2d" type="string"/>
+    <aura:attribute name="q3" type="string"/>
+    <aura:attribute name="q4" type="string"/>
+    <aura:attribute name="q5" type="string"/>
+    <aura:attribute name="q6" type="string"/>
+
+    <aura:attribute name="isFirstValid" type="Boolean" default="true"/>
+
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="showErrors" type="Boolean"/>
+    <aura:attribute name="documents" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="ExceededLimitEvent" type="c:ExceededLimitEvent"/>
+
+    <aura:handler name="change" value="{!v.q1}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q2}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q2a}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q2b}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q2c}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q2d}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q3}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q4}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q5}" action="{!c.onFirstChanged}"/>
+    <aura:handler name="change" value="{!v.q6}" action="{!c.onFirstChanged}"/>
+
+    <div class="slds-p-around_medium">
+        <div>
+            <br/>
+            <div class="slds-text-heading_medium">
+                <b>Notes on Questions:</b>
+            </div>
+            <div class="slds-text-heading_small">
+                <ol class="slds-list_ordered">
+                    <li>The information requested below should be comprehensive and complete to the extent possible.</li>
+                    <li>The points listed below do not need to be filled in as long as they are clear from the overall context. Please fill in the remaining points below the notes in parentheses.</li>
+                    <li>Use definitions of terms consistently and clearly. Abbreviations and terms that are not commonly used must be briefly defined when they are first used. Terms that are defined differently from normal linguistic usage must subsequently also be used in the corresponding sense in the further text.</li>
+                    <li>Your explanations must be understandable to a person of average skill in the art. You may assume average expert knowledge, but not relevant experience with regard to the respective problem addressed.</li>
+                </ol>
+            </div>
+        </div>
+        <br/>
+        <div class="slds-text-heading_medium">
+            <b>Invention Details</b>
+        </div>
+        <br/>
+        <div>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>1)
+                        </div>
+                        <div class="slds-col slds-text-heading_small">
+                            <p style="margin-bottom: 5px;">Technical field of the invention.
+                                <lightning:helptext
+                                        content="Briefly describe the technical field in which your invention belongs, e. g. &quot;Detectors for HPLC.&quot;
+                            Please attach any relevant drawings, sketches, graphs, formulae, chemical structures etc."/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <lightning:inputRichText value="{!v.q1}" valid="{!v.isFirstValid}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+                <c:cmpTextLimit isRichText="true" vLimit="50000" vText="{!v.q1}"/>
+            </div>
+            <aura:if isTrue="{! not(v.isFirstValid)}">
+                <div class="slds-text-color_error">You have reached the maximum size (50,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q1.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>2) Please briefly describe your
+                    invention and how do you make and use it.</p>
+                <lightning:inputRichText
+                        label="" value="{!v.q2}" valid="{!lessthanorequal(v.q2.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q2}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q2.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q2.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>2. a) What is the purpose of
+                    your invention?</p>
+                <lightning:inputRichText  label="" value="{!v.q2a}" valid="{!lessthanorequal(v.q2a.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q2a}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q2a.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q2a.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>2. b)
+                        </div>
+                        <div class="slds-col slds-text-heading_small" style="margin-bottom: 5px;">
+                            What is the problem solved by invention? How does your invention solve it?
+                            <lightning:helptext
+                                    content="Describe which problem your invention addresses with regards to the point mentioned
+                            above. Describe the basic functionality of your invention in summary."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:inputRichText label="" value="{!v.q2b}" valid="{!lessthanorequal(v.q2b.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q2b}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q2b.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q2b.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <p class="slds-text-heading_small" style="margin-bottom: 5px;"><span style="color:#ff0000">* </span>2. c) Please provide at least
+                    one detailed example of your invention.</p>
+                <lightning:inputRichText label="" value="{!v.q2c}" valid="{!lessthanorequal(v.q2c.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q2c}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q2c.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q2c.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>2. d)
+                        </div>
+                        <div style="margin-bottom: 5px;" class="slds-col slds-text-heading_small">
+                            Advantages of the invention.
+                            <lightning:helptext
+                                    content="Explain the advantages of your invention or distinguishing features of your invention
+                            over what is previously known. If possible, document the advantages using test results,
+                            e.g., pre-post comparisons.
+                            In addition to the immediate technical details, also mention general advantages, e.g.,
+                            improvements in manufacturing costs, operations or performance."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:inputRichText label="" value="{!v.q2d}" valid="{!lessthanorequal(v.q2d.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q2d}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q2d.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q2d.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>3)
+                        </div>
+                        <div style="margin-bottom: 5px;" class="slds-col slds-text-heading_small">
+                            What is the closest technology to your invention?
+                            <lightning:helptext
+                                    content="Please describe any closest technology to the invention of which you are aware. If
+                            none, please indicate accordingly."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:inputRichText label="" value="{!v.q3}" valid="{!lessthanorequal(v.q3.length, 10000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="10000" vText="{!v.q3}"/>
+
+            <aura:if isTrue="{!greaterthanorequal(v.q3.length, 10000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (10,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q3.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>4)
+                        </div>
+                        <div style="margin-bottom: 5px;" class="slds-col slds-text-heading_small">
+                            Related publications.
+                            <lightning:helptext
+                                    content="Please attach copies or provide patent or publication numbers or other references or
+                            publications that have relevance to the invention. If none, please indicate
+                            accordingly."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:textarea label="" variant="label-hidden" value="{!v.q4}" maxlength="5000"/>
+            </div>
+            <c:cmpTextLimit isRichText="false" vLimit="5000" vText="{!v.q4}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q4.length, 5000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (5,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q4 == null, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px">
+                            <span style="color:#ff0000">* </span>5)
+                        </div>
+                        <div style="margin-bottom: 5px;" class="slds-col slds-text-heading_small">
+                            Is there a way to tell if
+                            someone is using the technology or practicing the invention?
+                            <lightning:helptext
+                                    content="Can a possible use of the invention by a third party be determined without extensive
+                            reverse engineering? If so, how? If unsure, please indicate accordingly."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:textarea label="" variant="label-hidden" value="{!v.q5}" maxlength="10000"/>
+            </div>
+            <c:cmpTextLimit isRichText="false" vLimit="10000" vText="{!v.q5}"/>
+            <aura:if isTrue="{!greaterthanorequal(v.q5.length, 10000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (10,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q5 == null, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+            <div>
+                <div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-grow-none slds-text-heading_small"
+                             style="white-space: nowrap;padding-right:4px; margin-bottom: 5px;">
+                            <span style="color:#ff0000">* </span>6)
+                        </div>
+                        <div class="slds-col slds-text-heading_small">
+                            List all possible
+                            applications, variants and improvements or possible workarounds of the invention as
+                            completely as
+                            possible.
+                            <lightning:helptext
+                                    content="Provide information on the practical implementation of these variants, insofar as it
+                            deviates from the previously described example.
+                            Application examples that only appear conceivable in theory can also be interesting."/>
+                        </div>
+                    </div>
+                </div>
+                <lightning:inputRichText label="" value="{!v.q6}" valid="{!lessthanorequal(v.q6.length, 30000)}">
+                    <lightning:insertImageButton/>
+                </lightning:inputRichText>
+            </div>
+            <c:cmpTextLimit isRichText="true" vLimit="30000" vText="{!v.q6}"/>
+
+            <aura:if isTrue="{!greaterthanorequal(v.q6.length, 30000)}">
+                <div class="slds-text-color_error">You have reached the maximum size (30,000 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!and(v.q6.length == 0, v.showErrors)}">
+                <div class="slds-text-color_error">Please provide value for this field.</div>
+                <br/>
+            </aura:if>
+        </div>
+        <br/>
+        <div class="slds-text-heading_medium">
+            <b>Attach any files further describing the invention</b>
+            <lightning:helptext style="margin-left:5px;" content="e.g., drawings, diagrams, flow charts, rich text documents"/>
+        </div>
+        <SymphonyIPM:cmpFileUploader canDeleteFiles="true" linkedEntityId="{!v.IDF}" canUploadMultipleFiles="true"
+                                     contentDocumentIds="{!v.documents}"/>
+    </div>
+</aura:component>

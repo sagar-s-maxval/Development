@@ -1,0 +1,13 @@
+<aura:component description="cmpPurgeDocuments"
+                extends="c:base"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,force:lightningQuickAction"
+                access="global"
+                controller="PatentController">
+
+    <div class="slds-p-around_medium">
+        <div style="float: right;">
+            <lightning:button variant="brand" label="Purge documents" onclick="{!c.purgeDocuments}"/>
+        </div>
+        <br/>
+    </div>
+</aura:component>

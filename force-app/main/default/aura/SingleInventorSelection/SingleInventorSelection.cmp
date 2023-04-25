@@ -1,0 +1,51 @@
+<aura:component controller="InventorControllerNew" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!-- Variables -->
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="coInventors" type="String" default=""/>
+    <aura:attribute name="coInventorsList" type="List"/>
+    <aura:attribute name="arrSelectedInvIds" type="List"/>
+    <aura:attribute name="strSelectedInvIds" type="string" access="global"/>
+    <aura:attribute name="placeholder" type="string" access="global"/>
+    <aura:attribute name="lstSelectedInventors" type="List" default="[]"/>
+    <aura:attribute name="lstInventors" type="List"/>
+    <aura:attribute name="EmptyList" type="List"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="Edit" type="boolean" default="false"/>
+    <aura:attribute name="userInfo" type="user" access="global"/>
+    <aura:attribute name="from_NewAssetInventorFlow" type="boolean" default="false"/>
+    <!--
+    <aura:attribute name="inputdisable" type="boolean" default="true"/>
+    -->
+    <aura:attribute name="inputdisable" type="boolean" default="false"/>
+    <!-- Event -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesController}"/>
+    <aura:registerEvent name="IDFAppEvent1" type="c:IDFAppEvent1"/>
+    <div>
+        <div class="slds-col slds-size_1-of-1">
+            <p style="font-size:14px;"> <span style="color:#ff0000">* </span>Primary inventor</p>
+        </div>
+    </div>
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="{!v.placeholder}"
+                    label="Search Inventor"
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+        <aura:if isTrue="{!empty(v.lstSelectedInventors)}">
+            <div class="slds-text-color_error">Please, select primary inventor</div>
+        </aura:if>
+        <p><lightning:pillContainer items="{!v.lstSelectedInventors}" onitemremove="{!c.removeSelectedInventorsController}"></lightning:pillContainer></p>
+    </div><br/>
+</aura:component>

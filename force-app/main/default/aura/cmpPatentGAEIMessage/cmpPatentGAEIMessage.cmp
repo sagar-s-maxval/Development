@@ -1,0 +1,25 @@
+<aura:component description="cmpPatentGAEIMessage"
+                extends="c:base"
+                controller="PatentController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId">
+
+    <aura:attribute name="isPCT" type="Boolean"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="message1" type="String" default="Need to offer re-assignment of IP Right to inventors at least 3 months prior to abandonment (§16 GAEI)"/>
+    <aura:attribute name="message2" type="String" default="Need to offer re-assignment of IP Rights for non-selected countries at least 2 months prior to filing due date (§14(2) GAEI)"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-card">
+        <div class="slds-p-around_medium">
+            <div class="slds-text-heading_label">
+                <aura:if isTrue="{!v.isPCT}">
+                    <p>{!v.message2}</p>
+                    <aura:set attribute="else">
+                        <p>{!v.message1}</p>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

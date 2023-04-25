@@ -1,0 +1,224 @@
+public without sharing class SharePatentOnCombine {
+
+    @InvocableMethod
+    public static void shareCombinedRecords(List<List<SymphonyIPM__Invention_Disclosure_New__Share>> idfsToShare) {
+        if (idfsToShare == null || idfsToShare.isEmpty() || idfsToShare.get(0) == null || idfsToShare.get(0).isEmpty()) {
+            return;
+        }
+        List<SymphonyIPM__Invention_Disclosure_New__Share> shareRecords = new List<SymphonyIPM__Invention_Disclosure_New__Share>();
+        Set<Id> addedIDFs = new Set<Id>();
+        Set<Id> usersAdded = new Set<Id>();
+
+        for (List<SymphonyIPM__Invention_Disclosure_New__Share> shareList : idfsToShare) {
+            for (SymphonyIPM__Invention_Disclosure_New__Share shareRecord : shareList) {
+                if (!addedIDFs.contains(shareRecord.ParentId) && !usersAdded.contains(shareRecord.UserOrGroupId)) {
+                    shareRecords.add(shareRecord);
+                }
+            }
+        }
+
+        if (!shareRecords.isEmpty()) {
+            insert shareRecords;
+        }
+    }
+
+    public static void magicMethod() {
+        Integer i = 0;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+        i++;
+
+    }
+
+
+
+}

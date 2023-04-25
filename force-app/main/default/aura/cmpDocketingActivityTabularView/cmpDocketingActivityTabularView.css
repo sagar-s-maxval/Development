@@ -1,0 +1,9 @@
+.THIS .header {
+    font-size: 18px;
+    font-weight: 500;
+    display: inline;
+}
+
+.THIS .expandButton {
+    text-align: end;
+}

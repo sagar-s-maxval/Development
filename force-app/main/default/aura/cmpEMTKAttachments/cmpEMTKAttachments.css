@@ -1,0 +1,13 @@
+.THIS table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.THIS tr {
+    border-bottom: 1px solid #ccc;
+    padding: 2%;
+}
+
+.THIS th {
+    text-align: left;
+}

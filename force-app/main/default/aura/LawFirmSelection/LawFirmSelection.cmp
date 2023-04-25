@@ -1,0 +1,40 @@
+<aura:component Controller="LawfirmControllers" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name="optLawfirms" type="List" />
+    <aura:attribute name="optOCs" type="List" />
+    <aura:attribute name="InputParam" type="string" access="global"/>
+    <aura:attribute name="OutputParam" type="string" access="global"/>
+    
+    <aura:attribute name="selectedOCId" type="Id" />
+     <aura:attribute name="selectedLawfirm" type="String" />
+    <aura:attribute name="selectedConfirmLawfirm" type="String" />
+    
+	<aura:handler name="init" value="{!this}" action="{!c.loadIDFlow}" />
+    
+    <!--<lightning:flow aura:id="flowData"  />-->
+	<lightning:select name="confirmLawfirmTier" required="true" aura:id="confirmLawfirmTier" label="Confirm Law Firm Tier" onchange="{!c.SelectConfirmLawfirm}">
+		<option value="">-- None --</option>
+        <option value="Tier A" text="Tier A" selected="{!equals('Tier A', v.selectedConfirmLawfirm)}"></option>
+        <option value="Tier B" text="Tier B" selected="{!equals('Tier B', v.selectedConfirmLawfirm)}"></option>
+        <option value="Tier C" text="Tier C" selected="{!equals('Tier C', v.selectedConfirmLawfirm)}"></option>
+	</lightning:select>
+    <lightning:select name="ddlLawfirm" required="true" aura:id="ddlLawfirm" label="Select Law Firm" onchange="{!c.SelectLawfirm}">
+		<option value="" onselect="{!c.SelectLawfirm}">-- None --</option>
+		<aura:iteration items="{!v.optLawfirms}" var="optLawfirm">
+			<option value="{!optLawfirm.Id}" text="{!optLawfirm.Name}" selected="{!equals(optLawfirm.Id, v.selectedLawfirm)}"></option>
+		</aura:iteration>
+	</lightning:select>
+    
+   <!--  <lightning:select name="ddlLawfirm" required="true" aura:id="ddlLawfirm" label="Select Law Firm"  onchange="{!c.loadOCs}">
+		<option>None</option>
+		<aura:iteration items="{!v.optLawfirms}" var="optLawfirm">
+			<option value="{!optLawfirm.Id}" text="{!optLawfirm.Name}"></option>
+		</aura:iteration>
+	</lightning:select> -->
+
+   <lightning:select name="ddlOutsideCounsel" aura:id="ddlOutsideCounsel" label="Select Outside Counsel Individual" onchange="{!c.setSelectedOC}" >
+		<option value="">None</option>
+		<aura:iteration items="{!v.optOCs}" var="optOC">
+			<option value="{!optOC.SymphonyIPM__User__c}" text="{!optOC.Name}" selected="{!equals(optOC.SymphonyIPM__User__c, v.OutputParam)}"></option>
+		</aura:iteration>
+	</lightning:select>
+</aura:component>

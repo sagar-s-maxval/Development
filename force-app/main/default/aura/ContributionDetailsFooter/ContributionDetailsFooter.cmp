@@ -1,0 +1,56 @@
+<aura:component access="global" implements="lightning:availableForFlowScreens">
+
+    <!-- Determine which actions are available -->
+    <aura:attribute name="isSave" type="Boolean"/>
+    <aura:attribute name="isSubmit" type="Boolean"/>
+
+    <aura:attribute name="buttonClicked" type="String"/>
+    <aura:attribute name="showModal" type="Boolean"/>
+    <aura:attribute name="openFlow" type="Boolean"/>
+
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>You are about to submit the form. Are you sure?</b>
+                    </p>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand"
+                                      label="Yes"
+                                      title="Yes"
+                                      onclick="{!c.submitDetails}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <lightning:flow aura:id="flowData"/>
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+
+        <div class="slds-float_right">
+            <lightning:button aura:id="CANCEL" label="Cancel"
+                              variant="neutral" onclick="{!c.onButtonPressed}"/>
+            <lightning:button aura:id="SAVE" label="Save"
+                              variant="neutral" onclick="{!c.onButtonPressed}"/>
+            <lightning:button aura:id="FINISH" label="Submit"
+                              variant="brand" onclick="{!c.onButtonPressed}"/>
+
+        </div>
+    </div>
+</aura:component>

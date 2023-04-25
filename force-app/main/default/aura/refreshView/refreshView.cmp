@@ -1,0 +1,2 @@
+<aura:component implements="force:lightningQuickAction,lightning:availableForFlowActions,lightning:availableForFlowScreens,lightning:availableForFlowScreens">
+</aura:component>

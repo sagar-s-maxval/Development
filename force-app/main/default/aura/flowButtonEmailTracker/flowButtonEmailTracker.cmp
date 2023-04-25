@@ -1,0 +1,18 @@
+<aura:component implements="lightning:availableForFlowScreens" description="flowButtonEmailTracker">
+
+    <aura:attribute name="isNoAction" type="Boolean"/>
+    <aura:attribute name="isAction" type="Boolean"/>
+
+    <div class="slds-float_right">
+        <aura:if isTrue="{!v.isAction}">
+            <lightning:button aura:id="NEXT" label="Create" variant="brand" onclick="{!c.handleChange}"/>
+        </aura:if>
+    </div>
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <aura:if isTrue="{!v.isNoAction}">
+                <lightning:button aura:id="NEXT" label="Submit" variant="brand" onclick="{!c.handleChange}"/>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

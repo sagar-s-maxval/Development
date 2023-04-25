@@ -1,0 +1,3 @@
+<design:component>
+	<design:attribute name="DashboardId" label="Dashboard Name" />
+</design:component>

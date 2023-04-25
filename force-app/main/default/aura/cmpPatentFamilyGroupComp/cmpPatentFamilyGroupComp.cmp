@@ -1,0 +1,255 @@
+<aura:component controller="patentfamilycomponetclass" implements="force:hasRecordId,flexipage:availableForRecordHome,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.loadfamilyList}"/>
+    <aura:attribute name="Listoffamily" type="object[]" />
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="showrecId" type="string"/>
+    <aura:attribute name="arrSelectedBasePatentIds" type="List"/>
+    <aura:attribute name="tooltip" type="boolean" default="false"/>
+    <aura:attribute name="test" type="List"/>
+    <aura:attribute name="test1" type="List"/> 
+    <aura:attribute name="strSelectedBasePatentIds" type="string" access="global"/>
+    <aura:attribute name="lstSelectedBasePatents" type="List"/>
+    <aura:attribute name="isShowSearchBaseResult" type="boolean" default="false"/>
+    <aura:attribute name="isCreateOpen" type="boolean" default="false"/>
+    <aura:attribute name="isExpand" type="boolean" default="false"/>
+    <aura:attribute name="isCreateOpenModel" type="boolean" default="false"/>
+    <aura:attribute name="fmlyobject" type="SymphonyIPM__Family__c"  default="{'sobjectType':'SymphonyIPM__Family__c',
+                                                                              'SymphonyIPM__BaseRecord__c':'',
+                                                                              'SymphonyIPM__ParentRecord__c':'',
+                                                                              'SymphonyIPM__Filing_Date__c':'',
+                                                                              'SymphonyIPM__Case_Type__c':'',
+                                                                              'SymphonyIPM__FamilyId__c':''}"/>  
+    <!-- Model Popup to Create Family -->
+    <aura:if isTrue="{!v.isCreateOpen}">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closefmlyModel}">
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium">Create Family Record</h2>
+                </div>  
+                <div class="slds-modal__content slds-p-around--medium">
+                    <form>                    
+                       <div onkeyup="{! c.searchBasePatentController}">
+                             <lightning:layout>
+                             <lightning:layoutItem size="10">
+                             <lightning:input 
+                                         name="txtSearchBasePatents"
+                                         aura:id="txtSearchBasePatents" 
+                                         label="Base Record"
+                                         type="search"
+                                         placeholder="Enter application number"/>
+                                 </lightning:layoutItem>
+                             </lightning:layout>
+                    </div>
+                        <lightning:layout>
+                             <lightning:layoutItem size="10">
+                   <aura:if isTrue="{!v.isShowSearchBaseResult}">
+                           <ui:scrollerWrapper class="scrollerSize">
+                           <ui:inputSelect multiple="true" aura:id="lstAvailableBasePatents" change="{!c.getSelectedBasePatentController}" >
+                           </ui:inputSelect>
+                       </ui:scrollerWrapper>
+                   </aura:if>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+                        <lightning:layout>
+                        <lightning:layoutItem size="10">
+        <p><lightning:pillContainer items="{!v.lstSelectedBasePatents}"  onitemremove="{!c.removeSelectedBasePatentsController}" ></lightning:pillContainer></p>
+                            </lightning:layoutItem>
+                        </lightning:layout>
+    <br/>
+                    </form>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closefmlyModel}" >Cancel</button>
+                    <button class="slds-button slds-button--brand" onclick="{!c.createfmlyrec}">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>
+    <div class="slds-grid slds-grid--align-end">
+        
+        <button class="slds-button" data-uk-tooltip="{pos:'top-left'}" title="Refresh this section" label="Refresh Grouping" onclick="{!c.familyRefereshwin}">
+             
+            <lightning:icon iconName="utility:refresh" size="x-small" alternativeText="Couldn't Refresh" />
+             
+        </button>
+       
+        <button class="slds-button data-uk-tooltip"  title="Regroup family" label="Sync Patent Grouping" onclick="{!c.familydatasync}">
+             <lightning:icon iconName="utility:sync" size="x-small"/>
+        </button>
+               
+         <button class="slds-button " data-uk-tooltip="{pos:'top-left'}" title="Add new family member" label="Add" onclick="{!c.openfmlyModel}">
+             <lightning:icon iconName="utility:add" size="x-small" />
+         </button>
+        <button class="slds-button" data-uk-tooltip="{pos:'top-left'}" title="Expand Patent Family" label="Expand" onclick="{!c.familyExpand}">
+             
+            <lightning:icon iconName="utility:pop_in" size="x-small" alternativeText="Couldn't Expand" />
+             
+        </button>
+         
+    </div>
+    <br/>
+    <!-- Model for expansion of Family Table -->
+    <aura:if isTrue="{!v.isExpand}">
+        <div aura:id="thecontainer" class="thecontainer" id="thecontainer">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open slds-modal--large">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <h2 id="header99" class="slds-text-heading--medium">Patent Family {!v.Listoffamily[0].ParentDocketNumber} </h2>
+                </div>  
+                <div class="slds-modal__content slds-p-top--x-large slds-p-around_medium">
+                    
+    <table class="slds-table ">
+         <thead>
+            <tr class="slds-line-height_reset">
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Docket No"><b>DOCKET NO</b></span>
+                </th>                
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Family Members"><b>FAMILY MEMBERS</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Filing Date"><b>FILING DATE</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Title"><b>TITLE</b></span>
+                </th>
+                <!--<th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Jurisdiction"><b>JURISDICTION</b></span>
+                </th>-->
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Status"><b>STATUS</b></span>
+                </th>        
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Case Type"><b>CASE TYPE</b></span>
+                </th>        
+                <!--<th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Issue Date of Patent"><b>ISSUE DATE OF PATENT</b></span>
+                </th>-->    
+            </tr>
+        </thead>
+
+        <tbody>
+            <aura:iteration items="{!v.Listoffamily}" var="fmly">
+                <tr class="slds-hint-parent">
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.DocketNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.DocPatId + '/view'}" target="_blank">{!fmly.DocketNumber}</a></div>
+                    </td>
+                    <aura:if isTrue="{!not(empty(fmly.PatentId))}">
+                        <td role="gridcell">
+                            <div class="slds-truncate" title="{!fmly.BaseNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.PatentId + '/view'}" target="_blank">{!fmly.BaseNumber}</a></div>
+                        </td>
+                        <aura:set attribute="else">
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!fmly.BaseNumber}">{!fmly.BaseNumber}</div>
+                            </td>
+                        </aura:set>
+                    </aura:if>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.filingDate}">{!fmly.filingDate}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.title}">{!fmly.title}</div>
+                    </td>
+                    <!--<td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.jurisdiction}">{!fmly.jurisdiction}</div>
+                    </td>-->
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.status}">{!fmly.status}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.CaseType}">{!fmly.CaseType}</div>
+                    </td>
+                    <!--<td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.IssueDate}">{!fmly.IssueDate}</div>
+                    </td>-->
+                </tr>
+            </aura:iteration>           
+        </tbody>
+    </table>
+       
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closefamilyExpand}" >Close</button>                   
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+        </div>
+    </aura:if>
+       
+            <div class="slds-scrollable" style="height:150px;">
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer ">
+         <thead>
+            <tr class="slds-line-height_reset">
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Docket No"><b>DOCKET NO</b></span>
+                </th>                
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Family Members"><b>FAMILY MEMBERS</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Filing Date"><b>FILING DATE</b></span>
+                </th>
+                <!--<th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Title"><b>TITLE</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Jurisdiction"><b>JURISDICTION</b></span>
+                </th>-->
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Status"><b>STATUS</b></span>
+                </th>        
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Case Type"><b>CASE TYPE</b></span>
+                </th>        
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Issue Date of Patent"><b>ISSUE DATE OF PATENT</b></span>
+                </th>        
+            </tr>
+        </thead>
+
+        <tbody>
+            <aura:iteration items="{!v.Listoffamily}" var="fmly">
+                <tr class="slds-hint-parent">
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.DocketNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.DocPatId + '/view'}" target="_blank">{!fmly.DocketNumber}</a></div>
+                    </td>
+                    <aura:if isTrue="{!not(empty(fmly.PatentId))}">
+                        <td role="gridcell">
+                            <div class="slds-truncate" title="{!fmly.BaseNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.PatentId + '/view'}" target="_blank">{!fmly.BaseNumber}</a></div>
+                        </td>
+                        <aura:set attribute="else">
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!fmly.BaseNumber}">{!fmly.BaseNumber}</div>
+                            </td>
+                        </aura:set>
+                    </aura:if>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.filingDate}">{!fmly.filingDate}</div>
+                    </td>
+                    <!--<td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.title}">{!fmly.title}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.jurisdiction}">{!fmly.jurisdiction}</div>
+                    </td>-->
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.status}">{!fmly.status}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.CaseType}">{!fmly.CaseType}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.IssueDate}">{!fmly.IssueDate}</div>
+                    </td>
+                </tr>
+            </aura:iteration>           
+        </tbody>
+    </table>
+       </div>    
+    
+</aura:component>

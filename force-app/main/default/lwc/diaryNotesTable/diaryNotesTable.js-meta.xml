@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <description>Diary Notes Table</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="showPinnedNotes" type="Boolean" label="Display only pinned notes?"
+                      description="If TRUE only pinned notes will be displayed"/>
+            <property name="objectApi" type="String" label="Object API"
+                      description="Specify Search Project API name of TM Search Instruction"/>
+        </targetConfig>
+    </targetConfigs>
+    <masterLabel>Diary Notes Table</masterLabel>
+</LightningComponentBundle>

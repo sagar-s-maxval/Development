@@ -1,0 +1,32 @@
+.THIS.maintable tr th
+{
+    border-collapse:collapse;
+    border-style:solid;
+    border-width:1px;
+    border-color:Red;
+    color:#666;
+    background-color:red;
+}
+.THIS.maintable tr th, .THIS div.maintable tr th, .THIS p.maintable tr th
+{
+    border-collapse:collapse;
+    border-style:dotted;
+    border-width:0px;
+    border-bottom-width:1px;
+    border-color:#bbb;
+    padding:10px 0px;
+    text-transform:uppercase;
+    background-color:#FEFEFE;
+}
+.THIS.test
+{
+    background-color:red;
+}
+.THIS .Pending svg 
+{
+   fill: red;    
+}
+.THIS .Completed svg 
+{
+   fill: green;    
+}

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="country" label="countryVal"/>
+     <design:attribute name="caseType" label="caseTypeVal"/>
+</design:component>

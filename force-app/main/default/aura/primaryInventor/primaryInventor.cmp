@@ -1,0 +1,45 @@
+<aura:component description="primaryInventor"
+                extends="c:base"
+                controller="InventorController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="selectedInventors" type="String"/>
+    <aura:attribute name="selectedInventorsList" type="List" default="[]"/>
+    <aura:attribute name="primaryInventorId" type="String"/>
+    <aura:attribute name="pillList" type="List" default="[]"/>
+    <aura:attribute name="currentUserEmail" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.selectedInventors}" action="{!c.doInit}"/>
+
+    <div>
+        <div class="slds-col slds-size_1-of-1">
+            <label for="txtSearchInventors" style="font-size:14px; ma4margin-bottom:5px;"> <span style="color:#ff0000">* </span>Primary Inventor <lightning:helptext style="margin-left:5px;" content="To replace the selected Primary Inventor Contact, search and select a name. The existing primary inventor will be replaced with the newly selected name."/></label>
+        </div>
+    </div>
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Search primary inventor"
+                    label=""
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{! and(not(v.primaryInventorId), not(v.isShowSearchResult))}">
+            <div class="slds-text-color_error">Please select primary inventor.</div>
+        </aura:if>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+        <p><lightning:pillContainer items="{!v.pillList}" onitemremove="{!c.removeSelectedInventor}"/></p>
+    </div><br/>
+</aura:component>

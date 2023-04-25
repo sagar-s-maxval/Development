@@ -1,0 +1,45 @@
+<aura:component description="cmpContributionApproval" controller="RemunerationController">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="columnsUser" type="List"/>
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="dataUser" type="List"/>
+    <aura:attribute name="keyField" type="String" default="Id"/>
+    <aura:attribute name="approvedIds" type="List"/>
+    <aura:attribute name="isApproved" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}"/>
+
+    <div class="slds-table slds-table_bordered">
+        <aura:if isTrue="{!not(empty(data))}">
+            <lightning:datatable
+                    columns="{! v.columns }"
+                    data="{! v.data }"
+                    keyField="{! v.keyField }"
+                    hideCheckboxColumn="true"
+                    onrowaction="{! c.handleRowAction }"
+            />
+        </aura:if>
+        <div>
+            <br/>
+            <p><span style="font-size:14px; color: red">* </span>Your percentage: </p>
+            <lightning:datatable
+                    class="tableEdit"
+                    aura:id="contrTable"
+                    columns="{! v.columnsUser }"
+                    data="{! v.dataUser }"
+                    keyField="{! v.keyField }"
+                    hideCheckboxColumn="true"
+                    showRowNumberColumn="false"
+                    hideTableHeader="true"
+                    onrowaction="{! c.handleRowAction }"
+                    suppressBottomBar="true"
+                    oncellchange="{!c.handleCellChange}"/>
+        </div>
+        <div class="slds-float_right">
+            <p><i>Contribution once confirmed can't be changed.</i></p>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,61 @@
+<aura:component controller="ReviewDecisionEmailsController" implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!-- Variables -->
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="coInventors" type="String"/>
+    <aura:attribute name="coInventorsList" type="List"/>
+    <aura:attribute name="arrSelectedInvIds" type="List"/>
+    <aura:attribute name="strSelectedInvIds" type="string" access="global"/>
+    <aura:attribute name="placeholder" type="string" access="global"/>
+    <aura:attribute name="lstSelectedInventors" type="List" default="[]"/>
+    <aura:attribute name="lstInventors" type="List"/>
+    <aura:attribute name="EmptyList" type="List"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="Edit" type="boolean" default="false"/>
+    <aura:attribute name="userInfo" type="user" access="global"/>
+    <aura:attribute name="from_NewAssetInventorFlow" type="boolean" default="false"/>
+    <aura:attribute name="primaryInventor" type="String"/>
+    <aura:attribute name="selectedInventors" type="SymphonyIPM__Inventor__c[]" />
+    <aura:attribute name="showTitle" type="boolean" default="true"/>
+    <aura:attribute name="type" type="String"/>
+    <aura:attribute name="isRMI" type="Boolean" default="false"/>
+    <aura:attribute name="ocUserId" type="String"/>
+    <aura:attribute name="vendorId" type="String"/>
+    <aura:attribute name="excludeIDS" type="List"/>
+    <aura:attribute name="lawFirm" type="String"/>
+    <!--
+    <aura:attribute name="inputdisable" type="boolean" default="true"/>
+    -->
+    <aura:attribute name="inputdisable" type="boolean" default="true"/>
+    <!-- Event -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesController}"/>
+    <aura:registerEvent name="IDFAppEvent1" type="c:IDFAppEvent1"/>
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+            <aura:if isTrue="{!v.showTitle}">
+                <div class="slds-text-title">
+                    To
+                </div>
+                <aura:set attribute="else">
+                    <div class="slds-text-title">
+                        Cc
+                    </div>
+                </aura:set>
+            </aura:if>
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="{!v.placeholder}"
+                    label="Search Inventor"
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+        <p><lightning:pillContainer items="{!v.lstSelectedInventors}" onitemremove="{!c.removeSelectedInventorsController}"></lightning:pillContainer></p>
+    </div><br/><br/>
+</aura:component>

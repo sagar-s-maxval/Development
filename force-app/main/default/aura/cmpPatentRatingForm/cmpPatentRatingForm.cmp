@@ -1,0 +1,82 @@
+<aura:component description="cmpPatentRatingForm" extends="c:base" controller="PatentRatingController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="role" type="String"/>
+    <aura:attribute name="q1" type="Boolean" default="false"/>
+    <aura:attribute name="q2" type="String"/>
+    <aura:attribute name="q3" type="String"/>
+    <aura:attribute name="q4" type="Boolean" default="false"/>
+    <aura:attribute name="q5" type="String"/>
+    <aura:attribute name="q6" type="String"/>
+    <aura:attribute name="q7" type="String"/>
+    <aura:attribute name="q8" type="String"/>
+    <aura:attribute name="q9" type="String"/>
+    <aura:attribute name="q10" type="String"/>
+    <aura:attribute name="q11" type="String"/>
+
+    <aura:attribute name="InnovationTypes" type="List"/>
+    <aura:attribute name="Taxonomy" type="List"/>
+    <aura:attribute name="CaseRatings" type="List"/>
+
+    <aura:attribute name="productLines" type="List"/>
+    <aura:attribute name="productLinesSelected" type="List"/>
+    <aura:attribute name="productLinesString" type="String"/>
+
+    <aura:attribute name="products" type="List"/>
+    <aura:attribute name="productsSelected" type="List"/>
+    <aura:attribute name="productsString" type="String"/>
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="ratingId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
+
+    <aura:attribute name="disableForm" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:handler name="change" value="{!v.q9}" action="{!c.lineChanged}"/>
+    <aura:handler name="change" value="{!v.q8}" action="{!c.productChanged}"/>
+
+    <aura:handler name="change" value="{!v.productsSelected}" action="{!c.handleProductChange}"/>
+
+    <aura:handler name="change" value="{!v.productLinesSelected}" action="{!c.reloadProducts}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-col slds-size_1-of-3">
+            <p class="slds-text-heading_small"><b>CSO Program Data</b></p><br/>
+            <lightning:input type="toggle" label="Intensifying Innovation" checked="{!v.q1}" disabled="{!v.disableForm}"
+                             messageToggleActive="Yes" messageToggleInactive="No"/>
+            <lightning:input type="text" label="CSO Program Name" value="{!v.q2}" disabled="{!v.disableForm}"
+                             style="margin-top:5px;"/>
+            <lightning:combobox label="CSO Innovation Type" value="{!v.q3}" options="{! v.InnovationTypes }"
+                                disabled="{!v.disableForm}" style="margin-top:5px;"/>
+            <br/>
+            <lightning:input type="toggle" label="CSO Top Program" checked="{!v.q4}" disabled="{!v.disableForm}"
+                             messageToggleActive="Yes" messageToggleInactive="No"/>
+            <lightning:input type="text" label="CSO NPI Number" value="{!v.q5}" disabled="{!v.disableForm}"
+                             style="margin-top:5px;"/>
+            <lightning:input type="text" label="CSO Tech Area 1" value="{!v.q6}" disabled="{!v.disableForm}"
+                             style="margin-top:5px;"/>
+            <lightning:input type="text" label="CSO Tech Area 2" value="{!v.q7}" disabled="{!v.disableForm}"
+                             style="margin-top:5px;"/>
+            <hr/>
+
+            <p class="slds-text-heading_small"><b>P2P Program Data</b></p><br/>
+            <lightning:combobox label="Product Lines" value="{!v.q9}" options="{! v.productLines }"
+                                disabled="{!v.disableForm}"/>
+            <c:cmpPatentProductLineSearch productLine="{!v.q9}" selectedLines="{!v.productLinesSelected}"
+                                          lines="{!v.productLinesString}"/>
+            <lightning:combobox label="Products" value="{!v.q8}" options="{! v.products }" disabled="{!v.disableForm}" style="margin-top:5px;"/>
+            <c:cmpPatentProductSearch product="{!v.q8}" availableProducts="{!v.products}"
+                                      selectedProducts="{!v.productsSelected}" products="{!v.productsString}"/>
+            <lightning:combobox label="Taxonomy" value="{!v.q10}" options="{! v.Taxonomy }"
+                                disabled="{!v.disableForm}" style="margin-top:5px;"/>
+            <hr/>
+            <p class="slds-text-heading_small"><b>Patent Rating</b></p><br/>
+            <lightning:combobox label="Case Rating" value="{!v.q11}" options="{! v.CaseRatings }"
+                                disabled="{!v.disableForm}"/>
+        </div>
+    </div>
+
+</aura:component>

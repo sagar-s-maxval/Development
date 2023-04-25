@@ -1,0 +1,31 @@
+<aura:component controller="CountryController_RFF" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <!-- Variables -->
+    <aura:attribute name="arrSelectedCountryIds" type="List"/>
+    <aura:attribute name="strSelectedCountryIds" type="string" access="global"/>
+    <aura:attribute name="lstSelectedCountries" type="List"/>
+    <aura:attribute name="lstCountries" type="List"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <!-- Event -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesController}"/>
+    
+    
+    <div onkeyup="{! c.searchCountriesController }">
+        Select the desired countries :
+        <lightning:input
+                         aura:id="txtSearchCountries"	
+                         name="txtSearchCountries"
+                         label="Search Countries"
+                         placeholder = "Search Countries"
+                         type="search"
+                         variant="label-hidden"
+                         />
+    </div>
+    <aura:if isTrue="{!v.isShowSearchResult==true}">
+        <ui:scrollerWrapper class="scrollerSize">
+            <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableCountries" change="{!c.getSelectedCountriesController}" >
+            </ui:inputSelect>
+        </ui:scrollerWrapper>
+    </aura:if>
+    <p><lightning:pillContainer items="{!v.lstSelectedCountries}" onitemremove="{!c.removeSelectedCountriesController}"></lightning:pillContainer></p>
+    <br/><br/>
+</aura:component>

@@ -1,0 +1,89 @@
+<aura:component controller="PatentDocument"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickAction,lightning:actionOverride,force:hasRecordId"
+    access="global">
+    <aura:attribute name="title" type="String" default="Document for Review (Draft)" />
+    <aura:attribute name="docTypeOptions" type="List" />
+    <aura:attribute name="reviewByOptions" type="List" />
+    <aura:attribute name="selectedReviewBy" type="List" />
+    <aura:attribute name="fileUploaded" type="String" />
+    <aura:attribute name="today" type="Date" />
+    <aura:attribute name="finalVersion" type="Boolean" />
+    <aura:attribute name="hasError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMessage" type="String" />
+    <aura:attribute name="hasAccess" type="Boolean" default="false"/>
+    <aura:attribute name="newDocument" type="sObject"
+        default="{'sObjectType' : 'SymphonyIPM__Patent_Attachments__c'}" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.hasAccess}">
+        <aura:if isTrue="{!v.newDocument.SymphonyIPM__Actor_Status__c == 'Draft'}">
+            <lightning:card title="{!v.title}">
+                <aura:set attribute="actions">
+                    <lightning:buttonIcon iconName="utility:delete" variant="brand" onclick="{!c.handleDelete}" />
+                </aura:set>
+                <aura:set attribute="footer">
+                    <aura:if isTrue="{!v.newDocument.SymphonyIPM__Version__c == 'Final'}">
+                        <lightning:button label="Submit Final Version" variant="brand" onclick="{!c.handleSaveFinalVersion}" />
+                        <aura:set attribute="else">
+                            <lightning:button label="Submit for Review" variant="brand" onclick="{!c.handleSaveRecord}" />
+                        </aura:set>
+                    </aura:if>
+                    <lightning:button label="Save as Draft" onclick="{!c.handleSaveDraft}" />
+                </aura:set>
+                <p class="slds-p-horizontal_small">
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-size--1-of-1">
+                        <aura:if
+                            isTrue="{!and(v.newDocument.SymphonyIPM__Document_Type__c != '', and(v.newDocument.SymphonyIPM__Document_Type__c != null, v.newDocument.SymphonyIPM__Version__c != 'Initial'))}">
+                            <lightning:formattedText value="{!v.newDocument.SymphonyIPM__Document_Type__c}" />
+                            <aura:set attribute="else">
+                                <lightning:combobox name="progress" label="Document Type" placeholder="Choose Type"
+                                    options="{! v.docTypeOptions }" onchange="{! c.handleDocTypeChange }"
+                                    value="{!v.newDocument.SymphonyIPM__Document_Type__c}" />
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col slds-size--1-of-1" style="margin-top: 2px;">
+                        <aura:if isTrue="{!v.newDocument.SymphonyIPM__Version__c != 'Final' }">
+                            <lightning:input type="checkbox" label="Upload final version" checked="{v.finalVersion}" />
+                        </aura:if>
+                    </div>
+                    <aura:if isTrue="{!v.newDocument.SymphonyIPM__Version__c == 'Initial'}">
+                        <div class="slds-col slds-size--1-of-1">
+                            <c:cmpMultiSelectPicklist name="reviewBy" options="{!v.reviewByOptions}"
+                                value="{!v.selectedReviewBy}" change="{!c.handleReviewByChange}" label="Review By"
+                                placeholder="Select Review By" required="true" />
+                            <aura:if isTrue="{!v.hasError}">
+                                <span class="slds-required">{!v.errorMessage}</span>
+                            </aura:if>
+                        </div>
+                    </aura:if>
+                    <div class="slds-col slds-size--1-of-2">
+                        <lightning:input type="date" label="Respond By Date"
+                            value="{!v.newDocument.SymphonyIPM__Respond_by_Date__c}" min="{!v.today}" />
+                    </div>
+                    <div class="slds-col slds-size--1-of-2">
+                        <lightning:input type="date" label="PTO Due Date" value="{!v.newDocument.SymphonyIPM__PTO_Due_Date__c}"
+                            min="{!v.today}" />
+                    </div>
+                    <div class="slds-col slds-size--1-of-1" style="height: 350px; margin-top: 5px;">
+                        <lightning:inputRichText value="{!v.newDocument.SymphonyIPM__Comments__c}"
+                            placeholder="Please enter your comments" />
+                    </div>
+                    <div class="slds-col slds-size--1-of-1">
+                        <lightning:fileUpload label="Attachments" name="fileUploader" multiple="false" recordId="{!v.recordId}"
+                            onuploadfinished="{!c.handleUploadFinished}" />
+                    </div>
+                    <div class="slds-col slds-size--1-of-1">
+                        <p style="font-weight: bold;">Uploaded Files</p>
+                        {!v.fileUploaded}
+                    </div>
+                </div>
+                </p>
+            </lightning:card>
+            <aura:set attribute="else">
+                <SymphonyIPM:cmpPatentDocumentAttachment recordId="{!v.recordId}" />
+            </aura:set>
+        </aura:if>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,68 @@
+<aura:component description="adhocDocketingModal" implements="lightning:availableForFlowScreens">
+
+    <aura:attribute name="showModal" type="boolean" default="false"/>
+    <aura:attribute name="actions" type="String"/>
+    <aura:attribute name="eventDate" type="Date"/>
+    <aura:attribute name="dueDate" type="Date"/>
+    <aura:attribute name="comments" type="String"/>
+
+    <aura:attribute name="showError" type="Boolean"/>
+
+    <div>
+        <aura:if isTrue="{!v.showModal}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModal }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Add Ad hoc activity</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <lightning:input type="text" label="Docketing activity" required="true" value="{!v.actions}"/>
+                        <aura:if isTrue="{!and(not(v.actions), v.showError)}">
+                            <div class="slds-text-color_error">This field is required.</div>
+                        </aura:if>
+                        <lightning:input type="date" label="Event date" required="true" value="{!v.eventDate}"/>
+                        <aura:if isTrue="{!and(not(v.eventDate), v.showError)}">
+                            <div class="slds-text-color_error">This field is required.</div>
+                        </aura:if>
+                        <lightning:input type="date" label="Due date" required="true" value="{!v.dueDate}"/>
+                        <aura:if isTrue="{!and(not(v.dueDate), v.showError)}">
+                            <div class="slds-text-color_error">This field is required.</div>
+                        </aura:if>
+                        <aura:if isTrue="{!lessthan(v.dueDate, v.eventDate)}">
+                            <div class="slds-text-color_error">Due date should be after event date.</div>
+                        </aura:if>
+                        <lightning:textarea label="Comments" value="{!v.comments}"/>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeModal }"/>
+                        <lightning:button variant="brand"
+                                          label="Save"
+                                          title="Save"
+                                          onclick="{!c.saveActivity}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+            <aura:set attribute="else">
+                <div class="slds-clearfix slds-p-top_medium">
+                    <p>Press the button below to create new Ad hoc Docketing Activity.</p>
+                    <div class="slds-float_right">
+                        <lightning:button label="Create Ad hoc Activity" variant="brand" onclick="{!c.showModal}"/>
+                    </div>
+                    <br/>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

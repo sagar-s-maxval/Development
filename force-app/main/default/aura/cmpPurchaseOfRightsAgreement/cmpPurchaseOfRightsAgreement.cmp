@@ -1,0 +1,4 @@
+<aura:component description="cmpPurchaseOfRightsAgreement"
+                implements="lightning:availableForFlowScreens,lightning:availableForFlowActions,force:hasRecordId"
+                access="global">
+</aura:component>

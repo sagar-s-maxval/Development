@@ -1,0 +1,30 @@
+.THIS .radioGroups .slds-radio{
+    display : inline !important;
+}
+
+.THIS {
+    --lwc-fontSize3: 1rem;
+}
+.THIS .slds-form-element__label {
+/*    color: #032e61;*/
+color: #000000;
+}
+
+.THIS .radioGroups .slds-form-element__control {
+    padding-left: 25px;
+    clear: left;
+}
+
+.THIS .addPadding {
+    padding-left: 22px;
+    clear: left;
+}
+
+.THIS .slds-form-element__icon {
+    padding-top: 0rem;
+}
+
+.THIS .boxOptions{
+    padding-left:1.8rem;
+    clear: left;
+}

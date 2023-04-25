@@ -1,0 +1,10 @@
+<aura:component implements="lightning:availableForFlowScreens">
+
+    <aura:attribute name="actionSelected" type="String"/>
+    <div class="slds-clearfix">
+        <div class="slds-float_right">
+            <lightning:button aura:id="CANCEL" label="Cancel" variant="brand-outline" onclick="{!c.handleChange}"/>
+            <lightning:button aura:id="NEXT" label="Send" variant="brand" onclick="{!c.handleChange}"/>
+        </div>
+    </div>
+</aura:component>

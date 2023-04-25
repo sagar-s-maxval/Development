@@ -1,0 +1,238 @@
+<aura:component description="thDocuSignNew"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens"
+                access="global"
+                controller="DocuSignSendEnvelopeController">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isAddPersonModalOpen" type="Boolean" default="false"/>
+    <aura:attribute name="IsPatent" type="Boolean" default="false"/>
+    <aura:attribute name="isPreviewModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isAttachmentModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isDisabled" type="boolean" default="true"/>
+    <aura:attribute name="isSendDisabled" type="boolean" default="true"/>
+    <aura:attribute name="notOneFileSelected" type="boolean" default="true"/>
+    <aura:attribute name="tooManyFileSelected" type="boolean" default="false"/>
+    <aura:attribute name="noPersonsSelected" type="boolean" default="true"/>
+    <aura:attribute name="noReviewerSelected" type="boolean" default="true"/>
+    <aura:attribute name="isPreloader" type="boolean" default="false"/>
+    <aura:attribute name="isShowStatus" type="boolean" default="false"/>
+    <aura:attribute name="statusErrorMessage" type="String"/>
+
+    <aura:attribute name="folderValue" type="String"/>
+    <aura:attribute name="templateValue" type="String"/>
+    <aura:attribute name="emailBody" type="String"/>
+    <aura:attribute name="emailTemplateFolders" type="List"/>
+    <aura:attribute name="emailTemplates" type="List"/>
+    <aura:attribute name="defaultTemplateName" type="String"/>
+
+    <aura:attribute name="showRelatedPersons" type="Boolean" default="false"/>
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.initController}"/>
+    <aura:handler name="change" value="{!v.folderValue}" action="{!c.onFolderChange}"/>
+    <aura:handler name="change" value="{!v.templateValue}" action="{!c.onTemplateChange}"/>
+
+
+    <aura:if isTrue="{!v.isShowStatus}">
+        <!--    Success/Error Message -->
+        <lightning:card>
+            <div class="messageContainer">
+                <aura:if isTrue="{!empty(v.statusErrorMessage)}">
+                    <lightning:icon iconName="action:check" size="large" alternativeText="Success"/>
+                    <div class="slds-m-around_large">
+                        Envelope successfully sent!<br/><br/>
+                        Check status in "DocuSign Envelopes" tab.<br/>
+                        (It might take few seconds to update details)<br/>
+                    </div>
+
+                    <aura:set attribute="else">
+                        <lightning:icon iconName="utility:error" size="large" alternativeText="Error"/>
+                        <div class="slds-m-around_small">The error occurred during sending:</div>
+                        <div class="slds-text-color_error slds-m-around_large">{!v.statusErrorMessage}</div>
+                    </aura:set>
+                </aura:if>
+
+                <lightning:button label="OK" title="OK" onclick="{!c.onAcknowledge}"/>
+            </div>
+        </lightning:card>
+
+        <!--    Files and Persons Lists -->
+        <aura:set attribute="else">
+            <div class="mainContainer">
+                <aura:if isTrue="{!v.isPreloader}">
+                    <lightning:spinner alternativeText="Loading" size="medium"/>
+                </aura:if>
+
+                <aura:if isTrue="{!v.IsPatent}">
+                    <div class="slds-text-align_right slds-m-bottom_medium">
+                        <lightning:button
+                                name="Attachment"
+                                label="Attachment"
+                                iconName="utility:add"
+                                onclick="{!c.openAttachmentModal}"/>
+                    </div>
+                </aura:if>
+
+                <c:thFileList aura:id="fileList"
+                              recordId="{!v.recordId}"
+                              onrowselect="{!c.rowSelect}"
+                              onpreloader="{!c.onPreloader}"
+                              onrefresh="{!c.onPageRefresh}"/>
+
+                <aura:if isTrue="{!v.tooManyFileSelected}">
+                    <div class="slds-text-color_error slds-m-around_large">
+                        *Multiple documents is not supported for Invention Disclosure
+                    </div>
+                </aura:if>
+
+                <c:thPersonsList aura:id="personList"
+                                 onrowselect="{!c.rowSelect}"/>
+
+                <c:thReviewerList aura:id="reviewerList"
+                                  recordId="{!v.recordId}"
+                                  onrowselect="{!c.rowSelect}"
+                                  onpreloader="{!c.onPreloader}"/>
+
+                <div class="slds-m-top_medium">
+                    <div class="slds-clearfix">
+                        <lightning:button class="slds-float_left"
+                                          label="Add Person"
+                                          variant="brand-outline"
+                                          iconName="utility:adduser"
+                                          onclick="{!c.NewRecord}"/>
+
+                        <lightning:button class="slds-float_right"
+                                          label="Send Envelope"
+                                          variant="brand"
+                                          onclick="{!c.openPreviewModal}"
+                                          disabled="{!v.isSendDisabled}"/>
+                    </div>
+
+                </div>
+            </div>
+        </aura:set>
+    </aura:if>
+
+    <!--    Email preview modal window -->
+    <aura:if isTrue="{!v.isPreviewModalOpen}">
+        <!-- Modal/Popup Box starts here-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header slds-theme_alert-texture slds-theme_warning">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModal }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate ">
+                        Email body preview
+                    </h2>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>
+                        <lightning:combobox aura:id="selectFolder" value="{!v.folderValue}"
+                                            options="{!v.emailTemplateFolders}" name="selectTemplateFolder"
+                                            label="Select Folder">
+                        </lightning:combobox>
+                    </p>
+                    <p class="slds-m-bottom_xxx-small">
+                        <lightning:combobox aura:id="select" value="{!v.templateValue}" options="{!v.emailTemplates}"
+                                            name="selectTemplate" label="Select Template">
+                        </lightning:combobox>
+                    </p>
+                    <c:cmpTemplateSearch availableProducts="{!v.emailTemplates}" product="{!v.templateValue}"/>
+
+                    <br/>
+                    <p><b>
+                            <lightning:inputRichText variant="bottom-toolbar" value="{!v.emailBody}"/>
+                        </b></p>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <div class="slds-text-align_right">
+                        <lightning:button variant="neutral"
+                                          label="Close"
+                                          title="No"
+                                          onclick="{! c.closeModal }"/>
+
+                        <lightning:button variant="brand"
+                                          iconName="utility:send"
+                                          iconPosition="right"
+                                          label="Send"
+                                          title="Yes"
+                                          onclick="{!c.sendToApex}"/>
+                    </div>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!--    Email preview modal window end-->
+
+    <!--    Attachment modal window-->
+    <aura:if isTrue="{!v.isAttachmentModalOpen}">
+        <div Style="height:500px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick="{!c.closeModal}">
+                            <lightning:icon iconName="utility:close" alternativeText="Close" variant="inverse"
+                                            size="small"/>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <h2 id="modal-heading-01"
+                            class="slds-text-heading_medium slds-hyphenate inlineTitle"></h2>
+                        <div class='modal__content'>
+                            <c:thDocuSignFileUpload recordId="{!v.recordId}"></c:thDocuSignFileUpload>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+    <!--    Attachment modal window-->
+
+    <!--    Add person modal window-->
+    <aura:if isTrue="{!v.isAddPersonModalOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+
+                <div class="slds-p-around_medium" id="modal-content-id-1" style="background-color: transparent;">
+
+                    <h2 id="modal-heading-01"
+                        class="slds-text-heading_medium slds-hyphenate inlineTitle slds-p-top--large slds-p-horizontal--medium slds-p-bottom--medium slds-text-heading--medium"></h2>
+
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                                title="Close" onclick='{!c.closeModal}'>
+                            <lightning:icon iconName="utility:close" alternativeText="Close" variant="inverse"
+                                            size="small"/>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </header>
+
+                    <div class='modal__content' style="background-color: white; padding: 10px;">
+                        <lightning:flow aura:id="flowData" onstatuschange="{!c.statusChange}"/>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!--    Add person modal window end-->
+
+</aura:component>

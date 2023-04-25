@@ -1,0 +1,11 @@
+<template>
+    <lightning-card if:true={response.data} class="slds-m-around_medium">
+        <lightning-tree-grid
+                columns={getColumns}
+                data={getTreeData}
+                key-field="Id"
+                onrowaction={handleRowAction}
+                hide-checkbox-column
+        ></lightning-tree-grid>
+    </lightning-card>
+</template>

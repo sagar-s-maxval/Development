@@ -1,0 +1,21 @@
+<aura:component description="cmpEmailAuditTrail"
+                controller="EmailAuditTrailController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="emailList" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds-p-around_medium">
+        <div class="slds-table_bordered">
+            <lightning:datatable
+                    showRowNumberColumn="true"
+                    keyField="id"
+                    data="{! v.emailList }"
+                    columns="{! v.columns }"
+                    hideCheckboxColumn="true"/>
+        </div>
+    </div>
+</aura:component>

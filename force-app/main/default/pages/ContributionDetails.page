@@ -1,0 +1,312 @@
+<apex:page renderAs="advanced_pdf" standardStylesheets="false" applyBodyTag="false"
+           standardController="Remuneration__c"
+           applyHtmlTag="false" sidebar="false" showHeader="false"
+
+           pageStyle="all">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+        <style type="text/css" media="print">
+
+
+            @page {
+
+                size: A4 portrait;
+                border: 1px solid black;
+                margin-top: 13%;
+                margin-bottom:13%;
+                margin-right: 10%;
+                margin-left:7%
+
+                @top-center {
+                }
+                 @top-left{
+                     content: element(headerDock);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            @top-right {
+             content: element(header);
+            content: {!$Resource.ThermoFisherLogo};
+            }
+              @top-right {
+            content: element(header);
+            content: {!$Resource.ThermoFisherLogo};
+            }
+            }
+
+            * {
+                margin: 0px;
+                padding: 1px;
+            }
+
+
+            div.headerImg {
+
+
+                height: 70px;
+                width: 300px;
+                float: right;
+                position: running(headerImg);
+            }
+
+            div.content {
+                padding-top: 130px;
+            }
+
+            div.footer {
+                display: block;
+                padding :10px;
+                position: running(footer);
+            }
+
+            div.subfooter {
+                display: inline-block;
+            }
+
+            div.right {
+                float: right;
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            .pagecount:before {
+                content: counter(pages);
+            }
+
+            .stationName {
+
+                text-align: center;
+                font-weight: bold;
+                font-size: 20pt;
+                margin-bottom: 10px;
+            }
+
+            table {
+
+                width: 100%;
+            }
+
+            .centered {
+                text-align: center;
+            }
+
+            .right {
+                text-align: right;
+            }
+
+            div {
+                width : 100%;
+            }
+
+            img {
+                width: 100%;
+            }
+
+            .tableHeader {
+                border-width: 0px 0px 1px 0px;
+                border-color: #eee;
+                border-style: solid;
+            }
+
+            .sectionHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16pt;
+                margin-bottom: 10px;
+            }
+            .subHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 15pt;
+                margin-bottom: 10px;
+            }
+
+            .AppleHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 12pt;
+                margin-bottom: 7px;
+                color: gray;
+            }
+
+            #totalCost {
+                margin-top: 15px;
+            }
+
+            #totalCostLabel {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+
+            .headerRow .TableTitle {
+                background-color: #e6e6e6;
+            }
+             .colstyle {width:50%}
+            .tableStyle {border-collapse: collapse; border-spacing: 0px 0px; }
+            .colStyle1 { width:150px;text-align:left; padding-top:8px;padding-right:15px; padding-bottom:8px}
+            .colStyle2 { width:200px; padding-right:10px; padding-top:8px; padding-bottom:8px}
+             div.header {
+
+                width: 100%;
+                padding: 5px;
+                margin: 20px 0px;
+                position: running(header);
+            }
+             div.headerDock{
+                padding: 5px;
+                 position: running(headerDock);
+                 }
+                .comma-list {
+                display: inline;
+                list-style: none;
+                padding: 0px;
+                }
+                .comma-list li {
+                display: inline;
+                }
+
+                .comma-list li::after {
+                content: " ";
+                }
+                .comma-list li:last-child::after {
+                content: " ";
+                }
+
+
+
+
+
+
+
+
+
+        </style>
+    </head>
+    <body>
+
+    <apex:form >
+        <apex:pageBlock >
+            <apex:repeat value="{!Remuneration__c}" var="a">
+                <div class="header">
+                    <img src="{!$Resource.ThermoFisherLogo}" width="150px" height="30px" align="right"/>
+                </div>
+                <div class="sectionHeader">Contribution Details</div>
+                <div class="headerDock"><b>Disclosure#[{!Remuneration__c.Invention_Disclosure__r.Name}]</b>
+                    <br/>
+                    <b>{!Remuneration__c.Invention_Disclosure__r.SymphonyIPM__Title__c}</b>
+                </div>
+                <div class="tableHeader "></div>
+                <div class="footer">
+                    <div>
+                        <div class="subfooter">
+                            <apex:outputText value="{0,date,MMM dd, yyyy}">
+
+                                <apex:param value="{!Today()}"/>
+
+                            </apex:outputText>
+                        </div>
+                        <div class="subfooter right">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                    </div>
+                    <br/>
+                    <div class="centered"><i>Privileged Attorney-Client Communication. This document contains
+                            confidential and proprietary information of ThermoFisher. Do Not copy or disseminate.</i>
+                    </div>
+
+                </div>
+
+                <apex:pageBlockSection columns="1">
+                    <br/>
+                    <apex:panelGrid columns="1" styleClass="tableStyle" border="0" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+                        <apex:outputPanel >
+                            <p><b>a) First and last name of the inventor.</b></p>
+                            <apex:outputText value="{!a.Inventor_Full_Name__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>b) Is the invention in your field of work?</b></p>
+                            <apex:outputText value="{!a.Question_b__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>c) What training did you have and what was your job function when you made the
+                                    invention?</b></p>
+                            <apex:outputText value="{!a.Question_c__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>d) Was the problem defined by instructions from your superiors?</b></p>
+                            <apex:outputText value="{!a.Question_d_Radio__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(a.Question_d_Radio__c = 'Yes',true,false)}">
+                            <p><b>What information did the instructions contain?</b></p>
+                            <apex:outputText value="{!a.Question_d__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>e) Was the company already aware of the problem?</b></p>
+                            <apex:outputText value="{!a.Question_e_Radio__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(a.Question_e_Radio__c = 'Yes',true,false)}">
+                            <p><b>Which sources provided you with the information?</b></p>
+                            <apex:outputText value="{!a.Question_e__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>f) Did you become aware of the deficiency or the requirement yourself?</b></p>
+                            <apex:outputText value="{!a.Question_f_Radio__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(a.Question_f_Radio__c = 'Yes',true,false)}">
+                            <p><b>Which deficiency or requirement did you determine yourself?</b></p>
+                            <apex:outputText value="{!a.Question_f__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>g) What did you contribute to the invention? Briefly explain your share in the
+                                    invention.</b></p>
+                            <apex:outputText value="{!a.Question_g__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>h) What support did the company provide?</b></p>
+                            <apex:outputPanel rendered="{!IF(a.Is_Laboratory_Equipment__c,true,false)}">
+                                <p>Laboratory equipment</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(a.Is_Computer_Software__c,true,false)}">
+                                <p>Computer / software</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(a.Is_Materials_Prototypes__c,true,false)}">
+                                <p>Materials / prototypes</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(a.Is_Designs_Planning__c,true,false)}">
+                                <p>Designs / planning</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(a.Is_Calculations_Simulations__c,true,false)}">
+                                <p>Calculations / simulations</p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(a.Is_Evaluation_Test__c,true,false)}">
+                                <p>Evaluations / test</p>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>i) Please select an option that is best suited based on your contribution to the
+                                    invention.</b></p>
+                            <apex:outputText value="{!a.Option_that_is_best_suited__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel >
+                            <p><b>Comments, If any.</b></p>
+                            <apex:outputText value="{!a.Comments__c}" escape="false"/>
+                        </apex:outputPanel>
+                        <br/>
+                        <apex:outputPanel >
+                            <p><b>Contribution percentage:</b>
+                                <apex:outputText value="{!a.Contribution_new__c}" escape="false"/>
+                            </p>
+                        </apex:outputPanel>
+
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+            </apex:repeat>
+        </apex:pageBlock>
+    </apex:form>
+
+    </body>
+
+</apex:page>

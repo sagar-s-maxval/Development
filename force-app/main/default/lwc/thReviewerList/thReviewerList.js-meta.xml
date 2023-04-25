@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <description>Th Reviewer List</description>
+    <isExposed>false</isExposed>
+    <masterLabel>Th Reviewer List</masterLabel>
+</LightningComponentBundle>

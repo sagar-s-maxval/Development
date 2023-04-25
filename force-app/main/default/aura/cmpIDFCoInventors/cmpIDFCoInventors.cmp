@@ -1,0 +1,35 @@
+<aura:component description="cmpIDFCoInventors" controller="IDFSubmissionController"
+                implements="lightning:availableForFlowScreens,lightning:availableForFlowActions" access="global">
+
+    <aura:attribute name="selectedInventors" type="List" default="[]"/>
+    <aura:attribute name="coInventors" type="String" default=""/>
+<!--    <aura:attribute name="primaryInventor" type="String" default=""/>-->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium">
+        <table>
+            <tbody>
+            <aura:iteration var="inventor" items="{!v.selectedInventors}" indexVar="i">
+                <tr>
+                    <td onclick="{!c.removeInventor}">
+                        <a onclick="{!c.removeInventor}" data-index="{!i}">
+                            <lightning:icon iconName="utility:delete" alternativeText="delete" title="Delete"
+                                            size="small"/>
+                        </a>
+                    </td>
+                    <td>{!inventor.Name}</td>
+                    <td>{!inventor.SymphonyIPM__Address__c}</td>
+                    <td>{!inventor.SymphonyIPM__Citizenship__c}</td>
+                    <td>phone</td>
+                    <td>{!inventor.SymphonyIPM__Email__c}</td>
+                    <td>Employer Name</td>
+                    <td>address</td>
+                    <td>country</td>
+                    <td>type</td>
+                </tr>
+            </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>

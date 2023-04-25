@@ -1,0 +1,18 @@
+.THIS .modal {
+    float: left;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+}
+
+.THIS .modal-min-width {
+    width: 70%;
+    max-width: 840px;
+    min-width: 480px;
+}
+
+.THIS .modal-max-width {
+    width: 100%;
+    max-width: 840px;
+    min-width: 480px;
+}

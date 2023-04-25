@@ -1,0 +1,27 @@
+<aura:component description="cmpEmailBody"
+                controller="EmailAuditTrailController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="mailBody" type="String"/>
+    <aura:attribute name="to" type="String" />
+    <aura:attribute name="from" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium">
+        <div>
+            <div style="float:left;">
+                <lightning:icon iconName="standard:avatar"/>
+            </div>
+            <div style="float:left; padding-left: 1rem;">
+                <p>From: {!v.from}</p>
+                <p>To: {!v.to}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="uiOutputRichText" linkify="true" >
+            <aura:unescapedHtml value="{!v.mailBody}"/>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:availableForFlowScreens" access="global" >
+    <aura:attribute name = "country" type="String" access="global"/>
+    <aura:attribute name="caseType" type="String" access="global"/>
+    
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+      <div class="slds-clearfix" >
+    <lightning:button  aura:id="NEXT" label="Save" 
+               variant="brand" onclick="{!c.onButtonPressed}" class="slds-float_right" />
+        </div>
+</aura:component>

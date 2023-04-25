@@ -1,0 +1,119 @@
+<aura:component controller="patentfamilycomponetclass" implements="force:hasRecordId,flexipage:availableForRecordHome,force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.loadfamilyList}"/>
+    <aura:attribute name="Listoffamily" type="object[]" />
+    <aura:attribute name="recordId" type="Id"/>
+    <aura:attribute name="showrecId" type="string"/>
+    <aura:attribute name="arrSelectedBasePatentIds" type="List"/>
+    <aura:attribute name="tooltip" type="boolean" default="false"/>
+    <aura:attribute name="test" type="List"/>
+      <aura:attribute name="test1" type="List"/>
+    <aura:attribute name="arrSelectedParentPatentIds" type="List"/>
+    <aura:attribute name="strSelectedBasePatentIds" type="string" access="global"/>
+    <aura:attribute name="strSelectedParentPatentIds" type="string" access="global"/>
+     <aura:attribute name="lstSelectedBasePatents" type="List"/>
+    <aura:attribute name="lstSelectedParentPatents" type="List"/>
+    <aura:attribute name="isShowSearchBaseResult" type="boolean" default="false"/>
+     <aura:attribute name="isShowSearchParentResult" type="boolean" default="false"/>
+    <aura:attribute name="isCreateOpen" type="boolean" default="false"/>
+    <aura:attribute name="isCreateOpenModel" type="boolean" default="false"/>
+      <!-- Sortable -->
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    <aura:attribute name="defaultSortDirection" type="String" default="asc" />
+    <!-- Sortable -->
+   <!-- comments -->
+    <aura:attribute name="fmlyobject" type="SymphonyIPM__Family__c"  default="{'sobjectType':'SymphonyIPM__Family__c',
+                                                                              'SymphonyIPM__BaseRecord__c':'',
+                                                                              'SymphonyIPM__ParentRecord__c':'',
+                                                                              'SymphonyIPM__Filing_Date__c':'',
+                                                                              'SymphonyIPM__FamilyId__c':''}"/>  
+     <div class="slds-grid slds-grid--align-end">
+    <button class="slds-button" data-uk-tooltip="{pos:'top-right'}" title="Refresh" label="Refresh Grouping" onclick="{!c.familyRefereshwin}">
+        <lightning:icon iconName="utility:refresh" size="x-small" alternativeText="Couldn't Refresh" />
+         </button></div>
+   <ui:scrollerWrapper class="outerScroller">
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+         <thead>
+             <tr class="slds-line-height_reset">
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Docket No"><b>DOCKET NO</b></span>
+                </th>                
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">       
+                    <span class="slds-truncate" title="Family Members"><b>FAMILY MEMBERS</b></span>
+                </th>
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+               
+            <span class="slds-truncate" title="Filing Date"><b>FILING DATE </b></span>
+                     <span class="slds-icon_container slds-icon-utility-arrowdown">
+                           <aura:if isTrue="{!v.sortedDirection=='asc'}">
+              <lightning:buttonIcon onclick="{!c.handleSort }" iconName="utility:arrowdown" alternativeText="Approved" size="x-small" title="Approved" />
+                         <aura:set attribute="else">
+                              <lightning:buttonIcon onclick="{!c.handleSort }" iconName="utility:arrowup" alternativeText="Approved" size="x-small" title="Approved" />
+       
+                               </aura:set>
+                         </aura:if>
+                         </span>
+                </th>
+               
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Status"><b>STATUS</b></span>
+                </th>        
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Case Type"><b>CASE TYPE</b></span>
+                </th>        
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Issue Date of Patent"><b>ISSUE DATE OF PATENT</b></span>
+                </th>  
+                <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Jurisdiction"><b>COUNTRY CODE</b></span>
+                </th>
+                   <th aria-sort="none" class="slds-is-sortable slds-is-resizable slds-text-title_caps" aria-label="Name" scope="col">
+                    <span class="slds-truncate" title="Title"><b>TITLE</b></span>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <aura:iteration items="{!v.Listoffamily}" var="fmly">
+                <tr class="slds-hint-parent">
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.DocketNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.DocPatId + '/view'}" target="_blank">{!fmly.DocketNumber}</a></div>
+                    </td>
+                    <aura:if isTrue="{!not(empty(fmly.PatentId))}">
+                        <td role="gridcell">
+                            <div class="slds-truncate" title="{!fmly.BaseNumber}"><a href="{!'/one/one.app?#/sObject/'+ fmly.PatentId + '/view'}" target="_blank">{!fmly.BaseNumber}</a></div>
+                        </td>
+                        <aura:set attribute="else">
+                            <td role="gridcell">
+                                <div class="slds-truncate" title="{!fmly.BaseNumber}">{!fmly.BaseNumber}</div>
+                            </td>
+                        </aura:set>
+                    </aura:if>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.filingDate}">{!fmly.filingDate}</div>
+                    </td>
+                   
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.status}">{!fmly.status}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.CaseType}">{!fmly.CaseType}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.IssueDate}">{!fmly.IssueDate}</div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.jurisdiction}">{!fmly.jurisdiction}</div>
+                    </td>
+                     <td role="gridcell">
+                        <div class="slds-truncate" title="{!fmly.title}">{!fmly.title}</div>
+                    </td>
+                      <td data-label="icon" class="slds-col slds-size_1-of-12" onclick="{!c.delete}" id="{!fmly.DocPatId}">
+                        <lightning:icon iconName="utility:delete" size="x-small" />
+                    </td>
+                </tr>
+            </aura:iteration>           
+        </tbody>
+    </table>
+  </ui:scrollerWrapper>     
+</aura:component>

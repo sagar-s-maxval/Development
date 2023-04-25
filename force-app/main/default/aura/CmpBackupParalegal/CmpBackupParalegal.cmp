@@ -1,0 +1,49 @@
+<aura:component controller="Backupparalegalcntrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:attribute name="CurrentUser" type="Object"/>
+   <force:recordData recordId="{!$SObjectType.CurrentUser.Id}"
+                  fields="Profile.Name"
+                  targetFields="{!v.CurrentUser}"/>
+    <aura:attribute name="richtext" type="String"/>
+     <aura:attribute name="showedit" type="boolean" default="false"/>
+     <aura:attribute name="showAccordion" type="Boolean" default="false" description="Show or hide the main summary"/>
+     <aura:handler name="init" value="{! this }" action="{! c.init }" />
+      <article class="slds-card">
+              <div onclick="{!c.toggleAccordion}">
+          <div style="float:left;  margin-right: 1rem;margin-left: 10px;margin-bottom:10px;margin-top:8px;">  
+                 <aura:if isTrue="{!v.showAccordion}">
+                            <lightning:icon iconName="utility:chevrondown" size="x-small"/>
+                             <aura:set attribute="else">
+                                <lightning:icon iconName="utility:chevronright" size="x-small"/>
+                            </aura:set>
+                        </aura:if>
+               </div>
+                
+                <div class="slds-card__header-title" style="margin-top:10px;margin-bottom:10px;"><lightning:button variant="base" label="Backup Paralegal" title="Backup Paralegal" /></div>
+    </div>
+                  <aura:if isTrue="{!v.showAccordion}">
+        <p style="margin-left:5px;">
+           <div style="margin-bottom:10px;margin-top:10px;">
+                <aura:if isTrue="{!!v.showedit}">
+            <lightning:formattedRichText value="{!v.richtext}" />
+               </aura:if>
+            </div>
+            <aura:if isTrue="{!v.CurrentUser.Profile.Name=='System Administrator'}">
+               <aura:if isTrue="{!!v.showedit}">
+                    <footer class="slds-card__footer">
+                        <div class="slds-clearfix">
+                         <p class="slds-float_right">
+                 <lightning:button  variant="base" label="Edit" title="Brand action" onclick="{! c.handleClick }" />
+                             </p></div>
+                   </footer>
+                     </aura:if>
+                <aura:if isTrue="{!v.showedit}">
+             <lightning:inputRichText value="{!v.richtext}"/>
+                  <center style="margin-bottom:10px;margin-top:10px;">
+                        <lightning:button variant="brand" label="Save" title="Brand action" onclick="{!c.savetext }" />
+                 <lightning:button variant="brand-outline" label="Close" title="Brand action" onclick="{! c.clickcancel }" /> &nbsp;
+                  <br></br>
+                   </center>
+                </aura:if>
+                </aura:if></p>
+     </aura:if> </article>
+</aura:component>

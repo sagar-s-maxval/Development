@@ -1,0 +1,213 @@
+<apex:page renderAs="pdf" standardStylesheets="false" applyBodyTag="false" standardController="SymphonyIPM__Patent__c" extensions="NOACheckListDynemic"
+           contentType="application/pdf" applyHtmlTag="false" sidebar="false" showHeader="false"
+           pageStyle="all">
+ <html>
+ <head>
+ <style type="text/CSS">
+
+ .beta td{
+ padding:5px;
+ page-break-inside: avoid;
+ }
+ .beta th{border: 1px solid white;}
+ @page {
+ size:landscape;
+ @bottom-right {
+ content: "Page " counter(page);
+ }
+ }
+ </style>
+ </head>
+ <body>
+ 
+   <div>
+     <table style="width:90%;border:1px black solid;padding:5px;" align="center">    
+         <tr><td style="width:20%"><span style="padding-right:5em;font-style:italic;color:#6699CC;">Appl. No.</span></td><td>{!pat.SymphonyIPM__Application_Number__c}</td><td style="width:25%"></td><td style="padding-left:7em;"><apex:image value="{!URLFOR($Resource.TF)}" width="130" height="40"/></td></tr>
+         <tr><td style="width:20%"><span style="padding-right:4em;font-style:italic;color:#6699CC;">Filing Date</span></td><td><apex:outputText value="{0, date, MMMM d',' yyyy}"><apex:param value="{!pat.SymphonyIPM__Application_Date__c}"/></apex:outputText></td><td style="width:25%"></td><td></td></tr>
+         <tr><td style="width:20%"><span style="padding-right:4em;font-style:italic;color:#6699CC;">Priority App No.</span></td><td>{!pat.SymphonyIPM__Priority_Number__c}</td>
+             <td style="width:25%"><span style="padding-left:7em;font-style:italic;color:#6699CC;">File#</span></td><td>{!pat.SymphonyIPM__Docket_No__c}</td>
+         </tr>
+         <tr><td style="width:25%"><span style="padding-right:4em;color:#6699CC;font-style:italic;">Priority File Date.</span></td><td><apex:outputText value="{0, date, MMMM d',' yyyy}"><apex:param value="{!pat.SymphonyIPM__Application_Date__c}"/></apex:outputText></td>
+             <td style="width:25%"><span style="padding-left:7em;color:#6699CC;font-style:italic;">Conf. No.</span></td><td>1082</td>
+         </tr>
+         <tr><td style="width:25%"><span style="padding-right:4em;color:#6699CC;font-style:italic;">First Applicant</span></td><td>Life Technologies Corporation</td>
+             <td style="width:25%"><span style="padding-left:7em;color:#6699CC;font-style:italic;">EntityStatus</span></td><td>{!pat.SymphonyIPM__Entity_Status__c}</td>
+         </tr>
+         <tr><td style="width:7%"><span style="padding-right:5em;color:#6699CC;font-style:italic;">Title</span></td><td style="width:45%">{!pat.SymphonyIPM__Title_of_Invention__c}</td><td style="width:35%"></td><td></td></tr>
+         <tr><td style="width:7%"><span style="padding-right:5em;color:#6699CC;font-style:italic;">Inventor(s)</span></td><td style="width:45%">{!pat.SymphonyIPM__Inventors__c }</td><td style="width:35%"></td><td></td></tr>
+     </table>
+     <table style="width:90%;border:1px black solid;padding:5px;border-top:none;" align="center">
+         <tr><td style="width:20%"><span style="padding-right:5.4em;color:#6699CC;font-style:italic;">GROUP/DIV</span></td><td>LSG</td>
+             <td style="width:25%"><span style="padding-left:1.4em;color:#6699CC;font-style:italic;">DIV</span>&nbsp;CSD</td><td></td>
+         </tr>
+         <tr><td style="width:20%"><span style="padding-right:5.4em;color:#6699CC;font-style:italic;">BU</span></td><td>LSG-CSD-Next Generation Sequencing (BU)</td>
+             <td style="width:25%"><span style="padding-left:16em;color:#6699CC;"></span></td><td></td>
+         </tr>
+     </table>
+     <table style="width:90%;border:1px black solid;padding:5px;border-top:none;" align="center">
+          <tr><td style="width:7%"><span style="padding-right:7.9em;font-style:italic;color:#6699CC;">RM/PL</span></td><td>Kerri Schray</td>
+             <td style="width:7%"><span style="padding-left:12em;font-style:italic;color:#6699CC;">PL</span></td><td>Mila Kasan</td>
+         </tr>
+     </table>
+     <table style="width:90%;border:1px black solid;padding:5px;border-top:none;" align="center">
+          <tr><td style="width:20%"><span style="padding-right:7.7em;color:#6699CC;font-style:italic;">OC</span></td><td>{!pat.SymphonyIPM__Outside_Counsel__r.Name}</td>
+             <td style="width:25%"><span style="padding-left:16em;color:#6699CC;"></span></td><td></td>
+         </tr>
+     </table>
+     <h3 style="color:#365F91;text-align:center;">U.S. NOTICE OF ALLOWANCE CHECKLIST</h3>
+     <br/>
+     <table class="beta" border="1" style="width:90%;border:1px solid black;border-collapse:collapse;padding:5px;table-layout: fixed;" align="center">
+      <tr>
+          <th style="width:3%;"></th>
+          <th style="color:#6699CC;word-wrap: break-word;width:44%">PARALEGAL TASKS – FORMALITIES + IDS</th>
+          <th style="width:4%;"></th>
+          <th style="color:#6699CC;word-wrap: break-word;width:49%">COMMENTS (IF NEEDED)</th>
+      </tr>
+      <tr>
+          <td >1</td>
+          <td >All Bibliographic Info in header (from FIP) is accurate</td>
+          <td ><apex:image value="{!If((wrap.p1==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td>{!wrap.c1}</td>
+      </tr>
+      <tr>
+          <td >2</td>
+          <td >Declaration(s) for all inventors signed and filed</td>
+          <td ><apex:image value="{!If((wrap.p2==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c2}</td>
+      </tr>
+      <tr>
+          <td >3</td>
+          <td >Assignment(s) for all inventors signed and recorded</td>
+          <td ><apex:image value="{!If((wrap.p3==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c3}</td>
+      </tr>
+      <tr>
+          <td >4</td>
+          <td >Drawings are in order</td>
+          <td ><apex:image value="{!If((wrap.p4==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c4}</td>
+      </tr>
+      <tr>
+          <td >5</td>
+          <td >Sequence Listing accepted</td>
+          <td ><apex:image value="{!If((wrap.p5==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c5}</td>
+      </tr>
+      <tr>
+          <td >6</td>
+          <td >Allowed claims saved to FTF in Word format</td>
+          <td ><apex:image value="{!If((wrap.p6==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c6}</td>
+      </tr>
+      <tr>
+          <td >7</td>
+          <td >IDS - All SB08 refs initialed by Examiner</td>
+          <td ><apex:image value="{!If((wrap.p7==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c7}</td>
+      </tr>
+      <tr>
+          <td >8</td>
+          <td >IDS - All art from US and foreign counterparts cited</td>
+          <td ><apex:image value="{!If((wrap.p8==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c8}</td>
+      </tr>
+      <tr>
+          <td >9</td>
+          <td >IDS - Double-check MaxIDS for uncited art</td>
+          <td ><apex:image value="{!If((wrap.p9==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c9}</td>
+      </tr>
+      <tr>
+          <td >10</td>
+          <td >Other issues?  Describe:</td>
+          <td ></td>
+          <td >{!wrap.c10}</td>
+      </tr>
+    </table>
+    <br/>
+    <table class="beta" border="1" style="width:90%;border:1px solid black;border-collapse:collapse;padding:5px;table-layout: fixed;" align="center">
+      <tr>
+          <th style="width:3%;"></th>
+          <th style="color:#6699CC;word-wrap: break-word;width:44%">ATTORNEY/AGENT TASKS</th>
+          <th style="width:4%;"></th>
+          <th style="color:#6699CC;word-wrap: break-word;width:49%">COMMENTS (IF NEEDED)</th>
+      </tr>
+      <tr>
+          <td >11</td>
+          <td >Allowed claims match most recent amendment(s)</td>
+          <td ><apex:image value="{!If((wrap.p11==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c11}</td>
+      </tr>
+      <tr>
+          <td >12</td>
+          <td >No amendment(s) to specification or claims needed</td>
+          <td ><apex:image value="{!If((wrap.p12==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c12}</td>
+      </tr>
+      <tr>
+          <td >13</td>
+          <td >Inventorship is correct for allowed claims</td>
+          <td ><apex:image value="{!If((wrap.p13==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c13}</td>
+      </tr>
+      <tr>
+          <td >14</td>
+          <td >Non-publication Request was filed</td>
+          <td ><apex:image value="{!If((wrap.p14==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c14}</td>
+      </tr>
+      <tr>
+          <td >15</td>
+          <td >Government has rights in invention</td>
+          <td ><apex:image value="{!If((wrap.p15==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c15}</td>
+      </tr>
+      <tr>
+          <td >16</td>
+          <td >Will Thermo Fisher pay maintenance fees?</td>
+          <td ><apex:image value="{!If((wrap.p16==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c16}</td>
+      </tr>
+      <tr>
+          <td >17</td>
+          <td >If allowed before 12-month date, confirm if PCT is needed</td>
+          <td ><apex:image value="{!If((wrap.p17==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c17}</td>
+      </tr>
+      <tr>
+          <td >18</td>
+          <td >Notify inventors of allowance and duty of disclosure</td>
+          <td ><apex:image value="{!If((wrap.p18==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c18}</td>
+      </tr>
+      <tr>
+          <td >19</td>
+          <td >Are commercial product(s) covered by claims?</td>
+          <td ><apex:image value="{!If((wrap.p19==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c19}</td>
+      </tr>
+      <tr>
+          <td >20</td>
+          <td >Decision on continuing/divisional application</td>
+          <td ><apex:image value="{!If((wrap.p20==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c20}</td>
+      </tr>
+      <tr>
+          <td >21</td>
+          <td >Reply to Examiner’s Amendment/Reasons for Allowance</td>
+          <td ><apex:image value="{!If((wrap.p21==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c21}</td>
+      </tr>
+      <tr>
+          <td >22</td>
+          <td >Issue fee to be paid; if so, when?</td>
+          <td ><apex:image value="{!If((wrap.p22==true),URLFOR($Resource.Checkboxchecked),URLFOR($Resource.checkboxunchecked))}" width="20" height="20"/></td>
+          <td >{!wrap.c22}</td>
+      </tr>
+    </table>
+  </div> 
+  
+
+ </body>
+ </html>
+</apex:page>

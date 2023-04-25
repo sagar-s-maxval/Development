@@ -1,0 +1,118 @@
+<aura:component access="global" controller="InventorController" implements="lightning:availableForFlowScreens">
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <!-- Determine which actions are available -->
+    <aura:attribute name="isPrevious" type="Boolean"/>
+    <aura:attribute name="isProceed" type="Boolean"/>
+    <aura:attribute name="isExit" type="Boolean"/>
+    <aura:attribute name="isDelete" type="Boolean"/>
+    <aura:attribute name="isSubmit" type="Boolean"/>
+    <aura:attribute name="isGoToFirst" type="Boolean" default="false"/>
+
+    <aura:attribute name="buttonClicked" type="String"/>
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+    <aura:attribute name="idfId" type="String"/>
+
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="isButtonNotAvailable" type="Boolean" default="false"/>
+    <aura:attribute name="isDisable" type="Boolean" default="false"/>
+    <aura:attribute name="tooltip" type="Boolean" default="false"/>
+    <aura:attribute name="tooltip2" type="Boolean" default="false"/>
+
+    <aura:handler event="c:ExceededLimitEvent" action="{!c.handleExceedingLimit}"/>
+
+    <aura:if isTrue="{!v.showModal}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                 aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box Header Starts here-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                </header>
+                <!--Modal/Popup Box Body Starts here-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p><b>Are you sure you want to delete this Invention Disclosure?</b>
+                    </p>
+                </div>
+                <!--Modal/Popup Box Footer Starts here-->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral"
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand"
+                                      label="Yes"
+                                      title="Yes"
+                                      onclick="{!c.submitDetails}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+        <div class="slds-float_right slds-scope" style="position:relative" aria-describedby="help">
+            <!-- If Pause, Next, or Finish are available, display to the right -->
+            <aura:if isTrue="{!v.isPrevious}">
+                <lightning:button aura:id="PREVIOUS" label="Previous"
+                                  variant="neutral" onclick="{!c.onButtonPressed}"
+                                  disabled="{!v.isButtonNotAvailable}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.isGoToFirst}">
+                <lightning:button aura:id="PREVIOUS1" label="Previous"
+                                  variant="brand-outline" onclick="{!c.onButtonPressed}"
+                                  disabled="{!or(v.isButtonNotAvailable,v.isDisable)}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.isProceed}">
+                <lightning:button aura:id="NEXT" label="Save and Proceed"
+                                  variant="brand" onclick="{!c.onButtonPressed}" disabled="{!or(v.isButtonNotAvailable,v.isDisable)}"/>
+            </aura:if>
+            <aura:if isTrue="{! and(v.isSubmit, v.status == 'Draft')}">
+                <a onmouseover="{!c.showToolTip2}" onmouseout="{!c.HideToolTip2}">
+                    <lightning:button aura:id="FINISH" label="Submit"
+                                      variant="brand" onclick="{!c.onButtonPressed}"
+                                      disabled="{!or(v.isButtonNotAvailable,v.isDisable)}"/>
+                </a>
+            </aura:if>
+            <aura:if isTrue="{!and(v.isSubmit, v.status != 'Draft')}">
+                <a onmouseover="{!c.showToolTip2}" onmouseout="{!c.HideToolTip2}">
+                    <lightning:button aura:id="FINISH" label="Re-Submit"
+                                      variant="brand" onclick="{!c.onButtonPressed}"
+                                      disabled="{!v.isButtonNotAvailable}"/>
+                </a>
+            </aura:if>
+            <aura:if isTrue="{!v.tooltip2}">
+                <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-right" role="tooltip" id="help2"
+                     style="position:absolute;top:-4rem;left:-9rem;width:20rem;">
+                    <div class="slds-popover__body">
+                        <lightning:formattedRichText value="{!$Label.c.submitHelpText}"/>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isExit}">
+                <a onmouseover="{!c.showToolTip}" onmouseout="{!c.HideToolTip}">
+                    <lightning:button aura:id="EXIT" label="Save and Exit"
+                                      variant="brand-outline" onclick="{!c.onButtonPressed}"
+                                      disabled="{!or(v.isButtonNotAvailable,v.isDisable)}"/>
+                </a>
+                <aura:if isTrue="{!v.tooltip}">
+                    <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-right" role="tooltip" id="help"
+                         style="position:absolute;top:-4rem;left:-1.5rem;width:20rem;">
+                        <div class="slds-popover__body">
+                            <lightning:formattedRichText value="{!$Label.c.saveAndExitHelpText}"/>
+                        </div>
+                    </div>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.isDelete}">
+                <lightning:button aura:id="DELETE" label="Delete"
+                                  iconName="utility:delete" iconPosition="right" variant="destructive"
+                                  onclick="{!c.onButtonPressed}" disabled="{!v.isButtonNotAvailable}"/>
+            </aura:if>
+
+        </div>
+    </div>
+</aura:component>

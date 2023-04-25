@@ -1,0 +1,29 @@
+<aura:component description="cmpEMTKAttachments" extends="c:base" controller="EmailTrackerController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="emailId" type="String"/>
+    <aura:attribute name="attachments" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-card">
+        <table>
+            <tbody>
+            <aura:iteration items="{!v.attachments}" var="doc">
+                <tr>
+                    <td>
+                        <a href="{! '/servlet/servlet.FileDownload?file=' + doc.Id}">
+                            <lightning:icon iconName="doctype:attachment" alternativeText="attachment"
+                                            title="attachment"/>
+                        </a>
+                    </td>
+                    <td>
+                        <br/>
+                        <a href="{! '/servlet/servlet.FileDownload?file=' + doc.Id}">{!doc.Name}</a>
+                    </td>
+                </tr>
+            </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>

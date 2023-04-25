@@ -1,0 +1,17 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <h2 class="slds-card__header-title">
+                <span class="slds-text-heading_small slds-truncate">{label}</span>
+            </h2>
+        </div>
+        <div if:true={diaryNotes.data} class="slds-m-around_medium">
+            <lightning-datatable
+                    key-field="id"
+                    data={data}
+                    columns={columns}
+                    hide-checkbox-column="true">
+            </lightning-datatable>
+        </div>
+    </article>
+</template>

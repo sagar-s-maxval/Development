@@ -1,0 +1,10 @@
+/**
+ * Created by aromash on 13.10.2021.
+ */
+
+.THIS .slds-scope{
+    color: black;
+}
+.THIS .slds-form-element__label {
+    display: none;
+}

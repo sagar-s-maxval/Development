@@ -1,0 +1,7 @@
+<aura:component controller="RefreshRolesCntrl"  implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" 
+                access="global">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+  <span style="margin-bottom:20px;"> Updating the Roles ...
+    </span>
+</aura:component>

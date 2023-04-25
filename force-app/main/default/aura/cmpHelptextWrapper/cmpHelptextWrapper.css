@@ -1,0 +1,11 @@
+.THIS td {
+    vertical-align: top;
+}
+.THIS .left {
+    white-space: nowrap;
+    padding-right: 5px;
+}
+.THIS .slds-form-element__icon {
+    padding-top: 2px;
+    z-index: 9999;
+}

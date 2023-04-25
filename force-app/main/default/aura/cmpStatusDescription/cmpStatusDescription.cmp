@@ -1,0 +1,54 @@
+<aura:component implements="flexipage:availableForRecordHome">
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="content" type="String"/>
+    <aura:attribute name="isReferenced" type="Boolean"/>
+    <aura:attribute name="showAccordion" type="Boolean" default="false" description="Show or hide the main summary"/>
+    <article class="slds-card">
+        <div class="slds-card__header">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div onclick="{!c.toggleAccordion}">
+                    <div style="float:left; margin-right: 1rem;">
+                        <aura:if isTrue="{!v.showAccordion}">
+                            <lightning:icon iconName="utility:chevrondown" size="x-small"/>
+                            <aura:set attribute="else">
+                                <lightning:icon iconName="utility:chevronright" size="x-small"/>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-card__header-title">Invention Disclosure Status Description</div>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <aura:if isTrue="{!v.showAccordion}">
+                <lightning:formattedRichText value="{!$Label.c.submittedStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.statusRevRequestedDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.statusReSubmittedDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.acceptedStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.claimedStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.closedReleasedStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.needMoreInfoStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.defensiveStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.tradeSecretStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.holdStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.mergedStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.closedNoActionStatusDescription}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.approved}"/>
+                <hr/>
+                <lightning:formattedRichText value="{!$Label.c.finalDespositionStatusDescription}"/>
+            </aura:if>
+        </div>
+    </article>
+</aura:component>

@@ -1,0 +1,141 @@
+<aura:component description="cmpInventionDisclosureRating" controller="InventionRatingController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="recommendationOptions" type="List"/>
+
+    <aura:attribute name="q1" type="String"/>
+    <aura:attribute name="q2" type="String"/>
+    <aura:attribute name="q3" type="String"/>
+    <aura:attribute name="q4" type="String"/>
+    <aura:attribute name="q5" type="String"/>
+    <aura:attribute name="q6" type="String"/>
+    <aura:attribute name="q7" type="String"/>
+    <aura:attribute name="q8" type="String"/>
+    <aura:attribute name="q9" type="String"/>
+    <aura:attribute name="q10" type="String"/>
+    <aura:attribute name="q11" type="String"/>
+    <aura:attribute name="comments" type="String"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="showRecErrors" type="Boolean"/>
+    <aura:attribute name="status" type="String"/>
+
+    <aura:attribute name="reviewId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-text-heading_small">
+        <p><b>Note</b>: Please rate the following questions related to the disclosure on a scale of 1-5 wherein <b>1
+                being the lowest and 5 being the highest</b>.</p>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">How novel is the invention in comparison to the known prior art?
+        <lightning:helptext content="Originality"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label="" value="{!v.q1}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Does the invention solve a long-standing problem in its technical field?
+        <lightning:helptext content="Problem Resolution"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label="" value="{!v.q2}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Does the invention achieve unexpected favorable results?
+        <lightning:helptext content="Favorable Results"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label="" value="{!v.q3}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Does the invention represent a technology differentiator that gives us a competitive
+        advantage in the market?
+        <lightning:helptext content="Competitive Advantage"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox
+                label=""
+                value="{!v.q4}"
+                options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Is it likely that one or more of our competitors will practice the invention?
+        <lightning:helptext content="Competitors Usage"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label=""
+                            value="{!v.q5}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Does the invention have significant applicability outside of our core business?
+        <lightning:helptext content="Applicability"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label=""
+                            value="{!v.q6}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">Based on the foregoing, what is the business value of the invention to us?
+        <lightning:helptext content="Business Value"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label=""
+                            value="{!v.q7}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">How difficult will it be for others to design around the invention if it is patented?
+        <lightning:helptext content="Invention Design Complexity"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label=""
+                            value="{!v.q8}"
+                            options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">How difficult will it be to detect use of the invention by others without extensive
+        reverse-engineering?
+        <lightning:helptext content="Invention Complexity"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox
+                label=""
+                value="{!v.q9}"
+                options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">What is the likelihood that invention can be implemented as a product, in view of
+        technical challenges?
+        <lightning:helptext content="Commercial Use"/>
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox
+                label=""
+                value="{!v.q10}"
+                options="{! v.options }" variant="label-hidden"/>
+    </div>
+    <br/>
+    <p style="margin-bottom: 3px;">
+        <span style="color:#ff0000">* </span>Recommendations
+    </p>
+    <div class="slds-col slds-size_1-of-3">
+        <lightning:combobox label="" options="{!v.recommendationOptions}" value="{!v.q11}" variant="label-hidden"/>
+    </div>
+    <aura:if isTrue="{!and(v.showRecErrors, not(v.q11))}">
+        <div class="slds-text-color_error">You need to provide value to proceed further.
+        </div>
+    </aura:if>
+    <br/>
+    <p style="margin-bottom: 3px;">
+        Review comments
+    </p>
+    <lightning:textarea label="" value="{!v.comments}" maxlength="32768" variant="label-hidden"/>
+    <c:cmpTextLimit isRichText="false" vLimit="32768" vText="{!v.comments}"/>
+
+</aura:component>

@@ -1,0 +1,25 @@
+.THIS .file-uploader .slds-medium-show{
+    display: none;
+}
+
+.THIS .file-uploader {
+/*    position: absolute;*/
+    margin-top: -1rem;
+}
+
+.THIS .slds-file-selector__dropzone {
+    border: none;
+}
+
+.THIS .slds-col {
+    min-height: 2.65rem;
+}
+
+.THIS .grid-border {
+   border-style: solid
+}
+
+.THIS .delete-icon .slds-icon {
+    width: 1rem;
+    height: 1rem;
+}

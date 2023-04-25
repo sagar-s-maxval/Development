@@ -1,0 +1,6 @@
+<design:component>
+	<design:attribute name="ObjectAPIName" label="Object's API Name"/>
+    <design:attribute name="FilterFieldAPIName" label="Filter field's API Name" />
+    <design:attribute name="ShowPinned" label="Show Only Pinned" />
+    <design:attribute name="ShowActions" label="Show action buttons" />
+</design:component>

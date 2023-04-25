@@ -1,0 +1,11 @@
+<template>
+    <lightning-card class="slds-m-top_medium">
+        <lightning-datatable if:true={response.data}
+                             key-field="Id"
+                             data={data}
+                             columns={columns}
+                             onrowselection={rowSelected}
+                             max-row-selection="1"
+        ></lightning-datatable>
+    </lightning-card>
+</template>

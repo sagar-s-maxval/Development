@@ -1,0 +1,10 @@
+<aura:component description="cmpCustomDescription"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,lightning:availableForFlowScreens"
+>
+
+    <aura:attribute name="label" type="String"/>
+    <aura:attribute name="description" type="String"/>
+
+    <lightning:textarea aura:id="descriptionArea" name="input1" label="{!v.label}" onchange="{!c.handleChangeTextArea}"/>
+
+</aura:component>

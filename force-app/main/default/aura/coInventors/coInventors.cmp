@@ -1,0 +1,44 @@
+<aura:component description="primaryInventor"
+                extends="c:base"
+                controller="InventorController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="selectedInventors" type="String"/>
+    <aura:attribute name="selectedInventorsList" type="List" default="[]"/>
+    <aura:attribute name="primaryInventorId" type="String"/>
+    <aura:attribute name="pillList" type="List" default="[]"/>
+    <aura:attribute name="currentUserEmail" type="String"/>
+<!--    <aura:attribute name="isLoading" type="Boolean" default="false"/>-->
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:removeInventorEvent" action="{!c.handleRemoveInventor}"/>
+
+    <div>
+        <div class="slds-col slds-size_1-of-1">
+            <p style="font-size:14px;">Co-Inventors <lightning:helptext style="margin-left:5px;" content="Provide Thermo Fisher Scientific co-inventor(s) who helped on the invention. Click on the search box, then search and select a name. The selected name will be updated in the co-inventors text field. Continue the same process for each Thermo Fisher Scientific co-inventor to be added to the Invention Disclosure Form."/></p>
+        </div>
+    </div>
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Search for inventor"
+                    label=""
+                    type="search"
+                    variant="label-hidden"
+            />
+<!--            <lightning:spinner size="medium" class="{!v.isLoading ? '' : 'slds-hide'}" alternativeText="Loading..."/>-->
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+        <p><lightning:pillContainer items="{!v.pillList}" onitemremove="{!c.removeSelectedInventor}"/></p>
+    </div><br/>
+</aura:component>

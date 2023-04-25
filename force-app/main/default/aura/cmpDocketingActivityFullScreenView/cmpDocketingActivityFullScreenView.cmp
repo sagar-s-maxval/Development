@@ -1,0 +1,46 @@
+<aura:component implements="lightning:isUrlAddressable" description="cmpDocketingActivityFullScreenView">
+    <aura:attribute name="recordId" type="String"></aura:attribute>
+    <aura:attribute name="sObjectApiName" type="String"></aura:attribute>
+    <aura:attribute name="parentLookupField" type="String"></aura:attribute>
+    <aura:attribute name="fieldSet" type="String"></aura:attribute>
+    <aura:attribute name="nameAsUrl" type="Boolean"></aura:attribute>
+    <aura:attribute name="columnWidthOverride" type="String"></aura:attribute>
+    <aura:attribute name="header" type="String"></aura:attribute>
+    <aura:attribute name="returnHelpText" type="String"></aura:attribute>
+
+
+    <aura:attribute name="loaded" type="Boolean" default="false"></aura:attribute>
+
+    <aura:handler name="init" value="{!this}" action="{!c.onPageReferenceChange}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.onPageReferenceChange}"/>
+
+    <lightning:card>
+        <aura:if isTrue="{!v.loaded}">
+            <div class="slds-m-around_medium">
+                <lightning:layout verticalAlign="end">
+                    <lightning:layoutItem size="11">
+                        <h1 class="header">{!v.header}</h1>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="1">
+                        <div class="collapseButton">
+                            <lightning:buttonIcon
+                                    iconName="utility:contract"
+                                    alternativeText="{!v.returnHelpText}"
+                                    onclick="{!c.return}"
+                            ></lightning:buttonIcon>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+
+                <c:relatedListTableEditable
+                        recordId="{!v.recordId}"
+                        parentLookupField="{!v.parentLookupField}"
+                        sObjectApiName="{!v.sObjectApiName}"
+                        fieldSet="{!v.fieldSet}"
+                        nameAsUrl="{!v.nameAsUrl}"
+                        columnWidthOverride="{!v.columnWidthOverride}"
+                ></c:relatedListTableEditable>
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>

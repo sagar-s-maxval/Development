@@ -1,0 +1,23 @@
+.THIS .slds-grid_align-end
+{
+    justify-content: left !important;
+}
+
+.THIS .slds-th__action .slds-th__action-button {
+     display: none;
+}
+
+.THIS .slds-button_icon-bare{
+    display: none;
+}
+
+.THIS .tableEdit td:nth-child {
+    display:none !important;
+}
+.THIS .tableEdit th:nth-child {
+    display:none !important;
+}
+
+.THIS .slds-th__action {
+    justify-content: center;
+}

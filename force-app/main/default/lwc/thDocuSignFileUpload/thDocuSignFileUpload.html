@@ -1,0 +1,20 @@
+<template>
+
+    <div class="slds-p-around_medium lgc-bg" style="text-align:center;">
+        <lightning-file-upload
+                label="Attachment"
+                name="fileUploader"
+                accept={acceptedFormats}
+                record-id={recordId}
+                onuploadfinished={openFileUpload}
+        >
+        </lightning-file-upload>
+        <div style='padding-top: 15px;' class="slds-text-body_small">{filesName}</div>
+    </div>
+
+    <template if:true={loader}>
+        <div style="min-height:3rem;transform: translate(0, 0);">
+            <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+        </div>
+    </template>
+</template>

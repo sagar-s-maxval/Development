@@ -1,0 +1,33 @@
+<aura:component description="cmpOtherMattersPatents"
+                controller="OtherMattersController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="trademarksIds" type="List" default="[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Search trademarks"
+                    label="Search trademarks"
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+<!--        <p><lightning:pillContainer items="{!v.lstSelectedPatents}" onitemremove="{!c.removeSelectedPatent}"></lightning:pillContainer></p>-->
+    </div><br/>
+</aura:component>

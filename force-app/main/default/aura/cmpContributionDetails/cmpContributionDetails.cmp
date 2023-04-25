@@ -1,0 +1,19 @@
+<aura:component description="cmpContributionDetails"
+                controller="RemunerationController"
+                implements="force:hasRecordId,force:lightningQuickAction,flexipage:availableForAllPageTypes"
+                access="global">
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="columns" type="List" default="[]"/>
+    <aura:attribute name="data" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-table_bordered">
+        <lightning:datatable
+                showRowNumberColumn="true"
+                keyField="id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="true"/>
+    </div>
+</aura:component>

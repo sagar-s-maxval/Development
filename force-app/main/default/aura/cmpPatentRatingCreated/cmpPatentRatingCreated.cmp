@@ -1,0 +1,4 @@
+<aura:component description="cmpPatentRatingCreated" extends="c:base" implements="lightning:availableForFlowScreens">
+    <aura:attribute name="message" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

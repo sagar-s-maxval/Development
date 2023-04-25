@@ -1,0 +1,7 @@
+<aura:component description="thFlowTextInputDisabled" implements="lightning:availableForFlowScreens">
+
+    <aura:attribute name="vLabel" type="String"/>
+    <aura:attribute name="vValue" type="String"/>
+
+    <lightning:input name="inputText" disabled="true" value="{!v.vValue}" label="{!v.vLabel}" />
+</aura:component>

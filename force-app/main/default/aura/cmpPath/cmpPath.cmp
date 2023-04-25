@@ -1,0 +1,37 @@
+<aura:component implements="force:appHostable,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride,lightning:availableForFlowScreens" access="global">
+    <!-- attributes -->
+    <aura:attribute name="steps" type="String[]" access="global"/>
+    <aura:attribute name="currentStep" type="String" access="global"/>
+
+    <aura:attribute name="stepsProcessed" type="String[]"/>
+
+    <!-- handlers -->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+    <!-- component -->
+    <div class="slds-path">
+        <div class="slds-grid slds-path__track">
+            <div class="slds-grid slds-path__scroller-container">
+                <div class="slds-path__scroller">
+                    <div class="slds-path__scroller_inner">
+                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                            <aura:iteration items="{!v.stepsProcessed}" var="item">
+                                <li class="{!item.stage}" role="presentation" data-id="{!item.id}" onclick="{!c.handleStepClick}">
+                                    <a aria-selected="false" class="slds-path__link" href="javascript:void(0);" aura:id="{!item.id}" role="option" tabindex="-1">
+                                        <span class="slds-path__stage">
+                                            <lightning:icon iconName="action:approval" alternativeText="Approved" title="Approved" size="small"/>
+                                        </span>
+                                        <span class="slds-path__title">{!item.label}</span>
+                                    </a>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- aura method -->
+    <aura:method name="handleStepsChange" action="{!c.handleStepsChange}"></aura:method>
+</aura:component>

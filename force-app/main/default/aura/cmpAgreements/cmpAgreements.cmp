@@ -1,0 +1,29 @@
+<aura:component description="cmpAgreements"
+                extends="c:base"
+                implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId"
+                controller="InventorController">
+
+    <aura:attribute name="recordId" type="String"/>
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="selectedTemplates" type="List"/>
+    
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div style="height: 300px">
+        <lightning:datatable
+                keyField="id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                onrowselection="{! c.updateSelectedRows }"/>
+    </div>
+    <br/>
+    <div class="slds-clearfix slds-p-top_medium">
+        <div class="slds-float_right">
+            <lightning:button label="Generate selected documents" variant="brand" onclick="{!c.generateDocuments}"/>
+        </div>
+        <br/>
+    </div>
+</aura:component>

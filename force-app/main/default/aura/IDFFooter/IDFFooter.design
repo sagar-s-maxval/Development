@@ -1,0 +1,11 @@
+<design:component>
+    <design:attribute name="buttonClicked" label="Button Clicked"/>
+    <design:attribute name="isPrevious" label="isPrevious" />
+    <design:attribute name="isProceed" label="isProceed" />
+    <design:attribute name="isExit" label="isExit" />
+    <design:attribute name="isDelete" label="isDelete" />
+    <design:attribute name="isSubmit" label="isSubmit" />
+    <design:attribute name="isGoToFirst" label="isGoToFirst"/>
+    <design:attribute name="status" label="status" />
+    <design:attribute name="idfId" label="idfId"/>
+</design:component>

@@ -1,0 +1,7 @@
+<!--
+ - Created by aromash on 13.10.2021.
+ -->
+
+<design:component>
+    <design:attribute name="idfId" label="IDF Id"/>
+</design:component>

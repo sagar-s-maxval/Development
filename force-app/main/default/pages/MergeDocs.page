@@ -1,0 +1,2 @@
+<apex:page controller="MergeDocsController" action="{!redirect}"> 
+</apex:page>

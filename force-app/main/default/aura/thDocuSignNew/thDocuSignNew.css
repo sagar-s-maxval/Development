@@ -1,0 +1,9 @@
+.THIS .messageContainer {
+    width: 100%;
+    text-align: center;
+    border-width: 0;
+}
+
+.THIS.mainContainer {
+    background-color: white;
+}

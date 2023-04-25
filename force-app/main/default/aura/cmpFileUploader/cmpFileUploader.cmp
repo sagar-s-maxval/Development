@@ -1,0 +1,22 @@
+<aura:component description="cmpRemunerationFileUpload" controller="RemunerationController"
+                  implements="lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                  access="global">
+
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="inventors" type="List" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+
+    <div>
+        <aura:iteration items="{!v.inventors}" var="inventor">
+            <div>
+                <lightning:input label="" type="checkbox"/>
+                <p>{!inventor.Name}</p>
+            </div>
+            <div>
+                <lightning:fileUpload label="" recordId="{!v.recordId}" onuploadfinished="{!c.handleUploadFinished}"/>
+            </div>
+        </aura:iteration>
+    </div>
+</aura:component>

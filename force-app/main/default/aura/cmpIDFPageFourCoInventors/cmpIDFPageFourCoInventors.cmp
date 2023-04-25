@@ -1,0 +1,238 @@
+<aura:component description="cmpIDFPageFourCoInventors"
+                controller="RemunerationController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+    <aura:attribute name="selectedInventors" type="List" default="[]"/>
+    <aura:attribute name="contributions" type="List" default="[]"/>
+    <aura:attribute name="totalContribution" type="Integer"/>
+    <aura:attribute name="optionValues" type="List"/>
+    <aura:attribute name="split" type="Boolean" default="false"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="contribution" type="Integer"/>
+    <aura:attribute name="inventorName" type="String"/>
+    <aura:attribute name="serialNumber" type="Integer" default="1"/>
+    <aura:attribute name="maxAllowedContribution" type="Integer"/>
+    <aura:attribute name="selectedInventorsNames" type="List" default="[]"/>
+    <aura:attribute name="additionalInventors" type="List" default="[]"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.split}" action="{!c.splitRemuneration}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-text-heading_medium">
+            <b>Contribution Information</b>
+        </div>
+        <br/>
+        <table>
+            <tr>
+                <th><b>Serial Number</b></th>
+                <th><b>Inventor Name</b></th>
+                <th><b>Contribution %</b></th>
+            </tr>
+            <aura:iteration items="{!v.contributions}" var="contribution">
+                <aura:if isTrue="{!contribution.submitted}">
+                    <tr style="color:green">
+                        <td>{!contribution.serialNumber}</td>
+                        <td>{!contribution.fullName}</td>
+                        <td>{!contribution.contribution}</td>
+                    </tr>
+                    <aura:set attribute="else">
+                        <tr style="color:orange">
+                            <td>{!contribution.serialNumber}</td>
+                            <td>{!contribution.fullName}</td>
+                            <td>{!contribution.contribution}</td>
+                        </tr>
+                    </aura:set>
+                </aura:if>
+            </aura:iteration>
+            <aura:iteration items="{!v.additionalInventors}" var="contribution">
+                <tr style="color:red;">
+                    <td>{!contribution.serialNumber}</td>
+                    <td>{!contribution.fullName}</td>
+                    <td>{!contribution.contribution}</td>
+                </tr>
+            </aura:iteration>
+                <tr style="background-color: white">
+                    <td>{!v.serialNumber}</td>
+                    <td>{!v.inventorName}</td>
+                    <td>{!v.contribution}</td>
+                </tr>
+        </table>
+        <br/>
+        <div class="slds-text-heading_small">
+            Total Contribution: <b>{! add((v.totalContribution * 1) , (v.contribution * 1))}</b> %
+        </div>
+        <br/>
+        <div>
+            <p>What is your percentage of contribution?
+                <lightning:helptext
+                        content="Please, mention your percentage contribution."/></p>
+            <lightning:input type="number" maxlength="3" max="100" label="" value="{!v.contribution}"/>
+            <aura:if isTrue="{!or(v.contribution == null, or(v.contribution > v.maxAllowedContribution, lessthan(v.contribution, 1)))}">
+                <div class="slds-text-color_error">Please, provide value for this field that is more than 0 and no more than {!v.maxAllowedContribution}.</div>
+            </aura:if>
+        </div>
+        <br/>
+        <div>
+            <lightning:input type="checkbox" label="Split contribution equally" checked="{!v.split}"/>
+        </div>
+    </div><br/>
+
+    <hr/>
+
+    <div class="slds-text-heading_small">
+        <b>Inventors' responses</b>
+    </div>
+    <div class="x-accordion-heading">
+        <lightning:accordion allowMultipleSectionsOpen="true">
+            <!--            aura iteration use here-->
+            <aura:iteration items="{!v.selectedInventors}" var="inventor">
+                <lightning:accordionSection title="{!'Inventor ' + inventor.Inventor_Full_Name__c}" label="{!'Inventor ' + inventor.Inventor_Full_Name__c}">
+                    <aura:set attribute="body">
+                        <div class="slds-p-around_medium">
+                            <div>
+                                <div class="slds-text-body_small">
+                                    <div>
+                                        <div>
+                                            <p>a) First and last name of the inventor.</p>
+                                        </div>
+                                        <div>
+                                            <lightning:textarea label="" value="{!inventor.Inventor_Full_Name__c}" disabled="true"/>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div>
+                                            <p>b) Is the invention in your field of work?</p>
+                                        </div>
+                                        <div>
+                                            <lightning:radioGroup name="options1a"
+                                                                  label=""
+                                                                  options="{!v.optionValues}"
+                                                                  value="{!inventor.Question_b__c}"
+                                                                  type="radio"
+                                                                  variant="label-inline"
+                                                                  class="radioGroups"
+                                                                  disabled="true"
+                                            />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <p>c) What training did you have and what was your job function when you
+                                            made the invention?</p>
+                                        <lightning:textarea label="" value="{!inventor.Question_c__c}" disabled="true"/>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div>
+                                            <p>d) Was the problem defined by instructions from your superiors?</p>
+                                        </div>
+                                        <div>
+                                            <lightning:radioGroup name="options2a"
+                                                                  label=""
+                                                                  options="{!v.optionValues}"
+                                                                  value="{!inventor.Question_d_Radio__c}"
+                                                                  type="radio"
+                                                                  variant="label-inline"
+                                                                  class="radioGroups"
+                                                                  disabled="true"
+                                            />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <aura:if isTrue="{!inventor.Question_d_Radio__c == 'Yes'}">
+                                            <p>If so, what information did the instructions contain?</p>
+                                            <lightning:textarea label="" value="{!inventor.Question_d__c}" disabled="true"/>
+                                        </aura:if>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div>
+                                            <p>e) Was the company already aware of the problem?</p>
+                                        </div>
+                                        <div>
+                                            <lightning:radioGroup name="options3a"
+                                                                  label=""
+                                                                  options="{!v.optionValues}"
+                                                                  value="{!inventor.Question_e_Radio__c}"
+                                                                  type="radio"
+                                                                  variant="label-inline"
+                                                                  class="radioGroups"
+                                                                  disabled="true"
+                                            />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <aura:if isTrue="{!inventor.Question_e_Radio__c == 'Yes'}">
+                                            <p>If so, which sources provided you with the information?</p>
+                                            <lightning:textarea label="" value="{!inventor.Question_e__c}" disabled="true"/>
+                                        </aura:if>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <div>
+                                            <p>f) Did you become aware of the deficiency or the requirement
+                                                yourself?</p>
+                                        </div>
+                                        <div>
+                                            <lightning:radioGroup name="options4a"
+                                                                  label=""
+                                                                  options="{!v.optionValues}"
+                                                                  value="{!inventor.Question_f_Radio__c}"
+                                                                  type="radio"
+                                                                  variant="label-inline"
+                                                                  class="radioGroups"
+                                                                  disabled="true"
+                                            />
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <aura:if isTrue="{!inventor.Question_f_Radio__c == 'Yes'}">
+                                            <p>If so, which deficiency or requirement did you determine
+                                                yourself?</p>
+                                            <lightning:textarea label="" value="{!inventor.Question_f__c}" disabled="true"/>
+                                        </aura:if>
+                                    </div>
+                                    <br/>
+                                    <div><br/>
+                                        <p>Briefly explain your share in the invention.</p>
+                                        <lightning:textarea
+                                                label=""
+                                                value="{!inventor.Question_g__c}" disabled="true"/>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <p>h) What support did the company provide?</p><br/>
+                                        <p>(Multiple choices possible)</p><br/>
+                                        <lightning:input label="Laboratory equipment" type="checkbox"
+                                                         checked="{!inventor.Is_Laboratory_Equipment__c}" disabled="true"/>
+                                        <lightning:input label="Computer / software" type="checkbox"
+                                                         checked="{!inventor.Is_Computer_Software__c}" disabled="true"/>
+                                        <lightning:input label="Materials / prototypes" type="checkbox"
+                                                         checked="{!inventor.Is_Materials_Prototypes__c}" disabled="true"/>
+                                        <lightning:input label="Designs / planning" type="checkbox"
+                                                         checked="{!inventor.Is_Design_Planning__c}" disabled="true"/>
+                                        <lightning:input label="Calculations / simulations" type="checkbox"
+                                                         checked="{!inventor.Is_Calculations_Simulations__c}" disabled="true"/>
+                                        <lightning:input label="Evaluations / test" type="checkbox"
+                                                         checked="{!inventor.Is_Evaluation_Test__c}" disabled="true"/>
+                                        <br/>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <lightning:textarea label="Comments, If any." value="{!inventor.Comments__c}" disabled="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:set>
+                </lightning:accordionSection>
+            </aura:iteration>
+        </lightning:accordion>
+    </div>
+
+</aura:component>

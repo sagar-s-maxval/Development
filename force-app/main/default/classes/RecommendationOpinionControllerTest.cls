@@ -1,0 +1,4 @@
+@IsTest
+class RecommendationOpinionControllerTest {
+
+}

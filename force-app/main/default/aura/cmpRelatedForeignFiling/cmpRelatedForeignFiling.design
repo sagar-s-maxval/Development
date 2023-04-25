@@ -1,0 +1,3 @@
+<design:component>
+	<design:attribute name="strSelectedCountryIds" label="strSelectedCountryIds" description="flow1" />
+</design:component>

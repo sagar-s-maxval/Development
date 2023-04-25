@@ -1,0 +1,179 @@
+<aura:component controller="DiaryNoteController" implements="flexipage:availableForRecordHome,force:appHostable,force:hasRecordId,force:lightningQuickAction,force:hasSObjectName" access="global" >
+    <!-- Global Variable -->
+    <aura:attribute name="ObjectAPIName" type="string" access="global"/>
+    <aura:attribute name="FilterFieldAPIName" type="string" access="global"/>
+    <aura:attribute name="ShowPinned" type="boolean" access="global" default="false"/>
+    <aura:attribute name="ShowActions" type="boolean" access="global" default="false"/>
+    <!-- Page Variable -->
+    <aura:attribute name="SearchProjectId" type="Id"/>
+    <aura:attribute name="PinnedDiaryNotesList" type="List"/>
+    <aura:attribute name="PinnedDiaryNotesColumn" type="List"/>
+    <aura:attribute name="selectedRows" type="Id[]"/>
+    <aura:attribute name="ShowNewNote" type="boolean" default="false" />
+    <aura:attribute name="fields"
+                    type="String[]"
+                    default="['SymphonyIPMExt__Type__c']"/>
+    
+    <aura:attribute name="SelectedTypeisNote" type="string" access="global" default=""/>
+    <aura:attribute name="SelectedTypeisAction" type="string" access="global" default=""/>
+    <aura:attribute name="StripNoteHtmlValue" type="String" access= "global" default=""/>    
+    <aura:attribute name="SelectedType" type="String" access= "global"/>
+	<aura:attribute name="DueDate" type="String" access= "global"/>     
+    
+    <!-- EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.getPinnedDiaryNotesController}"/>
+    <aura:handler event="force:refreshView" action="{!c.getPinnedDiaryNotesController}" />
+	<!-- <aura:handler event="force:refreshView" action="{!c.getPinnedDiaryNotesController}" />-->
+	<!-- Card Body -->
+    <lightning:card title="Pinned Diary Notes">
+        <aura:set attribute="title">
+            <aura:if isTrue="{!v.ShowPinned}">
+                Pinned Notes
+                <aura:set attribute="else">
+                    Notes
+                </aura:set>
+            </aura:if>
+        </aura:set>    
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.ShowPinned}">
+                <lightning:buttonIcon  iconName="utility:add" variant="brand" alternativeText="To add new action/note" title="To add new action/note" onclick="{!c.newPinnedController}"/>
+                <aura:set attribute="else">
+                    <lightning:button iconName="utility:add" label="New" variant="brand" title="To add new action/note" onclick="{!c.newPinnedController}"/>
+                </aura:set>
+            </aura:if>
+            <aura:if isTrue="{! v.PinnedDiaryNotesList.length>0 }">
+                <aura:if isTrue="{!v.ShowPinned}">
+                    <lightning:buttonIcon iconName="utility:check" alternativeText="To mark the selected actions as completed" title="To mark the selected actions as completed" onclick="{! c.completeSelectedNoteController }" />
+                    <lightning:buttonIcon iconName="utility:clear" alternativeText="To mark the selected actions as pending" title="To mark the selected actions as pending" onclick="{!c.pendingSelectedNoteController}"/>
+                    <aura:set attribute="else">
+                        <lightning:button iconName="utility:check" label="Mark as Completed" title="To mark the selected actions as completed" onclick="{! c.completeSelectedNoteController }" />
+                        <lightning:button iconName="utility:clear" label="Mark as Pending"  title="To mark the selected actions as pending" onclick="{!c.pendingSelectedNoteController}"/>
+                    </aura:set>
+                </aura:if>
+                <aura:if isTrue="{!v.ShowActions}">
+                </aura:if>	
+                <aura:if isTrue="{!v.ShowPinned}">
+                    <lightning:buttonIcon iconName="utility:pin" alternativeText="To unpin the selected actions/notes" title="To unpin the selected actions/notes" onclick="{! c.unpinSelectedController }" />
+                    <aura:set attribute="else">
+                        <lightning:button iconName="utility:pin" label="Unpin" title="To unpin the selected actions/notes" onclick="{! c.unpinSelectedController }" />
+                    </aura:set>
+                </aura:if>
+                <aura:if isTrue="{!v.ShowActions}">
+                    <lightning:button iconName="utility:pinned" label="Pin" title="To pin the selected actions/notes" onclick="{! c.pinSelectedController }" />
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.ShowPinned}">
+                <lightning:buttonIcon iconName="utility:refresh" title="To refresh the diary note/action list" onclick="{!c.getPinnedDiaryNotesController}"/>
+                <aura:set attribute="else">
+                    <lightning:button iconName="utility:refresh" label="Refresh" title="To refresh the diary note/action list" onclick="{!c.getPinnedDiaryNotesController}"/>
+                </aura:set>
+            </aura:if>
+            
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <aura:if isTrue="{! v.PinnedDiaryNotesList.length>0 }">
+                <lightning:datatable data="{! v.PinnedDiaryNotesList }" 
+                                     columns="{! v.PinnedDiaryNotesColumn }" 
+                                     keyField="Id"
+                                     hideCheckboxColumn="false"
+                                     selectedRows="{! v.selectedRows }"
+                                     onrowaction="{! c.handleRowAction }"
+                                     onrowselection="{! c.getSelectedRows }"/><br/>&nbsp;
+                <lightning:icon iconName="utility:info" alternativeText="Pending Action" size="x-small" variant="error"/> - Pending Action&nbsp;&nbsp;
+                <lightning:icon iconName="utility:check" alternativeText="Action Completed" size="x-small" variant="success"/> - Action Completed &nbsp;&nbsp;                
+                <lightning:icon iconName="utility:note" alternativeText="Note" size="x-small"/> - Note &nbsp;&nbsp;
+                
+            </aura:if>
+            <aura:if isTrue="{! v.PinnedDiaryNotesList.length==0 }">
+                No action/note available
+            </aura:if>
+         </p>
+    </lightning:card>
+    <aura:if isTrue="{!v.ShowNewNote}">
+        <!-- MODAL BOX Start--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Diary Note</h2>
+                </header>
+                <!-- MODAL BOX BODY Part Starts-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:recordEditForm
+                                              aura:id="myRecordForm"
+                                              objectApiName="SymphonyIPMExt__Diary_Note__c"
+                                              onsubmit = "{!c.SaveRecord}"
+                                              onsuccess="{!c.handleSuccess}"
+                                              >
+                        <lightning:messages />
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-2">
+                                <lightning:inputField aura:id="Type" fieldName="SymphonyIPMExt__Type__c" onchange ="{!c.handleload}"/> 
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.SelectedTypeisAction}">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_2-of-2">
+                                    <lightning:inputField aura:id="Action" fieldName="SymphonyIPMExt__Action__c" /> 
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField aura:id="AssignedtoUser" fieldName="SymphonyIPMExt__Assigned_To_User__c" /> 
+                                </div>
+                                
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField aura:id="AssignedtoOffice" fieldName="SymphonyIPMExt__Assign_To_Office__c" /> 
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField aura:id="DueDate" fieldName="SymphonyIPMExt__Due_Date_if_any__c" value= "{!v.DueDate}"/> 
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:inputField aura:id="pinnedNote" fieldName="SymphonyIPMExt__Is_Pinned_Note__c" />    
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_2-of-2">
+                                    <lightning:inputField aura:id="Note" value ="{!v.StripNoteHtmlValue}" fieldName="SymphonyIPMExt__Note__c" />
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <!-- Your lightning:inputField components here -->
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <!-- More lightning:inputField components here -->
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.SelectedTypeisNote}">
+                            <lightning:inputField aura:id="Note" value ="{!v.StripNoteHtmlValue}" fieldName="SymphonyIPMExt__Note__c" /> 
+                            <lightning:inputField aura:id="PinnedNote" fieldName="SymphonyIPMExt__Is_Pinned_Note__c" /> 
+                        </aura:if>      
+                        <footer>
+                            <lightning:button class="slds-m-top_small" variant = "brand" type="submit" label="Save" />
+                            <lightning:button class = "slds-m-top_small" variant = "neutral" label= "Cancel" onclick = "{!c.closemodal}"/>
+                        </footer>
+                    </lightning:recordEditForm>
+                </div>
+                <!--MODAL BOX FOOTER Part Starts -->
+                <footer class="slds-modal__footer">
+                    <!--<lightning:button variant="neutral" 
+                                      label="Cancel"
+                                      title="Cancel"
+                                      onclick="{!c.closemodal}"
+                                      />
+                    <lightning:button variant="brand" 
+                                      label="Save"
+           						      type = "submit"
+                                      title="Save"
+                                      onclick="{!c.SaveRecord}"
+                                      />-->
+                </footer>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!-- MODAL BOX Part ends Here -->
+    </aura:if>
+</aura:component>

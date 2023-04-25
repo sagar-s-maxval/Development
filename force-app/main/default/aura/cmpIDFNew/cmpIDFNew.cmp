@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,force:lightningQuickAction" access="global" controller="IDFFlowController">
+    <aura:attribute name="inventionDisclosure" type="SymphonyIPM__Invention_Disclosure_New__c"/>
+    <!--    <force:recordData aura:id="idfLoader" recordId="{!v.recordId}"-->
+    <!--                      targetRecord="{!v.inventionDisclosure}" />-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <div class="container" style="background-color: white;">
+        <br/>
+        <lightning:flow aura:id="flowData"/>
+        <br/>
+        <br/>
+        <br/>
+    </div>
+</aura:component>

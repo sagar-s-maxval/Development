@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <description>Related List Table Editable</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Related List Table Editable</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="sObjectApiName" type="String" label="Related Child SObject" description="Api Name of Related Child SObject"/>
+            <property name="parentLookupField" type="String" label="Lookup Field" description="Api Name of Lookup Field on Related Child SObject"/>
+            <property name="fieldSet" type="String"
+                      label="Field Set Api Name" description="Api Name of Field Set on Related Child SObject to use as columns. Required in Field Set mean Editable in table"
+                      default="table_view"/>
+            <property name="nameAsUrl" type="Boolean" label="Name As Url" description="If checked, Name column will contain Link to Record"
+                      default="true"/>
+            <property name="columnWidthOverride" type="String"
+                      label="Width Override" description="Comma separated list of integers to override columns widths (no spaces)"/>
+            <property name="tableHeight" type="Integer"
+                      label="Table Height"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

@@ -1,0 +1,10 @@
+<design:component>
+    <design:attribute name="header" label="Table Header"/>
+    <design:attribute name="sObjectApiName" label="Related Child SObject" description="Api Name of Related Child SObject"/>
+    <design:attribute name="parentLookupField" label="Lookup Field" description="Api Name of Lookup Field on Related Child SObject"/>
+    <design:attribute name="fieldSet" label="Field Set Api Name" description="Api Name of Field Set on Related Child SObject to use as columns. Required in Field Set mean Editable in table"/>
+    <design:attribute name="nameAsUrl" label="Name As Url" description="If checked, Name column will contain Link to Record"/>
+    <design:attribute name="columnWidthOverride" label="Width Override" description="Comma separated list of integers to override columns widths (no spaces)"/>
+    <design:attribute name="collapseButtonHelpText" label="Collapse button help text"/>
+    <design:attribute name="tableHeight" label="Table Height"/>
+</design:component>

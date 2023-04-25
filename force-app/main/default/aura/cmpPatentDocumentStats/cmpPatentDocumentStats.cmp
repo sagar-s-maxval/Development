@@ -1,0 +1,60 @@
+<aura:component controller="PatentDocument" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickAction,lightning:actionOverride,force:hasRecordId" access="global">
+    <aura:attribute name="records" type="List" />
+    <aura:attribute name="options" type="List" default="[
+        {'label': 'Show Pending Actions', 'value': 'pending'}
+    ]"/>
+    <aura:attribute name="value" type="String" default="all"/>
+    <aura:attribute name="hasAccess" type="String" default="NoAccess" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:card>
+        <aura:set attribute="title">
+            <!--<lightning:radioGroup name="radioButtonGroup" options="{! v.options }" value="{! v.value }" type="button" onchange="{! c.handleRecordFilter }" class="float-left"/> -->
+        </aura:set>
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.hasAccess == 'edit'}">
+                <lightning:button label="New" variant="brand" onclick="{!c.handleUpload}" />
+            </aura:if>
+        </aura:set>
+        <div style="width: 880px; overflow: auto;">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                <thead>
+                    <tr>
+                        <th>LAST MODIFIED</th>
+                        <th>DOCUMENT #</th>
+                        <th>VERSION</th>
+                        <th>REVIEW BY</th>
+                        <th>DOCUMENT TYPE</th>
+                        <th>UPLOADED FILES</th>
+                        <th>RESPOND BY DATE</th>
+                        <th>STATUS</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.records}" var="item">
+                        <tr>
+                            <td>
+                                <lightning:formattedDateTime value="{!item.lastModified}" year="numeric" month="numeric" day="numeric" /></td>
+                            <td>{!item.documentNumber}</td>
+                            <td>{!item.version}</td>
+                            <td>{!item.reviewByRoles}</td>
+                            <td>{!item.documentType}</td>
+                            <td>
+                                <aura:iteration items="{!item.uploadedFiles}" var="att">
+                                    {!att.ContentDocument.Title} 
+                                    <a href="{! '/sfc/servlet.shepherd/document/download/' + att.ContentDocumentId }" target="_blank">
+                                        <lightning:icon iconName="utility:download" alternativeText="Utility image" title="Image" size="xx-small" />
+                                    </a> <br/>
+                                </aura:iteration>
+                            </td>
+                            <td>{!item.respondBy}</td>
+                            <td><lightning:badge label="{!item.status}"/></td>
+                            <td><a href="{! '/' + item.recordId }" target="_blank">View</a></td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,5 @@
+<design:component>
+    <design:attribute name="IDF" label="IDF"/>
+    <design:attribute name="status" label="Status"/>
+
+</design:component>

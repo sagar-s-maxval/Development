@@ -1,0 +1,18 @@
+<template>
+    <div class="slds-scrollable_y slds-m-bottom_x-small" style="max-height: 200px">
+        <div if:true={showMainTable}>
+            <div class="slds-m-vertical_medium">
+                <b>Required Signers  </b>
+                <lightning-helptext content="Persons in the generated document"></lightning-helptext>
+            </div>
+
+            <lightning-datatable key-field="Id"
+                                 data={persons}
+                                 columns={columns}
+                                 selected-rows={selectedRows}
+                                 onrowselection={rowSelected}
+            ></lightning-datatable>
+        </div>
+    </div>
+
+</template>

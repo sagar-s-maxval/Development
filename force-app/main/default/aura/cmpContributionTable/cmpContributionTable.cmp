@@ -1,0 +1,106 @@
+<aura:component description="cmpContributionTable"
+                controller="RemunerationController"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="contributions" type="List"/>
+    <aura:attribute name="totalContribution" type="Decimal"/>
+    <aura:attribute name="contribution" type="Decimal"/>
+    <aura:attribute name="additionalInventors" type="List" default="[]"/>
+    <aura:attribute name="split" type="Boolean" default="false"/>
+    <aura:attribute name="inventorName" type="String"/>
+    <aura:attribute name="serialNumber" type="Integer" default="1"/>
+    <aura:attribute name="maxAllowedContribution" type="Decimal"/>
+    <aura:attribute name="selectedInventorsNames" type="List" default="[]"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="canUserAdd" type="Boolean" default="true"/>
+    <aura:attribute name="profileName" type="String"/>
+    <aura:attribute name="flowIsOpened" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.split}" action="{!c.splitRemuneration}"/>
+    <aura:handler event="c:openContributionDetailsFormEvent" action="{!c.handleOpenFlow}"/>
+
+    <div class="slds-p-around_medium">
+        <aura:if isTrue="{!not(v.flowIsOpened)}">
+            <table>
+                <tr>
+                    <th class="serialNumber"><b>Serial Number</b></th>
+                    <th><b>Inventor Name</b></th>
+                    <th><b>Contribution %</b></th>
+                </tr>
+                <aura:iteration items="{!v.additionalInventors}" var="contribution">
+                    <tr>
+                        <td class="serialNumber">{!contribution.serialNumber}</td>
+                        <td>{!contribution.fullName}</td>
+                        <td>{!contribution.contribution}</td>
+                    </tr>
+                </aura:iteration>
+                <aura:if isTrue="{!v.canUserAdd}">
+                    <tr>
+                        <td class="serialNumber">{!v.serialNumber}</td>
+                        <td>{!v.inventorName}</td>
+                        <td>{!v.contribution}</td>
+                    </tr>
+                </aura:if>
+            </table>
+            <br/>
+            <div class="slds-text-heading_small">
+                <aura:if isTrue="{!v.canUserAdd}">
+                    Total Contribution: <b>{! add((v.totalContribution * 1) , (v.contribution * 1))}</b> %
+                    <aura:set attribute="else">
+                        Total Contribution: <b>{!v.totalContribution}</b> %
+                    </aura:set>
+                </aura:if>
+            </div>
+            <br/>
+<!--            <aura:if isTrue="{!v.canUserAdd}">-->
+<!--                <div>-->
+<!--                    <p>Please, add your contribution percentage to the Invention</p>-->
+<!--                    <lightning:input type="number" max="100" step="0.01" label="" value="{!v.contribution}"/>-->
+<!--                    <aura:if-->
+<!--                            isTrue="{!or(v.contribution == null, or(v.contribution > v.maxAllowedContribution, lessthan(v.contribution, 1)))}">-->
+<!--                        <div class="slds-text-color_error">Please, provide value for this field that is more than 0 and-->
+<!--                            no more than {!v.maxAllowedContribution}.-->
+<!--                        </div>-->
+<!--                    </aura:if>-->
+<!--                </div>-->
+<!--                <br/>-->
+<!--                <div class="slds-grid slds-gutters">-->
+<!--                    <div class="slds-col slds-size_1-of-2">-->
+<!--                        <aura:if isTrue="{!v.profileName != 'Platform Inventor'}">-->
+<!--                            <lightning:input type="checkbox" label="Split Contribution Details Equally"-->
+<!--                                             checked="{!v.split}"/>-->
+<!--                        </aura:if>-->
+<!--                    </div>-->
+<!--                    <div class="slds-col slds-size_1-of-2">-->
+<!--                        <div style="float:right;">-->
+<!--                            <lightning:button variant="brand" label="Save" onclick="{!c.saveContribution}"-->
+<!--                                              disabled="{!or(v.contribution == null, or(v.contribution > v.maxAllowedContribution, lessthan(v.contribution, 1)))}"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <aura:set attribute="else">-->
+<!--                    <div class="slds-grid slds-gutters">-->
+<!--                        <div class="slds-col slds-size_1-of-2">-->
+<!--                            <aura:if isTrue="{!v.profileName != 'Platform Inventor'}">-->
+<!--                                <lightning:input type="checkbox" label="Split Contribution Details Equally"-->
+<!--                                                 checked="{!v.split}"/>-->
+<!--                            </aura:if>-->
+<!--                        </div>-->
+<!--                        <div class="slds-col slds-size_1-of-2">-->
+<!--                            <div style="float:right;">-->
+<!--                                <lightning:button variant="brand" label="Save" onclick="{!c.saveSplitContribution}"-->
+<!--                                                  disabled="{!or(v.contribution == null, or(v.contribution > v.maxAllowedContribution, lessthan(v.contribution, 1)))}"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </aura:set>-->
+<!--            </aura:if>-->
+<!--            <aura:set attribute="else">-->
+<!--                <c:openContributionFlow idfId="{!v.IDF}" openFlow="{!v.flowIsOpened}"/>-->
+<!--&lt;!&ndash;                <c:cmpIDFSubmissionPageFour recordId="{!v.IDF}" openFlow="{!v.flowIsOpened}"/>&ndash;&gt;-->
+<!--            </aura:set>-->
+        </aura:if>
+    </div>
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="IsPatent" label="IsPatent" />
+    <design:attribute name="defaultTemplateName" label="Default Template Name" />
+</design:component>

@@ -1,0 +1,56 @@
+<aura:component description="cmpReviewDecisionEmail" implements="lightning:availableForFlowScreens">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="selectedInventors" type="SymphonyIPM__Inventor__c[]"/>
+    <aura:attribute name="ccInventors" type="SymphonyIPM__Inventor__c[]"/>
+    <aura:attribute name="selectedIds" type="List"/>
+    <aura:attribute name="ccIds" type="List"/>
+    <aura:attribute name="lawFirm" type="String"/>
+    <aura:attribute name="subject" type="String"/>
+    <aura:attribute name="emailBody" type="String"/>
+    <aura:attribute name="type" type="String"/>
+
+    <aura:attribute name="isApproveOC" type="Boolean"/>
+    <aura:attribute name="isRMI" type="Boolean" default="false"/>
+    <aura:attribute name="ocUserId" type="String"/>
+    <aura:attribute name="vendorId" type="String"/>
+    <aura:attribute name="showError" type="Boolean"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium">
+        <div>
+            <c:cmpPersonsSelector recordId="{!v.recordId}" lawFirm="{!v.lawFirm}" excludeIDS="{!v.ccIds}"
+                                  isRMI="{!v.isRMI}" arrSelectedInvIds="{!v.selectedIds}" ocUserId="{!v.ocUserId}"
+                                  vendorId="{!v.vendorId}" selectedInventors="{!v.selectedInventors}" type="{!v.type}"
+                                  showTitle="true"/>
+        </div>
+        <div>
+            <c:cmpPersonsSelector recordId="{!v.recordId}" selectedInventors="{!v.ccInventors}"
+                                  arrSelectedInvIds="{!v.ccIds}" excludeIDS="{!v.selectedIds}" type="{!v.type}"
+                                  showTitle="false"/>
+        </div>
+        <aura:if
+                isTrue="{!or(equals(v.type, 'Request More Information'), or(equals(v.type, 'Approve and Send to OC'), or(equals(v.type, 'Approve and Send OC'), equals(v.type, 'Appoint filing candidate'))))}">
+            <lightning:input type="email" value="{!v.lawFirm}" label="Law Firm Email"/>
+            <br/>
+        </aura:if>
+        <div>
+            <lightning:input type="text" label="Subject" value="{!v.subject}"/>
+            <aura:if isTrue="{!and(not(v.subject), v.showError)}">
+                {!v.subject.length}
+                <div class="slds-text-color_error">Subject should not be empty.</div>
+            </aura:if>
+        </div>
+        <br/>
+        <div>
+            <div class="slds-text-title">
+                Mail body
+            </div>
+            <lightning:inputRichText value="{!v.emailBody}"/>
+            <aura:if isTrue="{! and(not(v.emailBody), v.showError)}">
+                <div class="slds-text-color_error">Email body should not be empty.</div>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

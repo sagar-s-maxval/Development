@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <description>Th Trademark Dockets View</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__FlowScreen</target>
+
+    </targets>
+    <masterLabel>Th Trademark Dockets View</masterLabel>
+</LightningComponentBundle>

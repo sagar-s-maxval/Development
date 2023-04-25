@@ -1,0 +1,19 @@
+<design:component>
+    <design:attribute name="role" label="Role"/>
+    <design:attribute name="q1" label="Intensifying Innovation"/>
+    <design:attribute name="q2" label="CSO Program Name"/>
+    <design:attribute name="q3" label="CSO Innovation Type"/>
+    <design:attribute name="q4" label="CSO Top Program"/>
+    <design:attribute name="q5" label="CSO NPI"/>
+    <design:attribute name="q6" label="CSO Tech Area 1"/>
+    <design:attribute name="q7" label="CSO Tech Area 2"/>
+    <design:attribute name="q8" label="Product"/>
+    <design:attribute name="q9" label="Product Line"/>
+    <design:attribute name="q10" label="Taxonomy"/>
+    <design:attribute name="q11" label="Case Rating"/>
+    <design:attribute name="recordId" label="Patent Id"/>
+    <design:attribute name="ratingId" label="Rating Id"/>
+    <design:attribute name="userId" label="USER Id"/>
+    <design:attribute name="productLinesString" label="Product Lines String"/>
+    <design:attribute name="productsString" label="Products String"/>
+</design:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="vLabel" label="Label" />
+    <design:attribute name="vValue" label="Value" />
+</design:component>

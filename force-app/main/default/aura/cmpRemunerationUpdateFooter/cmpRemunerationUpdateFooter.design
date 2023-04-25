@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="buttonClicked" label="Button Clicked"/>
+    <design:attribute name="allowEdit" label="allowEdit"/>
+    <design:attribute name="isCancel" label="isCancel"/>
+    <design:attribute name="isNext" label="isNext"/>
+    <design:attribute name="isSend" label="isSend" />
+    <design:attribute name="isEdit" label="isEdit" />
+</design:component>

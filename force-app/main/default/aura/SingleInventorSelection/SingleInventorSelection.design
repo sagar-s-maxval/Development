@@ -1,0 +1,7 @@
+<design:component>
+    <design:attribute name="strSelectedInvIds" label="strSelectedInvIds" description="flow1" />
+    <design:attribute name="Edit" label="Edit" description="flow2" />
+    <design:attribute name="from_NewAssetInventorFlow" label="from_NewAssetInventorFlow" description="flow3" />
+    <design:attribute name="recordId" label="recordId" description="recordId" />
+
+</design:component>

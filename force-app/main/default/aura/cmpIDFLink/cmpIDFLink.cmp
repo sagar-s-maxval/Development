@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="HomePage" type="boolean" default="false"/>
+    <lightning:card  title="Invention Disclosure Submission">
+        
+        <div class="c1" style="text-align: center">  
+            <lightning:button variant="Brand" label="Invention Disclosure Form " title="Click to Continue" onclick="{! c.handleClick }" />&nbsp;&nbsp;&nbsp;&nbsp;</div><br/>
+        
+     </lightning:card>
+</aura:component>

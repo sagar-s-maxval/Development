@@ -1,0 +1,22 @@
+<design:component>
+    <design:attribute name="All_Bibliographic" label="All_Bibliographic_Info_in_the_header_from_FIP_is_accurate_d"/>
+    <design:attribute name="Comments1" label="Comments1"/>
+    <design:attribute name="Declaration_s_for_all" label="Declaration_s_for_all_inventors_signed_and_filed_d"/>
+    <design:attribute name="dtComments2" label="dtComments2"/>
+    <design:attribute name="Assignment_s_for_all" label="Assignment_s_for_all_inventors_signed_and_recorded_d"/>
+    <design:attribute name="dtComments3" label="dtComments3"/>
+    <design:attribute name="Drawings_are_in_order_d" label="Drawings_are_in_order_d"/>
+    <design:attribute name="dtComments4" label="dtComments4"/>
+    <design:attribute name="Sequence_Listing_accepted_d" label="Sequence_Listing_accepted_d"/>
+    <design:attribute name="dtComments5" label="dtComments5"/>
+    <design:attribute name="Allowed_claims_saved_in" label="Allowed_claims_saved_in_Word_format_d"/>
+    <design:attribute name="dtComments6" label="dtComments6"/>
+    <design:attribute name="IDS_All_SB08_refs" label="IDS_All_SB08_refs_initialed_by_Examiner_d"/>
+    <design:attribute name="dtComments7" label="dtComments7"/>
+    <design:attribute name="IDS_All_art_from_US" label="IDS_All_art_from_US_and_foreign_counterparts_cited_d"/>
+    <design:attribute name="dtComments8" label="dtComments8"/>
+    <design:attribute name="IDS_Double_check_MaxIDS" label="IDS_Double_check_MaxIDS_for_uncited_art_d"/>
+    <design:attribute name="dtComments9" label="dtComments9"/>
+    <design:attribute name="dtAnyOtherIssues" label="dtAnyOtherIssues"/>
+    <design:attribute name="noa" label="noa"/>
+</design:component>

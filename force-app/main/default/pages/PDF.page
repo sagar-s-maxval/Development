@@ -1,0 +1,530 @@
+<apex:page renderAs="advanced_pdf" standardStylesheets="false" applyBodyTag="false"
+           standardController="SymphonyIPM__Invention_Disclosure_New__c"
+           applyHtmlTag="false" sidebar="false" showHeader="false"
+
+           pageStyle="all"> <!--renderAs="advanced_pdf" contentType="application/pdf" -->
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+        <style type="text/css" media="print">
+            
+        
+            @page {
+               
+                size: A4 portrait;
+                border: 1px solid black;
+                margin-top: 13%;  
+                margin-bottom:13%;
+                margin-right: 10%;
+                margin-left:7%
+               
+                @top-center {
+                }
+                 @top-left{
+                     content: element(headerDock);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            @top-right {
+             content: element(header);
+            content: {!$Resource.ThermoFisherLogo};
+            }
+              @top-right {
+            content: element(header);
+            content: {!$Resource.ThermoFisherLogo};
+            }
+            }
+            
+            * {
+                margin: 0px;
+                padding: 1px;
+            }
+            
+          
+            div.headerImg {
+               
+              
+                height: 70px;
+                width: 300px;
+                float: right;
+                position: running(headerImg);
+            }
+         
+            div.content {
+                padding-top: 130px;
+            }
+            
+            div.footer {
+                display: block;
+                padding :10px;
+                position: running(footer);
+            }
+            
+            div.subfooter {
+                display: inline-block;
+            }
+            
+            div.right {
+                float: right;
+            }
+            
+            .pagenumber:before {
+                content: counter(page);
+            }
+            
+            .pagecount:before {
+                content: counter(pages);
+            }
+            
+            .stationName {
+            
+                text-align: center;
+                font-weight: bold;
+                font-size: 20pt;
+                margin-bottom: 10px;
+            }
+            
+            table {
+            
+                width: 98%;
+            }
+            
+            .centered {
+                text-align: center;
+            }
+            
+            .right {
+                text-align: right;
+            }
+            
+            div {
+                width : 100%;
+            }
+            
+            img {
+                width: 100%;
+            }
+            
+            .tableHeader {
+                border-width: 0px 0px 1px 0px;
+                border-color: #eee;
+                border-style: solid;
+            }
+            
+            .sectionHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 16pt;
+                margin-bottom: 10px;
+            }
+            .subHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 15pt;
+                margin-bottom: 10px;
+            }
+            
+            .AppleHeader {
+                text-align: center;
+                font-weight: bold;
+                font-size: 12pt;
+                margin-bottom: 7px;
+                color: gray;
+            }
+            
+            #totalCost {
+                margin-top: 15px;
+            }
+            
+            #totalCostLabel {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+            
+            .headerRow .TableTitle {
+                background-color: #e6e6e6;
+            }
+             .colstyle {width:50%}
+            .tableStyle {border-collapse: collapse; border-spacing: 0px 0px; }
+            .colStyle1 { width:150px;text-align:left; padding-top:8px;padding-right:15px; padding-bottom:8px}
+            .colStyle2 { width:200px; padding-right:10px; padding-top:8px; padding-bottom:8px}        
+             div.header {
+                
+                width: 100%;
+                padding: 5px;
+                margin: 20px 0px;
+                position: running(header);
+            }
+             div.headerDock{
+                padding: 5px;
+                 position: running(headerDock);
+                 }
+                .comma-list {
+                display: inline;
+                list-style: none;
+                padding: 0px;
+                }
+                .comma-list li {
+                display: inline;
+                }
+                
+                .comma-list li::after {
+                content: " ";
+                }
+                .comma-list li:last-child::after {
+                content: " ";
+                }    
+
+
+
+
+
+        </style>
+    </head>
+    <body>
+
+    <apex:form >
+        <apex:pageBlock >
+            <apex:repeat value="{!SymphonyIPM__Invention_Disclosure_New__c}" var="a">
+                <div class="header">
+                    <img src="{!$Resource.ThermoFisherLogo}" width="150px" height="30px" align="right"/>
+                </div>
+                <div class="sectionHeader">Invention Disclosure Submission</div>
+                <div class="headerDock"><b>Disclosure#[{!SymphonyIPM__Invention_Disclosure_New__c.Name}]</b></div>
+                <div class="tableHeader "></div>
+                <div class="footer">
+                    <div>
+                        <div class="subfooter">
+                            <apex:outputText value="{0,date,MMM dd, yyyy}">
+
+                                <apex:param value="{!Today()}"/>
+
+                            </apex:outputText>
+                        </div>
+                        <div class="subfooter right">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                    </div>
+                    <br/>
+                    <div class="centered"><i>Privileged Attorney-Client Communication. This document contains
+                            confidential and proprietary information of ThermoFisher. Do Not copy or disseminate.</i>
+                    </div>
+
+                </div>
+                <apex:pageBlockSection columns="1">
+                    <br/>
+
+                    <apex:panelGrid columns="2" styleClass="tableStyle" border="0" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+                        <b> Docket No:</b>
+                        <apex:outputText value="{!a.Name}"></apex:outputText>
+                        <b>Title of Invention:</b>
+                        <apex:outputText value="{!a.SymphonyIPM__Title__c}"></apex:outputText>
+                        <b>Primary Inventor:</b>
+                        <apex:outputText value="{!a.SymphonyIPM__Primary_Inventor__r.Name}"></apex:outputText>
+                        <b>Email:</b>
+                        <apex:outputText value="{!a.SymphonyIPM__Primary_Inventor__r.SymphonyIPM__Email__c}"></apex:outputText>
+                    </apex:panelGrid>
+
+                    <apex:panelGrid columns="2" styleClass="tableStyle" border="0" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+                        <b>Group:</b>
+                        <apex:outputText value="{!a.Group_Formula__c}"></apex:outputText>
+                        <b>Division:</b>
+                        <apex:outputText value="{!a.Division_Formula__c}"></apex:outputText>
+                        <b>Business Unit:</b>
+                        <apex:outputText value="{!a.Business_Unit_Formula__c}"></apex:outputText>
+                    </apex:panelGrid>
+                    <br/>
+                    <div class="subHeader">Inventors' Details</div>
+                    <apex:panelGrid columns="2" border="0" styleClass="tableStyle" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+                       <!-- <b>Inventors:</b>
+                        <apex:repeat value="{!SymphonyIPM__Invention_Disclosure_New__c.SymphonyIPM__Inventor_Details__r}"
+                                var="con">
+                            <apex:repeat rendered="{!not(con.Is_External_Inventor_New__c)}"
+                                    value="{!con.SymphonyIPM__Inventor__r.Name} - {!con.SymphonyIPM__Inventor__r.SymphonyIPM__Email__c}"
+                                    var="AddInvNames">
+                                <li>{!AddInvNames}</li>
+                            </apex:repeat>
+                        </apex:repeat>
+                        <b></b>
+                        <apex:repeat value="{!SymphonyIPM__Invention_Disclosure_New__c.SymphonyIPM__Inventor_Details__r}"
+                                var="con">
+                            <apex:repeat rendered="{!con.Is_External_Inventor_New__c}"
+                                    value="{!con.SymphonyIPM__Inventor__r.Name} - {!con.SymphonyIPM__Inventor__r.SymphonyIPM__Email__c}"
+                                    var="AddInvNames">
+                                <li>{!AddInvNames}</li>
+                            </apex:repeat>
+                        </apex:repeat>-->
+                    </apex:panelGrid>
+                  
+
+                    <table style=" border: 1px solid black ;  border-collapse: collapse"
+                           width="60%">
+
+                        <tr style=" border: 1px solid black; border-collapse: collapse">
+
+                            <th style=" border: 1px solid black; border-collapse: collapse; ">Name</th>
+
+
+                            <th style=" border: 1px solid black; border-collapse: collapse; ">Email Address</th>
+                            <th style=" border: 1px solid black; border-collapse: collapse; ">Employer Name</th>
+
+                            <th style=" border: 1px solid black; border-collapse: collapse; ">Employer Country</th>
+
+
+                        </tr>
+                        <apex:repeat value="{!SymphonyIPM__Invention_Disclosure_New__c.SymphonyIPM__Inventor_Details__r}"
+                                var="con">
+                            <apex:outputText rendered="{!not(con.Is_External_Inventor_New__c)}">
+                                <tr style=" border: 1px solid black; border-collapse: collapse">
+
+                                    <td style=" border: 1px solid black; ">{!con.SymphonyIPM__Inventor__r.Name}</td>
+                                    <td style=" border: 1px solid black; ">{!con.SymphonyIPM__Inventor__r.SymphonyIPM__Email__c}</td>
+                                    <td style=" border: 1px solid black; border-collapse: collapse; ">{!con.SymphonyIPM__Inventor__r.EmployerName__c}</td>
+
+                                    <td style=" border: 1px solid black; border-collapse: collapse; ">{!con.SymphonyIPM__Inventor__r.SymphonyIPM__Location__c}</td>
+                                </tr>
+                            </apex:outputText>
+                        </apex:repeat>
+
+                    </table>
+                    <br/>
+                    <apex:outputText rendered="{!SymphonyIPM__Invention_Disclosure_New__c.Does_include_external_inventor__c}">
+                        <p class="subHeader">
+                           <b>External Inventors' Details</b> 
+                        </p>
+                        <br/>
+                    </apex:outputText>
+                    <table style=" border: 1px solid black ;  border-collapse: collapse">
+
+                        <apex:outputText rendered="{!SymphonyIPM__Invention_Disclosure_New__c.Does_include_external_inventor__c}">
+                            <tr style=" border: 1px solid black; border-collapse: collapse">
+                                <th style=" border: 1px solid black; border-collapse: collapse;" width="50%">Name</th>
+                                <th style=" border: 1px solid black; border-collapse: collapse;">Email</th>
+                                <th style=" border: 1px solid black; border-collapse: collapse;">Comments</th>
+                            </tr>
+                        </apex:outputText>
+                        <apex:repeat value="{!SymphonyIPM__Invention_Disclosure_New__c.SymphonyIPM__Inventor_Details__r}"
+                                var="con">
+                            <apex:outputText rendered="{!con.Is_External_Inventor_New__c}">
+                                <tr style=" border: 1px solid black; border-collapse: collapse">
+
+                                    <td style=" border: 1px solid black;" width="50%">{!con.SymphonyIPM__Inventor__r.Name}</td>
+                                    <td style=" border: 1px solid black;" width="50%">{!con.SymphonyIPM__Inventor__r.SymphonyIPM__Email__c}</td>
+                                    <td style=" border: 1px solid black; border-collapse: collapse;" width="50%">{!con.SymphonyIPM__Inventor__r.External_Comments__c}</td>
+                                </tr>
+                            </apex:outputText>
+                        </apex:repeat>
+
+                    </table>
+
+                </apex:pageBlockSection>
+
+
+                <apex:pageBlockSection columns="1">
+                    <br/>
+                    <div class="subHeader">Invention Details</div>
+                    <apex:panelGrid columns="1" styleClass="tableStyle" border="0" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+                        <p><b>1) Technical field of the Invention.</b></p>
+
+                        <apex:outputText value="{!a.Technical_field_of_invention__c}" escape="false"></apex:outputText>
+
+                        <!--<p><b style="color:blue">2) Problem Description </b></p>-->
+                        <p><b>2) Please briefly describe your invention and how do you make and use it?</b></p>
+                        <apex:outputText value="{!a.Question_2__c}" escape="false"/>
+                        <p><b>2. a) What is the purpose of your invention?</b></p>
+                        <apex:outputText value="{!a.Question_2a__c}" escape="false"></apex:outputText>
+                        <p><b>2. b) What is the problem solved by invention? How does your invention solve it? </b></p>
+                        <apex:outputText value="{!a.Question_2b__c}" escape="false"></apex:outputText>
+                        <p><b>2. c) Please, provide at least one detailed example of your invention.</b></p>
+                        <apex:outputText value="{!a.Question_2c__c}" escape="false"></apex:outputText>
+                        <p><b>2. d) Advantages of the invention.</b></p>
+                        <apex:outputText value="{!a.Question_2d__c}" escape="false"></apex:outputText>
+                        <p><b>3) What is the closest technology to your invention?</b></p>
+                        <apex:outputText value="{!a.Question_3__c}" escape="false"></apex:outputText>
+                        <p><b>4) Related publications.</b></p>
+                        <apex:outputText value="{!a.Question_4__c}" escape="false"></apex:outputText>
+                        <p><b>5) Is there a way to tell if someone is using the technology or practicing the
+                                invention?</b></p>
+                        <apex:outputText value="{!a.Question_5__c}" escape="false"></apex:outputText>
+                        <p><b>6) List all possible applications, variants and improvements or possible workarounds of
+                                the invention as completely as possible. </b></p>
+                        <apex:outputText value="{!a.Question_6__c}" escape="false"></apex:outputText>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+
+
+                <apex:pageBlockSection columns="1">
+                    <div class="subHeader">Additional Details</div>
+                    <apex:panelGrid columns="1" styleClass="tableStyle" border="0" columnClasses="colStyle1,colStyle2"
+                                    rowClasses="rowstyle">
+
+
+                        <p><b>7) Is the invention related to a current project?</b></p>
+                        <apex:outputText value="{!a.Question_7_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_7_Radio__c='Yes',True,false)}">
+                            <p><b>If so, identify project name (including CRC's and/or Intensifying innovation)</b></p>
+                            <br/>
+                            <apex:outputText value="{!a.Question_7__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>8) Is the invention related to a current product? </b></p>
+                        <apex:outputText value="{!a.Question_8_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_8_Radio__c='Yes',True,false)}">
+                            <p><b>If so, identify product name if known?</b></p><br/>
+                            <apex:outputText value="{!a.Question_8__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>9) Which category is most closely related to Disclosure type?</b></p>
+                        <apex:outputText value="{!a.Invention_Category__c}" escape="false"></apex:outputText>
+
+                        <apex:outputPanel rendered="{!IF(a.Other_Comments__c!=null,True,false)}">
+                            <p><b>Other Comments</b></p><br/>
+                            <apex:outputText value="{!a.Other_Comments__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+
+                        <p><b>10) Has the invention already been tested?</b></p>
+                        <apex:outputText value="{!a.Has_the_invention_already_been_tested__c}"
+                                         escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Has_the_invention_already_been_tested__c='Yes',True,false)}">
+                            <p><b>What is the result?</b></p><br/>
+                            <apex:outputText value="{!a.What_is_the_result__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>11) Is the invention planned or scheduled to be disclosed or discussed in a printed
+                                publication or digital form, or to be disclosed or discussed orally, such as at a
+                                convention or seminar?</b></p>
+                        <apex:outputText value="{!a.Question_16_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_16_Radio__c='Yes',True,false)}">
+
+                            <p><b>Please provide date and corresponding details.</b></p><br/>
+                            <apex:outputText value="{!a.Question_16__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>12) Will the invention or product be offered for sale? Has it already been offered for
+                                sale or already sold? </b></p>
+                        <apex:outputText value="{!a.Question_10_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_10_Radio__c='Yes',True,false)}">
+                            <p><b>Please provide the details.</b></p><br/>
+                            <apex:outputText value="{!a.Question_10__c}" escape="false"></apex:outputText>
+                            <br/>
+                             <br/>
+                            <p><b>What is the date of the sale or intended sale (If any)?</b></p><br/>
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                <apex:param value="{!a.Question_11__c}"/>
+                            </apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>13) Does the invention involve a collaboration with an external partner? </b></p>
+                        <apex:outputText value="{!a.Question_12_Radio__c}" escape="false"></apex:outputText>
+
+                        <apex:outputPanel rendered="{!IF(a.Question_12_Radio__c='Yes',True,false)}">
+                            <p><b>13. a) If Yes, please provide the details</b></p><br/>
+                            <apex:outputText value="{!a.Question_12__c}" escape="false"></apex:outputText>
+                            <br/>
+                             <br/>
+                            <p><b>13. b) If known, what is the earliest date that confidential information is planned to
+                                    be
+                                    exchanged or was exchanged?</b></p><br/>
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                <apex:param value="{!a.Question_13__c}"/>
+                            </apex:outputText>
+                            <br/>
+                            <br/>
+                            <p><b>13. c) Is a contract or confidentiality agreement in place with the external
+                                    partner? </b>
+                            </p>
+                            <br/>
+                            <apex:outputText value="{!a.Question_14_Radio__c}" escape="false"></apex:outputText>
+                            <br/>
+                            <apex:outputPanel rendered="{!IF(a.Question_14_Radio__c='Yes',True,false)}">
+                                <br/>
+
+                                <p><b>13. d) If Yes, please provide the details</b></p><br/>
+                                <apex:outputText value="{!a.Question_14__c}" escape="false"></apex:outputText>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+
+                        <p><b>14) Does the invention involve a collaboration with another Thermo Fisher business? </b>
+                        </p>
+                        <apex:outputText value="{!a.Question_15_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_15_Radio__c='Yes',True,false)}">
+                            <p><b>Explain or identify which business(es) are involved</b></p>
+                            <apex:outputText value="{!a.Question_15__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>15) Are there external sources of funding? </b></p>
+                        <apex:outputText value="{!a.Question_17_Radio__c}" escape="false"></apex:outputText>
+                        <apex:outputPanel rendered="{!IF(a.Question_17_Radio__c='Yes',True,false)}">
+                            <p><b>Please provide details and/or contact info for who may know about funding </b></p>
+                            <apex:outputText value="{!a.Question_17__c}" escape="false"></apex:outputText>
+                        </apex:outputPanel>
+                        <p><b>16) Please enter relevant Idea ID(s) for your invention.</b></p>
+                        <apex:outputText value="{!a.MyIdea_ID_s__c}" escape="false"></apex:outputText>
+                        <br/>
+
+                        <!--<div class="subHeader">Roles</div>
+                        <apex:panelGrid columns="2" styleClass="tableStyle" border="0"
+                                        columnClasses="colStyle1,colStyle2" rowClasses="rowstyle">
+                       
+                            <p><b>IP Coordinator:</b></p>
+                            <apex:outputText value="{!a.IP_Coordinator__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Responsible Manager:</b></p>
+                            <apex:outputText value="{!a.IP_Responsible_Manager__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Compensation Manager:</b></p>
+                            <apex:outputText value="{!a.IP_Responsible_Manager__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Committee member:</b></p>
+                            <apex:outputText value="{!a.IPCommitteeMember__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Associate:</b></p>
+                            <apex:outputText value="{!a.IPAssociate__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Responsible Manager:</b></p>
+                            <apex:outputText value="{!a.IP_Responsible_Manager__r.Name}" escape="false"></apex:outputText>
+                            <p><b>IP Paralegal:</b></p>
+                            <apex:outputText value="{!a.IP_Paralegal_1__r.Name}" escape="false"></apex:outputText>
+                        </apex:panelGrid>-->
+
+                        <div class="subHeader">Invention Declaration</div>
+                        <apex:panelGrid columns="1" styleClass="tableStyle" border="0"
+                                        columnClasses="colStyle1,colStyle2" rowClasses="rowstyle">
+                            <p><b>●I hereby declare that all information in this invention disclosure form is complete
+                                    and correct to the best of my knowledge.
+                                  ●To the best of my knowledge, no other persons than those listed herein as inventors
+                                    contributed to the invention.
+                                  ●I understand that I am obligated to keep the invention confidential to accordance
+                                    with the IP guidelines and procedures of the company and the employment
+                                    contracts.</b></p>
+                            
+                            <apex:outputField value="{!a.Is_Declaration_Agreed__c}"><b>I have read and agree to the Terms and Conditions above</b></apex:outputField>
+                                
+                        </apex:panelGrid>
+                        <!--<div class="subHeader">Invention Disclosure Status</div>-->
+                        <apex:panelGrid columns="2" styleClass="tableStyle" border="0"
+                                        columnClasses="colStyle1,colStyle2" rowClasses="rowstyle">
+                            <p><b>Submitted Date:</b></p>
+                            <apex:outputText value="{0,date,MMM dd, yyyy}">
+                                <apex:param value="{!a.SymphonyIPM__Submitted_Date__c}"/>
+                            </apex:outputText>
+                            <p><b>Submitted By:</b></p>
+                            <apex:outputText value="{!a.Submitted_By__c}">
+                            </apex:outputText>
+
+                            <p><b>Re-submitted Date:</b></p>
+                            <apex:outputText value="{0,date,MMM dd, yyyy}">
+                                <apex:param value="{!a.Re_Submission_Date__c}"/>
+                            </apex:outputText>
+                            <p><b>Re-submitted By:</b></p>
+                            <apex:outputText value="{!a.Re_submitted_By__c}">
+                            </apex:outputText>
+
+                            <b>Invention Status:</b>
+                            <apex:outputText value="{!a.SymphonyIPM__Disclosure_Status__c}"
+                                             escape="false"></apex:outputText>
+                            <br/>
+                        </apex:panelGrid>
+                    </apex:panelGrid>
+                </apex:pageBlockSection>
+
+
+            </apex:repeat>
+        </apex:pageBlock>
+    </apex:form>
+
+    </body>
+
+</apex:page>

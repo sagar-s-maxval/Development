@@ -1,0 +1,64 @@
+<template>
+    <template if:true={response}>
+        <div class='slds-p-around_small'>
+            <b>Files from All Documents</b>
+            <lightning-input name="input" label="Filter By:" placeholder="Enter search key"
+                             onchange={filterBySearchKey}></lightning-input>
+        </div>
+        <div class="slds-scrollable" style="max-height: 10rem">
+            <lightning-datatable if:true={filteredDataExists}
+                                 key-field="Id"
+                                 data={data}
+                                 columns={getColumns}
+                                 onrowaction={handleRowAction}
+                                 onrowselection={handleRowAction}
+                                 sorted-by={sortBy}
+                                 sorted-direction={sortDirection}
+                                 onsort={doSorting}
+            ></lightning-datatable>
+            <template if:false={filteredDataExists}>
+                <div style="text-align: center">
+                    <p>
+                        <lightning-icon size="xx-small" variant="warning" icon-name="utility:filterList"
+                                        title="Have not found records"></lightning-icon>
+                        <span class="slds-text-body_regular"> There are not any Documents with name <b>"{textToFilterBy}"</b></span>
+                    </p>
+                </div>
+            </template>
+        </div>
+    </template>
+    <template if:false={response}>
+        <div style="text-align: center">
+            <p>
+                <lightning-icon class="slds-icon_small" size="x-small" variant="error" icon-name="utility:error"
+                                title="No records"></lightning-icon>
+                <span class="slds-text-heading_small"> Oops! We have not found any documents</span></p>
+        </div>
+    </template>
+    <div class="slds-p-around_medium lgc-bg">
+        <c-custom-lookup onsearch={handleSearch} is-multi-entry='true' label="Recommendation From" placeholder="Persons"
+                         onselectionchange={setRequestorNames} required="true">
+        </c-custom-lookup>
+        <div if:true={personIsEmpty} class="slds-form-element__help" style="color:#EA001E;">Enter a value.</div>
+        <c-custom-lookup onsearch={handleJurisdictionSearch} label="Jurisdiction" placeholder="Jurisdiction"
+                         onsecondselectionchange={setJurisdictionId} required="true">
+        </c-custom-lookup>
+        <div if:true={jurisdictionIsEmpty} class="slds-form-element__help" style="color:#EA001E;">Enter a value.</div>
+        <lightning-input type="text" label="Adverse Mark" placeholder="type here..."
+                         onchange={handleAdverseMarkChange} required class="validate"></lightning-input>
+        <lightning-input type="text" label="Adverse Party" placeholder="type here..."
+                         onchange={handleAdversePartyChange} required class="validate"></lightning-input>
+        <lightning-input type="text" label="Related Classes" placeholder="type here..."
+                         onchange={handleRelatedClassesChange}></lightning-input>
+        <lightning-input type="date" label="Deadline" placeholder="Enter a date"
+                         onchange={handleDeadlineChange} required class="validate"></lightning-input>
+        <lightning-input type="text" label="Application/ Registration no." placeholder="type here..."
+                         onchange={handleApplicationRegistrationChange}></lightning-input>
+        <lightning-input type="text" label="Comments" placeholder="type here..."
+                         onchange={handleCommentsChange}></lightning-input>
+    </div>
+    <div class="slds-clearfix">
+        <lightning-button class="slds-m-around_medium slds-float_right" variant="brand" label="Request"
+                          onclick={createRecommendation} disabled={anyError}></lightning-button>
+    </div>
+</template>

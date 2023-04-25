@@ -1,0 +1,44 @@
+<aura:component description="cmpOtherMattersPatents"
+                controller="PatentRatingController"
+                extends="c:base"
+                implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="productLine" type="String"/>
+    <aura:attribute name="selectedLines" type="List" default="[]"/>
+    <aura:attribute name="lstSelectedLines" type="List" default="[]"/>
+    <aura:attribute name="lines" type="String"/>
+    <aura:attribute name="isDataLoaded" type="Boolean" default="false"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.selectedLines}" action="{!c.reloadPills}"/>
+    <!--    <aura:handler name="change" value="{!v.lines}" action="{!c.doInit}"/>-->
+
+    <div onmouseleave="{!c.onblur}">
+        <div updateOn="keyup" onkeyup="{! c.searchInventorsController}">
+
+            <lightning:input
+                    aura:id="txtSearchInventors"
+                    name="txtSearchInventors"
+                    placeholder="Or search"
+                    label=""
+                    type="search"
+                    variant="label-hidden"
+            />
+        </div>
+        <aura:if isTrue="{!v.isShowSearchResult}">
+            <ui:scrollerWrapper class="scrollerSize">
+                <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors"
+                                change="{!c.getSelectedInventorsController}">
+                </ui:inputSelect>
+            </ui:scrollerWrapper>
+        </aura:if>
+        <aura:if isTrue="{!not(empty(v.lstSelectedLines))}">
+            <p>
+                <lightning:pillContainer items="{!v.lstSelectedLines}" onitemremove="{!c.removeSelectedLine}"/>
+            </p>
+        </aura:if>
+    </div>
+</aura:component>

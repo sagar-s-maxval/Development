@@ -1,0 +1,13 @@
+<aura:component implements="lightning:availableForFlowScreens">
+    <aura:attribute name="canNext" type="Boolean" />
+    <aura:attribute name="SelectedButton" type="string" />
+    <aura:attribute name="screen" type="string" />
+    <div class="slds-clearfix slds-p-bottom_medium">
+        <div class="slds-float_right">
+                <lightning:button aura:id="BACK" label="Previous" variant="neutral" onclick="{!c.onButtonPressed}"/>
+                <lightning:button aura:id="NEXT" label="Submit" variant="brand" onclick="{!c.onButtonPressed}"/>
+                <lightning:button aura:id="NEXT" label="Save and Exit" variant="brand" onclick="{!c.onButtonPressed}"/>
+                <lightning:button aura:id="NEXT" label="Delete" variant="brand" onclick="{!c.onButtonPressed}"/>        
+        </div>
+    </div>
+</aura:component>

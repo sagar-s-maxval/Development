@@ -1,0 +1,19 @@
+.THIS table, .THIS th, .THIS td {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.THIS th, .THIS td {
+    padding: 2px;
+    font-size: 10px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.THIS th {
+    width: 20%;
+}
+
+.THIS .x-accordion .x-accordion-group  .x-accordion-heading a .x-accordion-toggle {
+    color: red!important;
+}

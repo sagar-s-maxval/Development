@@ -1,0 +1,109 @@
+<aura:component description="cmpIDFInventorsWrapper"
+                controller="IDFFlowController"
+                implements="force:hasRecordId,lightning:availableForFlowScreens,lightning:availableForFlowActions"
+                access="global">
+
+    <aura:attribute name="primaryInventor" type="String" access="global"/>
+    <aura:attribute name="coInventors" type="String"/>
+    <aura:attribute name="selectedPrimaryInventor" type="List" default="[]"/>
+    <aura:attribute name="IDF" type="String"/>
+    <aura:attribute name="coInvLoaded" type="Boolean" default="false"/>
+    <aura:attribute name="titleName" type="String"/>
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="userEmail" type="String"/>
+
+    <aura:attribute name="Group" type="String"/>
+    <aura:attribute name="Division" type="String"/>
+    <aura:attribute name="BusinessUnit" type="String"/>
+
+    <aura:attribute name="groupValues" type="List"/>
+    <aura:attribute name="divisionValues" type="List"/>
+    <aura:attribute name="allBusinessUnitValues" type="Object"/>
+    <aura:attribute name="businessUnitValues" type="List"/>
+    <aura:attribute name="buCheck" type="Boolean" default="true"/>
+    <aura:attribute name="buError" type="Boolean"/>
+    <aura:attribute name="showTitleError" type="Boolean"/>
+    <aura:attribute name="showExternalError" type="Boolean"/>
+
+    <aura:attribute name="external_emails" type="String"/>
+    <aura:attribute name="external_names" type="String"/>
+    <aura:attribute name="external_comments" type="String"/>
+    <aura:attribute name="external_exists" type="Boolean" default="false"/>
+    <aura:attribute name="externalInventors" type="SymphonyIPM__Inventor__c[]"/>
+
+    <aura:handler name="change" value="{!v.primaryInventor}" action="{!c.onPrimaryInventorChanged}"/>
+    <!-- <aura:handler name="change" value="{!v.Group}" action="{!c.checkBusinessUnit}"/> -->
+    <aura:handler name="change" value="{!v.Group}" action="{!c.changeDivisionPLValues}"/>
+    <!-- <aura:handler name="change" value="{!v.Division}" action="{!c.checkBusinessUnit}"/> -->
+    <aura:handler name="change" value="{!v.Division}" action="{!c.changeBusinessUnitPLValues}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <br/>
+    <div class="text-color slds-theme_default">
+        <div>
+            <div class="slds-text-heading_medium">
+                <b>Title of the Invention</b>
+            </div>
+            <br/>
+            <div class="slds-col slds-size_3-of-3">
+                <p style="font-size:14px;"> <span style="color:#ff0000">* </span>Provide a descriptive title for the invention.</p>
+                <lightning:input variant="label-hidden" type="text" label="" value="{!v.title}" maxlength="255"/>
+                <c:cmpTextLimit isRichText="false" vLimit="255" vText="{!v.title}"/>
+            </div>
+            <aura:if isTrue="{!v.title.length == 255}">
+                <div class="slds-text-color_error">You have reached the maximum size (255 characters) of the input.
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.showTitleError}">
+                <div class="slds-text-color_error">Please provide a title to proceed.</div>
+            </aura:if>
+        </div>
+        <div class="slds-text-heading_medium">
+            <b>Inventors' Details</b>
+        </div>
+        <br/>
+        <div class="slds-col slds-size_1-of-3">
+            <c:primaryInventor selectedInventors="{!v.coInventors}" primaryInventorId="{!v.primaryInventor}" currentUserEmail="{!v.userEmail}"/>
+        </div>
+
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-3 slds-text-body_small">
+                <label style="font-size:14px;"> <span style="color:#ff0000">* </span>Group</label>
+                <lightning:select aura:id="groupId" value="{!v.Group}" label="" variant="label-hidden">
+                    <option value="">--Select Group--</option>
+                    <aura:iteration items="{!v.groupValues}" var="s">
+                        <option value="{!s}" selected="{!s == v.Group}">{!s}</option>
+                    </aura:iteration>
+                </lightning:select>
+                <br/>
+                <label style="font-size:14px;"> <span style="color:#ff0000">* </span>Division</label>
+                <lightning:select aura:id="divisionId" value="{!v.Division}" label="" variant="label-hidden">
+                    <option value="">--Select Division--</option>
+                    <aura:iteration items="{!v.divisionValues}" var="s">
+                        <option value="{!s}" selected="{!s == v.Division}">{!s}</option>
+                    </aura:iteration>
+                </lightning:select>
+                <br/>
+                <span style="font-size:14px;"> <span style="color:#ff0000">* </span>Business Unit</span>
+                <lightning:select variant="label-hidden" aura:id="buId" value="{!v.BusinessUnit}" label="">
+                    <option value="">--Select Business Unit--</option>
+                    <aura:iteration items="{!v.businessUnitValues}" var="s">
+                        <option value="{!s}" selected="{! equals(s, v.BusinessUnit)}">{!s}</option>
+                    </aura:iteration>
+                </lightning:select>
+                <aura:if isTrue="{! and(v.buError, equals(v.BusinessUnit, ''))}">
+                    <div class="slds-text-color_error">Please, select the Business unit</div>
+                </aura:if>
+            </div>
+        </div>
+        <br/>
+        <aura:if isTrue="{!v.coInvLoaded}">
+            <c:coInventors selectedInventors="{!v.coInventors}" primaryInventorId="{!v.primaryInventor}"/>
+        </aura:if>
+        <aura:if isTrue="{! or(not(empty(v.primaryInventor)), not(empty(v.coInventors)))}">
+            <c:cmpIDFSubmissionInventors primaryInventor="{!v.primaryInventor}" coInventors="{!v.coInventors}"/>
+        </aura:if>
+
+        <c:externalInventors isExternalInventor="{!v.external_exists}" isError="{!v.showExternalError}" inventors="{!v.externalInventors}" idfId="{!v.IDF}"/>
+    </div>
+</aura:component>

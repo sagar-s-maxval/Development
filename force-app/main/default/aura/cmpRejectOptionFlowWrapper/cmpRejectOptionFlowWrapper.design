@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="answer" label="Answer" description="Will store picklist value" />
+    <design:attribute name="description" label="Description" description="Will store description value" />
+</design:component>

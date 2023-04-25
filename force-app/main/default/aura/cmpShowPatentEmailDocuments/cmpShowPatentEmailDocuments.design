@@ -1,0 +1,5 @@
+<design:component >
+    <design:attribute name="emailMessageId" label="Email Message Record Id" />
+    <design:attribute name="patentId" label="Patent Id" />
+    <design:attribute name="updateRows" label="Update Rows" />
+</design:component>

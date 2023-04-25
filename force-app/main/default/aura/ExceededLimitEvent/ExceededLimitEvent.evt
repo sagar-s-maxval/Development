@@ -1,0 +1,7 @@
+<!--
+ - Created by oadamovskyi on 24.05.2022.
+ -->
+
+<aura:event type="APPLICATION" description="ExceededLimitEvent">
+    <aura:attribute name="isExceededLimit" type="Boolean"/>
+</aura:event>

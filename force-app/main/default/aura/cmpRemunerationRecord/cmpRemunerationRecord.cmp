@@ -1,0 +1,81 @@
+<aura:component description="cmpRemunerationRecord"
+                controller="RemunerationRecordController"
+                implements="force:hasRecordId,force:lightningQuickAction,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:availableForFlowActions">
+
+    <aura:attribute name="inventorName" type="String"/>
+    <aura:attribute name="idf" type="String"/>
+    <aura:attribute name="idfStatus" type="String"/>
+    <aura:attribute name="businessUnit" type="String"/>
+    <aura:attribute name="contribution" type="Integer"/>
+    <aura:attribute name="patent" type="String"/>
+    <aura:attribute name="appStatus" type="String"/>
+    <aura:attribute name="jurisdiction" type="String"/>
+    <aura:attribute name="awardCurrency" type="String"/>
+    <aura:attribute name="remunerationAmount" type="Integer"/>
+    <aura:attribute name="purchaseOfRights" type="Boolean"/>
+    <aura:attribute name="remAgreement" type="Boolean"/>
+
+    <aura:attribute name="records" type="List"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-p-around_medium">
+        <div class="slds-text-heading_medium">
+            <b>Remuneration Record</b>
+        </div>
+        <br/>
+        <div class="x-accordion-heading">
+            <lightning:accordion allowMultipleSectionsOpen="true">
+                <aura:iteration items="{!v.records}" var="record">
+                    <lightning:accordionSection title="{!record.Inventor_Name__c}" label="{!record.Inventor_Name__c}">
+                        <aura:set attribute="body">
+                            <div class="slds-p-around_medium">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <br/>
+                                        <lightning:input type="text" label="Inventor Name" value="{!record.Inventor_Name__c}"/>
+                                        <br/>
+                                        <lightning:input type="search" label="Invention Disclosure" value="{!record.Invention_Disclosure__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Invention Status" value="{!record.Invention_Status__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Business Unit" value="{!record.Business_Unit__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Contribution Percentage" value="{!record.Contribution_Percentage__c}"/>
+                                        <br/>
+                                        <div class="slds-text-heading_small">
+                                            <b>Documents Received</b>
+                                        </div>
+                                        <br/>
+                                        <lightning:input type="checkbox" label="Purchase of Rights Agreement" value="{!record.Purchase_of_Rights_Agreement__c}"/>
+                                        <br/>
+                                        <lightning:input type="checkbox" label="Remuneration Agreement" value="{!record.Remuneration_Agreement__c}"/>
+                                        <br/>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <br/>
+                                        <lightning:input type="search" label="Patent" value="{!record.Patent__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Application Status" value="{!record.Application_Status__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Employer Jurisdiction" value="{!record.Employer_Jurisdiction__c}"/>
+                                        <br/>
+<!--                                        change to picklist-->
+                                        <lightning:input type="text" label="Award currency" value="{!record.Award_Currency__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Remuneration Amount" value="{!record.Remuneration_Amount__c}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Last Modified By" value="{!record.LastModifiedById}"/>
+                                        <br/>
+                                        <lightning:input type="text" label="Created By" value="{!record.OwnerId}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:set>
+                    </lightning:accordionSection>
+                </aura:iteration>
+            </lightning:accordion>
+        </div>
+        <br/>
+    </div>
+</aura:component>

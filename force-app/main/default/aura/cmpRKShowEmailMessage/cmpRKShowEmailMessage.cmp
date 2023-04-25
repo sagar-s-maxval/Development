@@ -1,0 +1,26 @@
+<aura:component controller="EmailTrackerServiceCtrl"
+                implements="force:appHostable,flexipage:availableForRecordHome,force:lightningQuickAction,lightning:actionOverride,force:hasRecordId"
+                access="global">
+    <aura:attribute name="emailMessage" type="sObject"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:card>
+        <div class="slds-p-horizontal_small">
+            <span>From: {!v.emailMessage.FromName}</span><br/>
+            <span>To: <a href="{!'mailto:' + v.emailMessage.ToAddress}" data-aura-rendered-by="27:710;a"
+                         class="emailuiFormattedEmail"
+                         data-aura-class="emailuiFormattedEmail">{!v.emailMessage.ToAddress}</a></span>
+            <br/>
+            <br/>
+            <br/>
+            <span>
+                <aura:if isTrue="{!v.emailMessage.HTML_Body__c}">
+                    <lightning:formattedRichText value="{!v.emailMessage.HtmlBody}"/>
+                    <aura:set attribute="else">
+                        <lightning:formattedRichText value="{!v.emailMessage.HTML_Body__c}"/>
+                    </aura:set>
+                </aura:if>
+            </span>
+        </div>
+    </lightning:card>
+</aura:component>

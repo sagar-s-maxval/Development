@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="value" label="Selected Rule"/>
+    <design:attribute name="trackerId" label="Email Tracker Id"/>
+</design:component>
