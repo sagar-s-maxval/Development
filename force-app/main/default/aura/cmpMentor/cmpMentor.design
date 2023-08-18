@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="strSelectedInventorIds" label="Mentor" description="flow1" />
+    <design:attribute name="DisclosureIds" label="DisclosureIdsmentor" description="flow1" />
+    <design:attribute name="strRemovedInventorIds" label="strRemovedInventorIds" description="Ids to store removed inventors when IDF edit" />
+</design:component>

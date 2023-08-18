@@ -1,0 +1,57 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithoutHeader,lightning:isUrlAddressable" access="global" controller="sendsummaryemialcntrl" >
+	 <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="loaded" type="boolean" default="true" />
+     <aura:attribute name="response" type="String" default="" />
+     <aura:attribute name="errormsg" type="String" default="" />
+    <div styel="Background-color:white;">
+             <aura:if isTrue="{!v.loaded}">
+                   <lightning:spinner alternativeText="Loading" size="large" />
+                   </aura:if>
+     <aura:if isTrue="{!v.response!=null}">
+        
+       <div class="demo-only" style="height:4rem">
+<div class="slds-notify_container slds-is-relative">
+<div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+<span class="slds-assistive-text">success</span>
+
+<div class="slds-notify__content">
+<h2 class="slds-text-heading_small ">{!v.response}</h2>
+</div>
+
+</div>
+</div>
+</div>
+  </aura:if>
+    
+    
+    </div>
+   <!--  <aura:if isTrue="{!v.errormsg!=null}">
+        <div class="demo-only" style="height:4rem">
+        <div class="slds-notify_container slds-is-relative">
+        <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+        <span class="slds-assistive-text">error</span>
+        <div class="slds-notify__content">
+        <h2 class="slds-text-heading_small "> {!v.errormsg}  </h2>
+         </div>
+         </div>
+         </div>
+         </div>
+    </aura:if>
+    <aura:if isTrue="{!v.response!=null}">
+        
+         <div class="demo-only" style="height:4rem">
+         <div class="slds-notify_container slds-is-relative">
+         <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+         <span class="slds-assistive-text">success</span>
+         <div class="slds-notify__content">
+         <h2 class="slds-text-heading_small ">{!v.response}
+         </h2>
+         </div>
+         </div>
+         </div>
+         </div>
+  </aura:if> -->
+    
+    
+</aura:component>

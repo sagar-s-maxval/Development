@@ -1,0 +1,8 @@
+.THIS.scrollerSize {
+    position:absolute;
+    z-index:2000;
+    height: 300px;
+}
+.THIS.selectsize{
+    width:200px;
+}

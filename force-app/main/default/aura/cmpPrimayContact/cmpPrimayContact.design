@@ -1,0 +1,12 @@
+<design:component>
+	<design:attribute name="strSelectedInvIds" label="Primary Contact" description="flow1" />
+    <design:attribute name="strSelectedInventorIds" label="Primary Contact new" description="flow1" />
+    <design:attribute name="otherstrSelectedInventorIds" label="Other Contact" description="flow1" />
+    <design:attribute name="DisclosureId" label="DisclosureId" description="flow1" />
+    <design:attribute name="selectedManagingSegment" label="Other Managing Segment" description="flow1"  />
+    <design:attribute name="OtherContribution" label="Other DContribution" description="flow1"  />
+    <design:attribute name="OtherBusinessProblem" label="Other Business Problem" description="flow1"  />
+    <design:attribute name="selectedtech"  label="selectedtech" description="" />
+    <design:attribute name="selectedstage"  label="selectedstage" description="" />
+   
+</design:component>

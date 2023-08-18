@@ -1,0 +1,24 @@
+<design:component>
+    
+    <design:attribute name="Title"  label="title" description="" />
+    <design:attribute name="today"  label="today" description="" />
+    
+    <design:attribute name="today2"  label="today2" description="" />
+    <design:attribute name="today3"  label="today3" description="" />  
+    <design:attribute name="today4"  label="today4" description="" />
+        
+    <design:attribute name="check"  label="check" description="" />
+    <design:attribute name="selectedtech"  label="selectedtech" description="" />
+    <design:attribute name="selectedstage"  label="selectedstage" description="" />
+    <design:attribute name="selectedManagingSegment"  label="selectedManagingSegment" description="" />
+    <design:attribute name="selectedinv"  label="selectedinv" description="" />
+    <design:attribute name="selectedpri"  label="selectedpri" description="" />
+    <design:attribute name="selectedmen"  label="selectedimen" description="" />
+    <design:attribute name="TechPathName" label="TechPathName" description="passing from flow"/> 
+    <design:attribute name="option2" label="option2" />
+    <design:attribute name="OtherContact" label="OtherContact" />
+    <design:attribute name="DisStatus" label="DisStatus" />
+    <design:attribute name="PathVal" label="PathVal" />
+    <design:attribute name="Summary" label="Summary"/>
+    
+</design:component>

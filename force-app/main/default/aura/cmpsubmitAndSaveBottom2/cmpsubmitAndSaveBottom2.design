@@ -1,0 +1,72 @@
+<design:component>
+    <design:attribute name="value"  label="SaveAs" description="" />
+    <design:attribute name="navigateFlow"  label="Submit" description="" />
+    <design:attribute name="savebutton"  label="savebutton" description="" />
+    <design:attribute name="sub"  label="sub" description="" />
+    <design:attribute name="StatusNotDraft" label="StatusNotDraft"/>
+    <design:attribute name="OnlySave" label="OnlySave"/>
+    <design:attribute name="IDF"  label="IDF" description="" />
+    
+    <!--        On load     -->
+    <design:attribute name="Title"  label="Title" description="" />
+    <design:attribute name="Summary"  label="Summary" description="" />
+    <design:attribute name="check"  label="InventionProgramcheck" description="" /> 
+    <design:attribute name="BusinessProgm"  label="BusinessProgm" description="" />
+    <design:attribute name="Path"  label="Path" description="" />
+    <design:attribute name="stages"  label="stages" description="" />
+    <design:attribute name="ManagingSegments"  label="ManagingSegments" description="" /><!--Managing Segment-->
+    <design:attribute name="primaryInventor"  label="primaryInventor" description="" />
+    <design:attribute name="Mentor"  label="Mentor" description="" />
+    <design:attribute name="primarycontact"  label="primarycontact" description="" />
+    <design:attribute name="question11"  label="question11" description="" />
+    <design:attribute name="question12"  label="question12" description="" />
+    <design:attribute name="question13"  label="question13" description="" />
+    <design:attribute name="question14"  label="question14" description="" />
+    <design:attribute name="question21Textbox"  label="question21Textbox" description="" />
+    <design:attribute name="question22Textbox"  label="question22Textbox" description="" />
+    <design:attribute name="question23Textbox"  label="question23Textbox" description="" />
+    <design:attribute name="question230Textbox"  label="question230Textbox" description="" />
+    <design:attribute name="question24Textbox"  label="question24Textbox" description="" />
+    <design:attribute name="question25Textbox"  label="question25Textbox" description="" />
+    <design:attribute name="question26Textbox"  label="question26Textbox" description="" />
+    <design:attribute name="questioncheckbox21"  label="questioncheckbox21" description="" />
+    <design:attribute name="questioncheckbox22"  label="questioncheckbox22" description="" />
+    <design:attribute name="questioncheckbox23"  label="questioncheckbox23" description="" />
+    <design:attribute name="questioncheckbox230"  label="questioncheckbox230" description="" />
+    <design:attribute name="questioncheckbox24"  label="questioncheckbox24" description="" />
+    <design:attribute name="questioncheckbox25"  label="questioncheckbox25" description="" />
+    <design:attribute name="questioncheckbox26"  label="questioncheckbox26" description="" />
+    <design:attribute name="questioncheckbox27A"  label="questioncheckbox27A" description="" />
+    <design:attribute name="questioncheckbox27B"  label="questioncheckbox27B" description="" />
+    <design:attribute name="questioncheckbox27C"  label="questioncheckbox27C" description="" />
+    <design:attribute name="questioncheckbox27D"  label="questioncheckbox27D" description="" />
+    <design:attribute name="questioncheckbox27E"  label="questioncheckbox27E" description="" />
+    <design:attribute name="questioncheckbox27F"  label="questioncheckbox27F" description="" />
+    <design:attribute name="questionTextbox27A"  label="questionTextbox27A" description="" />
+    <design:attribute name="questionTextbox27B"  label="questionTextbox27B" description="" />
+    <design:attribute name="questionTextbox27C"  label="questionTextbox27C" description="" />
+    <design:attribute name="questionTextbox27F"  label="questionTextbox27F" description="" />
+    
+    <design:attribute name="Question22PublicDisDate"  label="Question22PublicDisDate" description="" />
+    <design:attribute name="Question23earlierUsed1Date"  label="Question23earlierUsed1Date" description="" />
+    <design:attribute name="Question24ExternalUseDate"  label="Question24ExternalUseDate" description="" />
+    <design:attribute name="Question25EarlierPlannedDate"  label="Question25EarlierPlannedDate" description="" />
+
+
+
+    
+    <design:attribute name="IsConfidentialityadded"  label="IsConfidentialityadded" description="" />
+    <design:attribute name="Confidentialityadded"  label="Confidentialityadded" description="" />
+    <!-- **** sync ****-->
+    <design:attribute name="TopBooleanValue"  label="TopBooleanValue" description="" />
+    <design:attribute name="BottomBooleanValue"  label="BottomBooleanValue" description="" />
+    
+    <!-- ************ -->
+    <design:attribute name="OtherBusinessSegment"  label="OtherBusinessSegment" description="" />
+    <design:attribute name="ContactFromOtherBusinessSegment"  label="ContactFromOtherBusinessSegment" description="" />
+    <design:attribute name="otherContribution"  label="otherContribution" description="" />
+    <design:attribute name="OtherBusinessProblem"  label="OtherBusinessProblem" description="" />
+    <design:attribute name="BusinessSegment"  label="BusinessSegment" description="" />
+    <design:attribute name="quest29"  label="quest29" description="" />
+    
+</design:component>

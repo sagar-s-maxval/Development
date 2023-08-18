@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+<aura:attribute name="value" type="String" />
+<aura:attribute name="action" type="String" />  
+<aura:attribute name="isTrue" type="boolean"/>
+<aura:attribute name="isChange" type="boolean"/>
+    <aura:attribute name="RatingVal" type="String"/>
+    <aura:attribute name="CheckCancel" type="boolean"/>
+     <aura:handler name="init" value="{!this}" action="{!c.init}"  />
+<aura:if isTrue="{!v.isChange}">
+ <div align="right">
+       <lightning:buttongroup >
+         <lightning:button label="Change" aura:id="EditId" variant="brand" onclick="{!c.handleEdit}"/>
+       </lightning:buttongroup>
+</div>
+</aura:if>  
+  <aura:if isTrue="{!v.isTrue}">
+      <div align="right">
+       <lightning:buttongroup >
+           <aura:if isTrue="{!v.CheckCancel==false}">
+           <lightning:button label="Cancel" aura:id="BACK" variant="brand" onclick="{!c.handleCancel}" /></aura:if>&nbsp;&nbsp;&nbsp;
+         <lightning:button label="Save" aura:id="EditId" variant="brand" onclick="{!c.handleEdit}"/>
+       </lightning:buttongroup>      
+      </div>
+  </aura:if>
+</aura:component>

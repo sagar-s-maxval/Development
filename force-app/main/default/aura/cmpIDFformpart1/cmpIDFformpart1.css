@@ -1,0 +1,10 @@
+.THIS .tallTextArea textarea {
+ width:1250px; height:90px
+}
+
+.THIS .slds-text-title{
+    color: blue;
+}
+.THIS .makeBlue{
+    -webkit-text-fill-color : black;
+}

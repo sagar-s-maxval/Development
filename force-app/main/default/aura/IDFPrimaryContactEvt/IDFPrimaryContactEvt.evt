@@ -1,0 +1,4 @@
+<!-- IDFPrimaryContactEvt -->
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="PrimaryContact" type="String"/>
+</aura:event>

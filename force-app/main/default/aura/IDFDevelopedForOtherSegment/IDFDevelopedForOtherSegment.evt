@@ -1,0 +1,4 @@
+<!--IDFDevelopedForOtherSegment-->
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="IDFDevelopedForOtherSegment" type="String"/>
+</aura:event>

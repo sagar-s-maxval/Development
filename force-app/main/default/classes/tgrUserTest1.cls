@@ -29,7 +29,7 @@ public class tgrUserTest1{
           RecordType rt=[select id,Name from RecordType where SobjectType='SymphonyIPM__Inventor__c' AND Name='Inventor' limit 1];
            SymphonyIPM__Inventor__c inv1=new SymphonyIPM__Inventor__c();
            inv1.Name='test1';
-           //inv1.EID__c='6737';
+           inv1.EID__c='6737';
           // inv1.Home_Country__c='abca';
            inv1.SymphonyIPM__Email__c='abc@a.com'; 
            inv1.SymphonyIPM__User__c=u1.id; 
@@ -51,7 +51,6 @@ public class tgrUserTest1{
            
           List<SymphonyIPM__Invention_Disclosure_New__c> lst=new list<SymphonyIPM__Invention_Disclosure_New__c>();
            SymphonyIPM__Invention_Disclosure_New__c idf = New SymphonyIPM__Invention_Disclosure_New__c();
-            idf.SymphonyIPM__Disclosure_State__c = 'Not Applicable';
             idf.SymphonyIPM__Primary_Inventor__c=inv1.id;
             idf.SymphonyIPM__Internal_Counsel__c=u.id;
             insert idf;
@@ -131,7 +130,7 @@ public class tgrUserTest1{
           RecordType rt=[select id,Name from RecordType where SobjectType='SymphonyIPM__Inventor__c' AND Name='Inventor' limit 1];
            SymphonyIPM__Inventor__c inv1=new SymphonyIPM__Inventor__c();
            inv1.Name='test1';
-           //inv1.EID__c='6737';
+           inv1.EID__c='6737';
            //inv1.Home_Country__c='abca';
            inv1.SymphonyIPM__Email__c='abc@a.com'; 
            inv1.SymphonyIPM__User__c=u1.id; 
@@ -153,7 +152,6 @@ public class tgrUserTest1{
            
             List<SymphonyIPM__Invention_Disclosure_New__c> lst=new list<SymphonyIPM__Invention_Disclosure_New__c>();
            SymphonyIPM__Invention_Disclosure_New__c idf = New SymphonyIPM__Invention_Disclosure_New__c();
-            idf.SymphonyIPM__Disclosure_State__c = 'Not Applicable';
             idf.SymphonyIPM__Primary_Inventor__c=inv1.id;
             idf.SymphonyIPM__Internal_Counsel__c=u11.id;
             insert idf;

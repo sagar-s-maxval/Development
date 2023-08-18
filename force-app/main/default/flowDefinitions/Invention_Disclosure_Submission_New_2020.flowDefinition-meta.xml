@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionNumber>21</activeVersionNumber>
+    <description>Removed disclosure sharing with hierarchy role users - 14/07/2020
+Fix to resolve primary inventor update while submit - Leena 12/06/2020
+Fix to add more inventors and avoid soql limit exception. - [Leena - 04/06/2020]
+Fix to remove default as &quot;no&quot; for checkboxes from 2.1 to 2.7 on &quot;save as draft&quot; - Leena [7/5/2020]
+Inventors Display fix - Leena 6/5/2020
+changes made to fix duplicate inventors - leena (23/04/2020)
+Added null check before looping over additional inventors - 15/4/2020
+sync in top and bottom submit --[Asma]
+Removed rowcause for all sharing records.[Juveria 10-04-2020]
+Added ISActive check for BU and Reviewer and removed next and previous button&gt;&gt;&gt;&gt; [Juveria 06-04-2020]
+Added IsActive check for user before creating share records and checked whether the user id for creating share record is the Owner of the record. [Leena - 06/04/2020].
+Changes made for replacing save button while adding inventors [Leena - 03/04/2020]
+changed the checkbox to radio button&gt;&gt;&gt;[Asma 01/04/2020]
+Changed the row cause for the users in the hierarchy and additional inventors..&gt;&gt;&gt;&gt;[Juveria  31-03-2020]
+Added Managing Segment picklist type field by removing the global value set assigned picklist Managing Segment field. Leena 24/03/2020
+Added Managing Segment in the form - Leena - 16/03/2020
+Rearranged the Contributor Information as Inventor ,Primary Contactand Mentor
+Rearranged the Contributor Information as Primary Contact, Inventor and Mentor and changed funding source from checkbox to radio button--13-02-2020
+Changed the value passed to the additional inventors component as string - Strfalse Leena-02/02/2020
+Addition of new 24th question based on requirement - Asma- 04/02/2020
+Changed sharing to the same user -24/02/2020
+Sharing For Business User
+
+Checking the profiles of Logged in user such as business user and reviewer and restricting the sharing access- (Checked and changed)
+Reviewer Unable to Submit the Disclosure - Fixed
+
+UHG IPLegal Updation
+
+Updated the IDF card with : Contact Eva Wood in IPLegal (IPLegal@uhg.com or 952-205-6063)
+
+Sharing the Record with Multiple Reviewers, BU which are present on the path.
+ Formatted the Screen Flow of the instructions.</description>
+    <masterLabel>Invention Disclosure Submission</masterLabel>
+</FlowDefinition>

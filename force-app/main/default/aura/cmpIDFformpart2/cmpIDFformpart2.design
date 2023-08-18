@@ -1,0 +1,63 @@
+<design:component>
+    <design:attribute name="que1"  label="que1" description="" />
+    <design:attribute name="que2"  label="que2" description="" />
+    <design:attribute name="que3"  label="que3" description="" />
+    <design:attribute name="que4"  label="que4" description="" />
+    <design:attribute name="ques21"  label="ques21" description="" />
+    <design:attribute name="ques22"  label="ques22" description="" />
+    <design:attribute name="ques23"  label="ques23" description="" />
+    <design:attribute name="ques230"  label="ques230" description="" />
+    <design:attribute name="ques24"  label="ques24" description="" />
+    <design:attribute name="ques25"  label="ques25" description="" />
+    <design:attribute name="ques26"  label="ques26" description="" />
+    <design:attribute name="ques270"  label="ques270" description="" />
+    <design:attribute name="ques271"  label="ques271" description="" />
+    <design:attribute name="ques272"  label="ques272" description="" />
+    <design:attribute name="ques273"  label="ques273" description="" />
+    <design:attribute name="ques274"  label="ques274" description="" />
+    <design:attribute name="ques275"  label="ques275" description="" />
+    <design:attribute name="ques273check"  label="ques273check" description="" />
+    <design:attribute name="ques274check"  label="ques274check" description="" />
+    <design:attribute name="questions21"  label="questions21" description="" />
+    <design:attribute name="questions22"  label="questions22" description="" />
+    <design:attribute name="questions23"  label="questions23" description="" />
+    <design:attribute name="questions230"  label="questions230" description="" />
+    <design:attribute name="questions24"  label="questions24" description="" />
+    <design:attribute name="questions25"  label="questions25" description="" />
+    <design:attribute name="questions26"  label="questions26" description="" />
+    <design:attribute name="CheckboxNew"  label="CheckboxNew271" description="" />
+    <design:attribute name="CheckboxNew1"  label="CheckboxNew272" description="" />
+    <design:attribute name="CheckboxNew2"  label="CheckboxNew273" description="" />
+    <design:attribute name="CheckboxNew5"  label="CheckboxNew275" description="" />
+    <design:attribute name="todaydate"  label="todaydateque23" description="" />
+    <design:attribute name="todaydate2"  label="todaydateque24" description="" />
+    <design:attribute name="todaydate3"  label="todaydateque25" description="" />
+    <design:attribute name="todaydate4"  label="todaydateque26" description="" />
+
+    <design:attribute name="ques24added"  label="ques24added" description="" />
+    <design:attribute name="q24added"  label="q24added" description="" />
+    
+    <design:attribute name="IDF"  label="IDF" description="" />
+    <design:attribute name="businessValue"  label="businessValue" description="" />
+    
+    <!-- Radio buttons -->
+    
+    <design:attribute name="optionsvaluedefault"  label="PriorQuestion21" description="" />
+    <design:attribute name="publicDisclosurechk"  label="publicDisclosurechk22" description="" />
+    <design:attribute name="CurrentCommercial23"  label="CurrentCommercial23" description="" />
+    <design:attribute name="useExternal230"  label="useExternal230" description="" />
+    <design:attribute name="ThirdPartyConfidentiality24"  label="ThirdPartyConfidentiality24" description="" />
+    <design:attribute name="FutureImplementation25"  label="FutureImplementation25" description="" />
+    <design:attribute name="CompetingProducts26"  label="CompetingProducts26" description="" />
+    <design:attribute name="ThirdPartyContributions27"  label="ThirdPartyContributions27" description="" />
+    <design:attribute name="ReverseEngineering28"  label="ReverseEngineering28" description="" />
+    <design:attribute name="competitivesolution28B"  label="competitivesolution28B" description="" />
+    <design:attribute name="literature28C"  label="literature28C" description="" />
+    <design:attribute name="impossible28D"  label="impossible28D" description="" />
+    <design:attribute name="Dontknow"  label="Dontknow" description="" />
+    <design:attribute name="other28F"  label="other28F" description="" />
+    
+    
+    
+    
+</design:component>

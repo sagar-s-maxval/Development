@@ -2,31 +2,27 @@
     <aura:attribute name="vText" type="String"/>
     <aura:attribute name="vLimit" type="Integer"/>
     <aura:attribute name="isRichText" type="Boolean"/>
-
+    
     <div class="slds-clearfix">
         <div class="slds-float_right">
-            <aura:if isTrue="{!v.vText.length > v.vLimit }">
-                <lightning:icon iconName="utility:error" size="x-small" class="error-icn" variant="error"/>&nbsp;
+            <aura:if isTrue="{!v.vText.length-7 > v.vLimit }">
+               <lightning:icon iconName="utility:error" size="x-small" class="error-icn" variant="error"/>&nbsp;
             </aura:if>
-
-            <aura:if isTrue="{! and (v.vText.length > 0, lessthanorequal(v.vText.length, v.vLimit))}">
-                <lightning:icon iconName="utility:success" size="x-small" class="success-icn" variant="Success"/>&nbsp;
-
+            
+            <aura:if isTrue="{!  (v.vText.length > 0)}">
+                
+               <!-- <lightning:icon iconName="utility:success" size="x-small" class="success-icn" variant="Success"/>&nbsp;-->
+                
                 <aura:if isTrue="{!v.isRichText}">
-                    {!v.vText.length-7} / {!v.vLimit} (including special characters)
+                    {!v.vText.length-7}/ {!v.vLimit} (including special characters and Space)
                     <aura:set attribute="else">
                         {!v.vText.length} / {!v.vLimit}
                     </aura:set>
                 </aura:if>
-
-                <aura:set attribute="else">
-
+              <!--  <aura:set attribute="else">
                     <lightning:icon iconName="utility:warning" size="x-small" class="warning-icn" variant="warning"/>&nbsp;
-
-                    {!v.vText.length} / {!v.vLimit}
-
-                </aura:set>
-
+                     {!v.vText.length} / {!v.vLimit}
+                </aura:set>-->
             </aura:if>
         </div>
     </div>

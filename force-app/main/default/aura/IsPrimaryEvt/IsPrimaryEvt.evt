@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="IsPri" type="Boolean"/>
+    <aura:attribute name="RowIndexValue" type="Integer"/>
+</aura:event>

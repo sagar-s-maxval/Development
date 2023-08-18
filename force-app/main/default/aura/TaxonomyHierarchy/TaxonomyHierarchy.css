@@ -1,0 +1,39 @@
+.THIS .sWrapTest {
+    height:150px;
+    width:100%;
+   
+}
+.THIS .highlight {
+    background-color: #87ceeb; 
+}
+
+.THIS .tblInventors
+{
+    background-color: #FFFDFD;
+}
+
+.THIS .slds-media__body{
+    margin-bottom:10px;
+    margin-top:10px;
+}
+
+.THIS .slds-table_cell-buffer tr>th {
+    padding-left : 0px;
+}
+
+.THIS .slds-table_cell-buffer tr>td { 
+    padding-left : 0px;
+}
+
+.THIS table th {
+    text-align:left;
+}
+
+.THIS a[href=""] {
+  display: none;
+}
+
+.THIS button[title="Expand Tree Branch"] ~ span {
+    color: green;
+    font-weight: bold;
+}

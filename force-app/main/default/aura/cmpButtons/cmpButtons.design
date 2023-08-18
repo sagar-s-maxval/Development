@@ -1,0 +1,5 @@
+<design:component>
+	 <design:attribute name="isTrue"  label="isTrue" description="" />
+     <design:attribute name="isChange"  label="isChange" description="" />
+    <design:attribute name="RatingVal" label="RatingVal" description="" />
+</design:component>

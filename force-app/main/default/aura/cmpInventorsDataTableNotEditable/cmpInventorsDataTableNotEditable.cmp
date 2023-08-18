@@ -1,0 +1,111 @@
+<aura:component controller="InventorControllerNew" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="record" type="Object" default="{'sobjectType':'WrapperInventorInfo','Recid':'','Name':'','RoleOfConception':'','IsPrimary':'false','IndexVal':'','EmailId':'','InventorName':''}"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/> 
+    <aura:registerEvent name="SelectedInventorEvt" type="c:SelectedInventorEvt"/>
+    <aura:registerEvent name="RowIndexEvt" type="c:RowIndexEvt"/>
+    <aura:registerEvent name="FooterDeleteRowEvt" type="c:FooterDeleteRowEvt"/>
+    
+    <aura:handler event="c:SelectedInventorsListEvt" action="{!c.setInventorIds}"/><!-- to get selected inventor ids on load for edit -->
+    <aura:attribute name="listOfSelectedInventorIds" type="List" default='[]'/>
+    <aura:attribute name="selectedRecord" type="Object"/>
+    <aura:attribute name="listOfSelectedRecords" type="List"/>
+    <aura:attribute name="Message" type="String" default="Search Result.."/>
+    <aura:attribute name="SearchWord" type="String"/>
+    <aura:attribute name="SelectedInventor" type="String"/>
+    <!--<aura:attribute name="DisplayDropDown" type="Boolean" default="false"/>-->
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    <aura:attribute name="ErrorVariable" type="boolean" default="false"/>
+    
+    <!-- save button replacment -->
+    <aura:attribute name="InValidInventor" type="boolean" default="false"/>
+    <aura:registerEvent name="InventorEvt" type="c:InventorEvt"/>
+    <aura:registerEvent name="OnSaveCheckValidInventor" type="c:OnSaveCheckValidInventor"/>
+    <aura:attribute name="counter" type="Integer"/>
+    <!-- end -->
+    
+    <!--<div align = "right">
+        <aura:set attribute="actions">
+            <a onclick="{!c.AddNewRow}">
+                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                <span class="slds-assistive-text">Add Icon</span>
+            </a>  
+        </aura:set>
+    </div>-->	
+    
+    	<tbody>
+    <lightning:layout>
+        
+        <lightning:layoutItem padding="around-small">
+            
+            <!--<lightning:input label="name" value="{!v.record.Name}" variant="label-hidden"/>-->
+            <div class="custom-box slds-form-element" onkeyup="" style="width:300px"> <!-- {!c.searchController} removed in order to fix Tab key selection issue (SYMSER-782) -->
+                
+                <lightning:input aura:id="SearchTxt"	
+                                 name="SearchTxt"
+                                 label="Search Inventor"
+                                 placeholder = "Search..."
+                                 type="search"
+                                 variant="label-hidden"
+                                 value="{!v.record.Name}" 
+                                 onchange="{!c.searchController}"
+                                 autocomplete="off" 
+                                 disabled = "true"/>
+                
+                <ui:scrollerWrapper class="scrollerSize">
+                    <aura:if isTrue="{!v.isShowSearchResult==true}">   
+                        <div style="position:absolute;top:35px;z-index:1000;width:300px;">
+                            <ui:inputSelect multiple="true"  class="dynamic" aura:id="lstAvailableInventors" change="{!c.SelectedInventorsController}" disabled = "true" >
+                            </ui:inputSelect>
+                        </div>
+                    </aura:if>
+                </ui:scrollerWrapper>
+            </div>
+           
+        </lightning:layoutItem>
+        
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <lightning:layoutItem padding="around-small" >
+            <div style="width:250px">
+                <lightning:input label="Role Of Conception" aura:id="ROC" value="{!v.record.RoleOfConception}" onchange = "{!c.SetRoleOfConception}" variant="label-hidden" autocomplete="off" disabled = "true"/>
+            </div>
+            
+            </lightning:layoutItem>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!--<lightning:layoutItem padding="around-small" >
+                <aura:if isTrue="{!v.record.IsPrimary}">
+                <ui:inputCheckbox label="IsPrimary" aura:id="IsPrimaryInventor"  change="{!c.inventorIsPrimary}"/>
+        			<aura:set attribute = "else">
+                    	<ui:inputCheckbox  label="IsPrimary" aura:id="IsPrimaryInventor" change="{!c.inventorIsPrimary}"/>
+                    </aura:set>
+                </aura:if>
+                <ui:inputCheckbox label="" aura:id="IsPrimaryInventor" value="{!v.record.IsPrimary}"  change="{!c.inventorIsPrimary}"/> 
+                </lightning:layoutItem>-->
+            
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--<lightning:layoutitem padding="around-small">
+            <aura:if isTrue = "{!v.rowIndex != 0}">
+                    <a onclick="{!c.removeRow}" alignmentBump="left">
+                        <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon" />
+                        <span class="slds-assistive-text">Delete Icon</span>
+                    </a>
+             </aura:if>   
+        </lightning:layoutitem>-->
+        
+            </lightning:layout>
+        
+            
+            
+            
+        
+     </tbody>
+    <lightning:layoutitem padding="around-small" alignmentBump="left">
+        <aura:if isTrue="{!v.ErrorVariable}">
+                <article class="slds-card">
+                    <p style="color:red;text-align:center">Invalid Inventor</p>
+                </article>
+            </aura:if>
+        </lightning:layoutitem>
+</aura:component>

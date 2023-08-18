@@ -1,0 +1,9 @@
+<design:component>
+	<design:attribute name="strSelectedInventorIds" label="strSelectedInventorIds" description="flow1" />
+    <design:attribute name="strSelectedInventorInfo" label="strSelectedInventorInfo" description="flow1" />
+    <design:attribute name="DisclosureId" label="DisclosureId" description="flow2"/>
+   
+    <design:attribute name="DisplayText" label="DisplayText" description="flow2"/>
+    <design:attribute name="DisplayTitle" label="DisplayTitle" description="flow2"/>
+    <design:attribute name="DisplayDocketNo" label="DisplayDocketNo" description="flow2"/>
+</design:component>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="problemQ11" type="boolean" /> 
+    
+</aura:event>

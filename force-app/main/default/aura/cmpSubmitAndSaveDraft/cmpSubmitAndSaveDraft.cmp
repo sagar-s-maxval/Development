@@ -1,0 +1,243 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens,lightning:isUrlAddressable" access="global" >
+    
+    <aura:attribute name="value" type="boolean"  /> 
+    <aura:attribute name="savebutton" type="boolean"  /> 
+    <aura:attribute name="navigateFlow" type="boolean"  /> 
+    <aura:attribute name="sub" type="boolean"  /> 
+    <aura:attribute name="Error" type="boolean"  default="false"/> 
+    <aura:attribute name="ErrorMessage" type="String"  /> 
+    <aura:attribute name="ErrorFields" type="List" default="" />
+    <aura:attribute name="StatusNotDraft" type="boolean" default="false" />
+    <aura:attribute name="OnlySave" type="boolean" />
+    <aura:attribute name="IDF" type="String" default="false"/>
+	 
+       
+    <!-- Attributes to pass on onload -->
+    <aura:attribute name="Title" type="string" access="global" default=''/>
+    <!-- Added Summary Field to IDF-https://maxval.atlassian.net/jira/core/projects/UCR/board?selectedIssue=UCR-5 By MVSL1383-->
+    <aura:attribute name="Summary" type="string" access="global" default=''/>
+    <aura:attribute name="check" type="boolean" access="global" />
+    <aura:attribute name="BusinessProgm" type="boolean" access="global" />
+    <aura:attribute name="Path" type="string"  default=''/>
+    <aura:attribute name="stages" type="string" access="global" default=''/>
+    <aura:attribute name="ManagingSegments" type="string" access="global" default=''/><!-- Managing Segment -->
+    <aura:attribute name="primaryInventor" type="string" default=''/>
+    <aura:attribute name="Mentor" type="string" default=''/>
+    <aura:attribute name="primarycontact" type="string" default=''/>
+    <aura:attribute name="question11" type="string" access="global" default='' />
+    <aura:attribute name="question12" type="string" access="global" default='' />
+    <aura:attribute name="question13" type="string" access="global" default='' />
+    <aura:attribute name="question14" type="string" access="global" default=''/>
+    <aura:attribute name="question21Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question22Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question23Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question230Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question24Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question25Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="question26Textbox" type="string" access="global" default=''/>
+    <aura:attribute name="questioncheckbox21" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox22" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox23" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox230" type="boolean" access="global" /> 
+    <aura:attribute name="questioncheckbox24" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox25" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox26" type="boolean" access="global" />
+	 <aura:attribute name="questionTextbox27A" type="string" access="global" default=''/>
+    <aura:attribute name="questionTextbox27B" type="string" access="global" default=''/>
+    <aura:attribute name="questionTextbox27C" type="string" access="global" default=''/>
+    <aura:attribute name="questionTextbox27F" type="string" access="global" default=''/>  
+    <aura:attribute name="questioncheckbox27A" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox27B" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox27C" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox27D" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox27E" type="boolean" access="global" />
+    <aura:attribute name="questioncheckbox27F" type="boolean" access="global" />
+    
+    <aura:attribute name="Question22PublicDisDate" type="string" access="global" default=''/>
+    <aura:attribute name="Question23earlierUseDate" type="string" access="global" default=''/>
+    <aura:attribute name="Question24EarlierExternalUseDate" type="string" access="global" default=''/>
+    <aura:attribute name="Question25EarlierPlannedDate" type="string" access="global" default=''/>
+
+
+    <aura:attribute name="IsConfidentialityadded" type="boolean" access="global" default="false"/>
+    <aura:attribute name="Confidentialityadded" type="string" access="global" default=''/>
+    <aura:attribute name="quest29" type="string" access="global" default='' />
+    <!-- End -->
+    
+    <!-- Events attributes -->
+    <aura:attribute name="VDTInventorsSelected" type="Object[]" default="" /> 
+    <aura:attribute name="VDTTitle" type="string" default="" /> 
+    <aura:attribute name="VDTSummary" type="string" default="" /> 
+    <aura:attribute name="VDTPath" type="string" default="" /> 
+    <aura:attribute name="VDTCurrentStageOfInvention" type="string" default="" />
+    <aura:attribute name="VDTManagingSegment" type="string" default="" /><!-- Managing Segemnt -->
+    <aura:attribute name="VDTPrimaryInventor" type="string" default="" /> 
+    <aura:attribute name="VDTProblemQ11" type="string" default="" />
+    <aura:attribute name="VDTSolutionQ12" type="string" default="" />
+    <aura:attribute name="VDTFeatureQ13" type="string" default="" />
+    <aura:attribute name="VDTAlternativeQue14" type="string" default=''/>
+    <aura:attribute name="VDTPriorsubmissionEvent21" type="string" default=''/>
+    <aura:attribute name="VDTPublicDisclosure22" type="string" default=''/>
+    <aura:attribute name="VDTCommercialEvent23" type="string" default=''/>
+    <aura:attribute name="VDTFutureEventQ24" type="string" default=''/>
+    <aura:attribute name="VDTproductsQ25" type="string" default=''/>
+    <aura:attribute name="VDTThirdPartyQ26" type="string" default=''/>
+    <aura:attribute name="VDTIsPriorsubmission21Event_Old" type="boolean" default="false"/>
+    <aura:attribute name="VDTISPublicDisclosureCheckQ22" type="string" default=''/>
+    <aura:attribute name="VDTIsCommercialCheckQ23" type="string" default=''/>
+    <aura:attribute name="VDTFutureimplementation24checkbox" type="string" default=''/>
+    <aura:attribute name="VDTIsproductsQ25checkbox" type="string" default=''/>
+    <aura:attribute name="VDTIsThirdparty26checkbox" type="string" default=''/>
+    <aura:attribute name="VDTPublicDisclosureDate" type="string" default=''/>
+    <aura:attribute name="VDTEarlierPlannedUseDate" type="string" default=''/>
+    <aura:attribute name="VDTEarlierExternalUseDate" type="string" default=''/>
+    <aura:attribute name="VDTReverseDetection" type="string" default=''/>
+    <aura:attribute name="VDTIsReverseDetection" type="boolean" default="false"/>
+    <aura:attribute name="VDTExternalUseChk" type="string" default=''/>
+    <aura:attribute name="VDTExternalUse" type="string" default=''/>
+    <aura:attribute name="VDTliteratureTxt" type="string" default=''/>
+    <aura:attribute name="VDTliteraturechk" type="boolean" default="false"/>
+    <aura:attribute name="VDTTestingtxt" type="string" default=''/>
+    <aura:attribute name="VDTTestingchk" type="Boolean" default="false"/>
+    <aura:attribute name="VDTOtherTxt" type="string" default=''/>
+    <aura:attribute name="VDTOtherChk" type="Boolean" default="false"/>
+    <!--<aura:attribute name="VDTIsThirdPartyConfidentiality" type="Boolean" default="false"/> commented on 8/4/2020 to fix validation not been fired for Third Party Confidentiality question-->
+    <aura:attribute name="VDTIsThirdPartyConfidentiality" type="string" default=''/>
+    <aura:attribute name="VDTThirdPartyConfidentiality" type="string" default=''/>
+    <aura:attribute name="VDTImpossible" type="boolean" default="false"/>
+    <aura:attribute name="VDTDontKnow" type="boolean" default="false"/>
+    <aura:attribute name="isBlankInv" type="boolean" default="false"/>
+    <aura:attribute name="OtherBusinessSegment" type="string"/>
+    <aura:attribute name="ContactFromOtherBusinessSegment" type="string"/>
+    <aura:attribute name="otherContribution" type="string"/>
+    <aura:attribute name="OtherBusinessProblem" type="string"/>
+    <aura:attribute name="BusinessSegment" type="string"/>
+    <aura:attribute name="DevelopedForOtherSegment" type="string" default="Yes"/>
+    <aura:attribute name="VDTBusinessValue" type="string" default="" />
+    
+    <!-- End -->
+    
+    <!--Radio button change -->
+    <aura:attribute name="VDTIsPriorsubmission21Event" type="string" default=""/>
+    
+    <!-- end -->
+    <!-- handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"  />
+    
+    <!--- Events starts-->
+    <!--<aura:handler event ="c:SelectedInventorsListFooterEvt" action ="{!c.setInventorsSelected}"/> SAVE BUTTON REPLACEMENT-->
+    <aura:handler event ="c:IDFTitleEvent" action ="{!c.setTitle}"/>
+    <aura:handler event ="c:IDFSummaryEvent" action ="{!c.setSummary}"/>
+    <aura:handler event ="c:IDFPathEvent" action ="{!c.setPath}"/>
+    <aura:handler event ="c:IDFCurrentStageOfInvention" action ="{!c.setCurrentStageOfInvention}"/>
+    <aura:handler event ="c:IDFManagingSegment" action ="{!c.setManagingSegment}"/><!--Managing Segment -->
+    <aura:handler event ="c:IDFPrimaryInventorEvent" action ="{!c.setPrimaryInventor}"/> 
+    <aura:handler event ="c:problemstatementQ11" action ="{!c.setQ11}"/>
+    <aura:handler event ="c:solutionQ12Event" action ="{!c.setQ12}"/>
+    <aura:handler event ="c:FeatureQue13" action ="{!c.setQ13}"/>
+    <aura:handler event ="c:AlternativeQue14" action ="{!c.setQ14}"/>
+    <aura:handler event ="c:PriorsubmissionEvent21" action ="{!c.setQ21}"/>
+    <aura:handler event ="c:PublicDisclosure22" action ="{!c.setQ22}"/>
+    <aura:handler event ="c:CommercialEvent23" action ="{!c.setQ23}"/>
+    <aura:handler event ="c:FutureEventQ24" action ="{!c.setQ24}"/>
+    <aura:handler event ="c:ProductsQ25" action ="{!c.setQ25}"/>
+    <aura:handler event ="c:ThirdPartyQ26" action ="{!c.setQ26}"/>
+    <aura:handler event ="c:IsPriorSubmission21Event" action ="{!c.setQ21check}"/>
+    <aura:handler event ="c:ISPublicDisclosureCheckQ22" action ="{!c.setQ22check}"/>
+    
+    <aura:handler event ="c:IsCommercialCheckQ23" action ="{!c.setQ23check}"/>
+    <aura:handler event ="c:Futureimplementation24checkbox" action ="{!c.setQ24check}"/>
+    <aura:handler event ="c:IsproductsQ25checkbox" action ="{!c.setQ25check}"/>
+    <aura:handler event ="c:IsThirdparty26checkbox" action ="{!c.setQ26check}"/>
+    
+    <aura:handler event ="c:PublicDisclosureDateEvent23Chk" action ="{!c.setQ23Datecheck}"/>
+    <aura:handler event ="c:DateofEarliestUseEvent" action ="{!c.setQ24Datecheck}"/>
+    <aura:handler event ="c:DateofEarliestExternalUseEvent" action ="{!c.setQ25Datecheck}"/>
+    <aura:handler event ="c:DateofEarliestPlannedUseEvent" action ="{!c.setQ26Datecheck}"/>
+
+
+    <aura:handler event ="c:ExternalTxt230Event" action ="{!c.setExternalTxt}"/>
+    <aura:handler event ="c:ExternalUseEvent23Chk" action ="{!c.setExternalChk}"/>
+    <aura:handler event ="c:IsReverseDetectionEvent" action ="{!c.setReverseChk}"/>
+    <aura:handler event ="c:ReverseDetectionEvent" action ="{!c.setReverseTxt}"/>
+    <aura:handler event ="c:IsTestingcheckboxEvent27b" action ="{!c.setTestingChk}"/>
+    <aura:handler event ="c:TestingTxtboxEvent27b" action ="{!c.setTestingTxt}"/>
+    <aura:handler event ="c:IsliteraturecheckboxEvent27c" action ="{!c.setliteratureChk}"/>
+    <aura:handler event ="c:literatureTxtEvent27c" action ="{!c.setliteratureTxt}"/>
+    <aura:handler event ="c:IsOthercheckboxEvent27f" action ="{!c.setOtherChk}"/>
+    <aura:handler event ="c:OtherTxtboxEvent27f" action ="{!c.setOtherTxt}"/>
+    <aura:handler event ="c:IsThirdPartyConfidentiality" action ="{!c.setConfidentiality}"/>
+    <aura:handler event ="c:ThirdPartyConfidentiality" action ="{!c.setConfidentialityTxt}"/>
+    <aura:handler event ="c:ImpossibleEvent" action ="{!c.setImpossible}"/>
+    <aura:handler event ="c:DontknowEvent" action ="{!c.setDontKnow}"/>
+	<aura:handler event ="c:IDFOtherBusinessSegment" action ="{!c.setOtherContactValues}"/>
+    <aura:handler event ="c:ManagementEvent" action ="{!c.setOtherBusinessSegment}"/>
+    <aura:handler event ="c:IDFOtherContribution" action ="{!c.setIDFOtherContribution}"/>
+    <aura:handler event ="c:IDFPrimaryContactEvt" action ="{!c.setPrimaryContact}"/>
+    <aura:handler event ="c:IDFOtherBusinessProblem" action ="{!c.setIDFOtherBusinessProblem}"/>
+    <aura:handler event ="c:IDFDevelopedForOtherSegment" action ="{!c.setDevelopedForOtherSegment}"/>
+    <aura:handler event ="c:SelectedInventorEvt" action ="{!c.setSelectedInventors}"/>
+    <aura:handler event ="c:businessValueInventionEvent" action ="{!c.setQ29}"/>
+    <!-- Events end -->
+    
+    <!-- Replacing save button in role of conception cmp -->
+    <aura:attribute name="InventorRecords" type="Object[]" />
+    <aura:handler event ="c:InventorEvt" action ="{!c.SetInventorFooter}"/>
+    <!--<aura:handler event ="c:Evtinventorvalidation" action ="{!c.SetInventorvalidation}"/>-->
+    <aura:handler event ="c:RoleOfConceptionEvt" action ="{!c.SetRoleOfConceptionFooter}"/>
+    <aura:handler event ="c:IsPrimaryEvt" action ="{!c.SetIsPrimaryFooter}"/>
+    <aura:handler event ="c:FooterDeleteRowEvt" action ="{!c.DeleteRowElement}"/>
+    <aura:handler event ="c:OnloadSelectedInventorsEvt" action ="{!c.SetInventorsSelectedOnload}"/>
+    <aura:handler event ="c:OnSaveCheckValidInventor" action ="{!c.OnSaveCheckValidInventormeth}"/>
+    <aura:attribute name="strSelectedInventorIds" type="string" access="global"/>
+    <aura:attribute name="strSelectedInventorInfo" type="string" access="global"/>
+    <aura:attribute name="strSelectedInventorIdsTemp" type="string" access="global"/>
+    <aura:attribute name="strSelectedInventorInfoTemp" type="string" access="global"/>
+    <aura:attribute name="IsValid" type="Boolean" default = "true"/>
+    <aura:attribute name="IsNameChoosen" type="Boolean" default = "false"/>
+    <!--<aura:attribute name="Invvalidation" type="Boolean" default = "false"/>-->
+    <aura:attribute name="IsRoleOfConceptionEntered" type="Boolean" default = "false"/>
+    <aura:attribute name="ValidatePrimaryInventor" type="Boolean" default = "false"/>
+    <aura:registerEvent name="InventorsFinalSelectedListEvt" type="c:InventorsFinalSelectedListEvt"/>
+    <aura:attribute name="OnsaveValidateInv" type="boolean" default="false"/>
+    <aura:attribute name="InvalidInvSearch" type='string' default=""/>
+    <!-- end -->
+    <!-- ************* Attributes to sync top and bottom submit button**** -->
+    
+    <aura:attribute name="TopBooleanValue" type="boolean" default="false" />
+	<aura:attribute name="BottomBooleanValue" type="boolean" default="false" />  
+    <aura:registerEvent name="cmpsubmitAndSaveBottom2Event" type="c:cmpsubmitAndSaveBottom2Event" />
+    <aura:registerEvent name="FooterToForm2CheckBoxesEvt" type="c:FooterToForm2CheckBoxesEvt" />
+    <!-- handler to handle error from bottom comp -->
+    <aura:handler event ="c:ErrorEventToPassTopEvent" action ="{!c.SetErrormessage2}"/>
+    <aura:attribute name="VDTErrorlistsync2" type="string"/> 
+    <!-- ***************************************************************** -->
+    
+    
+  <!--  <aura:if isTrue="{!v.Error}">
+        <article class="slds-card">
+            <p style="color:red;text-align:center">{!v.ErrorMessage}</p>
+        </article>
+    </aura:if>
+     
+  <aura:if isTrue="{!v.TopBooleanValue}"> -->
+
+    <aura:if isTrue= "{!or(v.BottomBooleanValue, v.Error)}">
+        <article class="slds-card">
+            <p style="color:red;text-align:center">{!v.ErrorMessage}</p>
+        </article>
+    </aura:if>
+       
+    
+    <div align="right">  
+        
+        <aura:if isTrue="{!v.StatusNotDraft==false}">
+            <lightning:button label="Save as draft" aura:id="HomId" variant="brand" class="customButton" onclick="{!c.handleChange}" />
+            <lightning:button label="Submit" aura:id="HomeId" variant="brand" class="customButton" onclick="{!c.handleChange2}" />
+            <aura:set attribute="else">
+                <lightning:button label="Save" aura:id="SaveId" variant="brand" class="customButton"  onclick="{!c.handleChange2}" />
+            </aura:set>
+        </aura:if>
+    </div>
+    
+</aura:component>

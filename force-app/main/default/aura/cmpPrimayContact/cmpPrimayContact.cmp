@@ -1,0 +1,210 @@
+<aura:component controller="PrimaryContactController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+    
+    <aura:Attribute name ="Selectedinventors" type="List" />
+   <!--  <aura:attribute name="SelectedPrimaryUserIds" type="string" access="global" default= " "/>-->
+    <aura:attribute name="strSelectedInvIds" type="String" access="global"/>
+    <aura:attribute name="strSelectedInventorIds" type="String" access="global"/>
+    <aura:attribute name="otherstrSelectedInventorIds" type="string" access="global"/>
+    <aura:attribute name="otherstrSelected" type="string" access="global"/> 
+    <aura:attribute name="pathselected" type="string" access="global"/>
+    <aura:Attribute name ="arrSelectedInvIds" type="List" />
+    <aura:Attribute name ="arrOtherSelectedInvIds" type="List" />
+    <aura:Attribute name ="otherSelectedInvIds" type="List" />
+    <aura:Attribute name ="otherlstSelectedInventors" type="List" />
+    <aura:attribute name="lstSelectedInventors" type="List"/>
+    <aura:attribute name ="isShowSearchResult" type ="boolean" default ="false"/>
+    <aura:attribute name ="isprbtechdisabled" type ="boolean" default ="false"/>
+    <aura:attribute name ="otherisShowSearchResult" type ="boolean" default ="false"/>
+    <aura:attribute name="from_NewAssetInventorFlow" type="boolean" default="false"/>
+    <aura:attribute name="inputdisable" type="boolean" default="false"/>
+    <aura:attribute name="DisclosureId" type="String" access="global" default="false"/>
+    <aura:attribute name="selectedManagingSegment" type="string" access="global" />
+    <aura:attribute name="DevelopedforOtherSegment" type="String" default="Yes"/>
+    <aura:attribute name="OtherBusinessSegment" type="list" default=""/>
+    <aura:attribute name="OtherContact" type="list" default=""/>
+    <aura:attribute name="pathBoolean" type="boolean" default="false"/>
+    <aura:attribute name="ManagingSegments" type="list" access="global"  />
+    <aura:attribute name="OtherContribution" type="String"  access="global"/>
+    <aura:attribute name="OtherBusinessProblem" type="String" default=""/>
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Yes', 'value': 'Yes'},
+    {'label': 'No', 'value': 'No'} 
+    ]"/>
+     <aura:attribute name="otherContactPill" type="boolean" access="global" default="true"/>
+     <aura:attribute name="selectedtech" type="string" access="global" default=""/>
+     <aura:attribute name="optPaths" type="List" />
+    <aura:registerEvent name="ManageSegment" type="c:ManagementEvent" />
+    <aura:registerEvent name="IDFOtherBusinessSegment" type="c:IDFOtherBusinessSegment" />
+    <aura:registerEvent name="IDFDevelopedForOtherSegment" type="c:IDFDevelopedForOtherSegment" />
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesController}" />
+    <aura:attribute name="stages" type="list" access="global"  /> 
+    <aura:attribute name="selectedstage" type="string" access="global" />
+ <!-- <label style="color:red">*</label><label>Business Segment</label><c:cmphelper/>
+    <lightning:select name="ManagingSegment" aura:id="ManagingSeg"  label=""  onchange="{!c.SetManagingSegment}" value="{!v.selectedManagingSegment}" >
+       <aura:if isTrue="{!v.pathBoolean}">
+                <option value="" ></option>
+           		<aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+				<option value="{!optManagingSeg}" text="{!optManagingSeg}" selected="{!optManagingSeg==v.selectedManagingSegment}"></option>
+           </aura:iteration>
+           <aura:set attribute="else">
+               <option value=""></option>
+               <aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+                   <option value="{!optManagingSeg}">{!optManagingSeg}</option> 
+               </aura:iteration>
+           </aura:set>
+    </aura:if>
+                       
+    </lightning:select> 
+    -->
+    
+   <div style="color:black">
+   <!-- <label style="color:red">*</label>-->
+    <label >  Primary Contact </label>
+    
+    <div onkeyup="{! c.searchInventorsController }" >
+        
+        <lightning:input aura:id="txtsearchinventors"
+                         name="txtsearchInventors"
+                         
+                         placeholder ="Search Contact"
+                         type="search"
+                         />
+        
+    </div>
+       
+    <aura:if isTrue ="{!v.isShowSearchResult}"> 
+        <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}">
+        </ui:inputSelect>
+    </aura:if>
+    <lightning:pillcontainer items ="{!v.lstSelectedInventors}" onitemremove ="{!c.removeSelectedInventorsController}" />
+    <br/>
+    <div style="color:black"><label style="color:red">*</label> <B> Is this concept being developed in connection with, or with funding from, a business segment within UHG other than your business segment?</B> If so, please indicate the business segment and a contact from the business segment below. </div>
+    <br/>
+       </div>
+    <label style="color:black">Developed for Other segment</label>
+    <lightning:radioGroup name="radioGroup"
+                          aura:id="mygroup"
+                          label=""
+                          options="{! v.options }"
+                          value="{! v.DevelopedforOtherSegment }"
+                          onchange="{!c.ChangeOtherSegment}"
+                          type="radio"
+                          class="test"/>
+    <br/>
+    <div style="color:black">
+    <aura:if isTrue="{! v.DevelopedforOtherSegment== 'Yes'}">
+        
+    
+        <label style="color:red">*</label><label style="color:black"> Other Business Segment</label><!--c:cmphelper/-->
+    <lightning:select name="ManagingSegment" aura:id="ManagingSeg"  label=""  onchange="{!c.SetManagingSegment}" value="{!v.selectedManagingSegment}" >
+       <aura:if isTrue="{!v.pathBoolean}">
+                <option value="" >--None--</option>
+           		<aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+				<option value="{!optManagingSeg}" text="{!optManagingSeg}" selected="{!optManagingSeg==v.selectedManagingSegment}"></option>
+           </aura:iteration>
+           <aura:set attribute="else">
+               <option value="">--None--</option>
+               <aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+                   <option value="{!optManagingSeg}">{!optManagingSeg}</option>
+               </aura:iteration>
+           </aura:set>
+    </aura:if>
+    </lightning:select>
+        <br/>
+    
+        <label style="color:red">*</label><label style="color:black"> Contact from Other Business Segment</label>
+    
+    <div onkeyup="{!c.othersearchInventorsController}">
+        
+        <lightning:input aura:id="othertxtsearchinventors"
+                         name="othertxtsearchInventors"
+                        
+                         placeholder ="Search Other Contact"
+                         type="search"
+                         />
+        
+    </div>
+    <aura:if isTrue ="{!v.otherisShowSearchResult}"> 
+        <ui:inputSelect multiple="true" class="multiple" aura:id="otherlstAvailableInventors" change="{!c.othergetSelectedInventorsController}" >
+        </ui:inputSelect>
+    </aura:if>
+        <aura:if isTrue ="{!not(empty(v.otherlstSelectedInventors))}">
+            <lightning:pillcontainer items ="{!v.otherlstSelectedInventors}" onitemremove ="{!c.removeOtherSelectedInventorsController}" aura:id ="OtherInventory" class="slds-show" />
+        </aura:if>
+          <br/>
+
+      <!--  <lightning:helptext content="This Should contain 255 characters only"/>-->
+        
+        
+        <label class="slds-form-element__label"  for="text-input-id-1" style="font-size: 13px; color:black;">
+            <abbr class="slds-required" title="required">*</abbr> 
+           Describe Contribution from Other Business Segment
+        </label>
+        <lightning:helptext content="255 character limit" />
+        <lightning:textarea aura:id ="comment" value="{!v.OtherContribution}" name="Comment" onchange="{!c.DCB}" maxlength="255" />
+      
+        <br/>
+     </aura:if>   
+    <label class="slds-form-element__label" for="text-input-id-1" style="font-size: 13px; color:black;">
+            <abbr class="slds-required" title="required">*</abbr> 
+           What individual or business first identified the problem, or business need, to be solved by this invention?
+        </label>
+        <lightning:helptext content="255 character limit" />
+        <lightning:textarea aura:id="newproblem"  value="{!v.OtherBusinessProblem}" name="newproblem"  onchange="{!c.DCBP}" maxlength="255"/> 
+      <br/>
+        <abbr class="slds-required" title="required">*</abbr><label style="color:black"> PRB Technology Area</label>
+      <lightning:select disabled = "{!v.isprbtechdisabled}" name="ddlPath" aura:id="ddlPath" label=""  onchange="{!c.setSelectedPath}"  value="{!v.selectedtech}">
+    
+            <aura:if isTrue="{!v.pathBoolean}">
+                            
+            <option value=""  >--None--</option>
+            <aura:iteration items="{!v.optPaths}" var="optPath">
+                <option value="{!optPath.Id}" text="{!optPath.Name}" selected="{!optPath.Id==v.selectedtech}"></option>
+            </aura:iteration> 
+                    
+            <aura:set attribute="else">
+                
+                <option value="" >--None--</option>
+                <aura:iteration items="{!v.optPaths}" var="optPath">
+                    <option value="{!optPath.Id}" text="{!optPath.Name}"></option>
+                </aura:iteration> 
+                
+            </aura:set>
+        </aura:if>
+          
+    </lightning:select>
+    
+    <br/>
+    <abbr class="slds-required" title="required">*</abbr><label style="color:black"> Current Stage of Invention</label>
+    <!-- There are hidden newline chars in the following tag -->
+    <!-- <lightning:helptext content="Concept: Invention is in the ideation stage and there are no concrete plans for implementation　
+POC/Prototype – Active: POC/Prototype has been built and there are active plans for pilot testing/use　
+POC/Prototype – Inactive: POC/Prototype has been built, but there are no active plans for pilot testing/use　
+Pilot Testing/Ready for Production - Active: Invention is built and/or pilot testing is in progress, and there are active plans to put the invention into production　
+Pilot Testing/Ready for Production - Inactive: The invention is built and/or pilot tested, but there are no active plans to put the invention into production　
+In Production – Internal Efficiencies: Invention is in production and is used internally to improve UHG’s processes and efficiencies　
+In Production – Internal Commercial Operations: Invention is in production and is used internally to directly support an external commercial operation　
+In Production – Externally Marketed: Invention is in production and is marketed externally to clients" />-->
+    <lightning:select name="stage" aura:id="stage" label=""  onchange="{!c.setstage}" value="{!v.selectedstage}">
+       <aura:if isTrue="{!v.pathBoolean}">
+                <option value="" >--None--</option>
+           		<aura:iteration items="{!v.stages}" var="optstg">
+				<option value="{!optstg}" text="{!optstg}" selected="{!optstg==v.selectedstage}"></option>
+           </aura:iteration>
+           <aura:set attribute="else">
+               <option value="">--None--</option>
+               <aura:iteration items="{!v.stages}" var="optstg">
+                   <option value="{!optstg}">{!optstg}</option>
+               </aura:iteration>
+           </aura:set>
+    </aura:if>
+              
+    
+    </lightning:select>
+    <br/>
+    
+    <DIV style="font-size:18px; color:black;" ALIGN="Center" ><B>Contributor Information</B></DIV><br/>
+    <DIV style="font-size:16px; color:black;" ALIGN="left" ><B>Inventors</B></DIV><br/>
+
+        </div>
+</aura:component>

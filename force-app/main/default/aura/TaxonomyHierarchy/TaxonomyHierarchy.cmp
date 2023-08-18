@@ -1,0 +1,152 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,lightning:hasPageReference,lightning:isUrlAddressable" access="global" controller="TaxonomyHierarchyController">
+    <aura:handler value="{!this}" name="init" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navigate" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="items" type="Object" access="PRIVATE"/>
+    <aura:attribute name="SearchKeyWord" type="string" />
+    <aura:attribute name="Selectedkeywords" type="List" />
+    <aura:attribute name="responseMessage" type="String" />
+    <aura:attribute name="selectedTree" type="String" />
+    <aura:attribute name="keywordslist" type="List" />
+    <aura:attribute name="selectedkeyIds" type="List" default="[]"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="displaytable" type="boolean" default="false"/>
+    <aura:attribute name="displaytree" type="boolean" default="false"/>
+    <aura:attribute name="serachFirstLoad" type="boolean" default="false"/>
+    <aura:attribute name="isLoading" type="boolean" default="false"/>
+    
+    <aura:attribute name="data" type="Object[]"/>
+    <aura:attribute name="hierarchySearchData" type="Map"/>
+    <aura:attribute name="columns" type="List"/>
+     <aura:attribute name="loaded" type="Boolean" default="false" />
+    <aura:attribute name="issearching" type="Boolean" default="false"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="CurrentUser" type="Object"/>
+<force:recordData recordId="{!$SObjectType.CurrentUser.Id}"
+                  fields="Profile.Name"
+                  targetFields="{!v.CurrentUser}"/>
+	<ltng:require scripts="{!$Resource.jqueryminVer331}" afterScriptsLoaded="{!c.loadValuesController}"/>
+    
+    <article class="slds-card">
+	<div class="slds-card__header slds-grid slds-grid" style="background:var(--lwc-pageHeaderColorBackground,rgb(243, 242, 242))">
+	<header class="slds-media slds-media_center slds-has-flexi-truncate">
+	<div class="slds-media__figure">
+        <lightning:icon iconName="custom:custom21" size="small"/>
+	</div>
+	<div class="slds-media__body">
+	<h4 class="slds-card__header-title" style="font-weight:bold;">
+   <a class="slds-card__header-link baseCard__header-title-container" href="javascript:void(0)" onclick="{!c.redirecttolist}">
+         
+            <span class="slds-truncate slds-m-right--xx-small">
+               Associated Keywords ({!v.keywordslist.length})
+            </span>
+        </a>
+	</h4>
+	</div>
+	</header>
+	</div>
+      
+        
+	<footer style="margin: 1em;"> 
+    <lightning:layout>
+          <lightning:layoutItem size="12">
+             
+                <div aura:id="searchRes" onmouseleave="{!c.onblur}"> 
+                                <div onkeyup="{!c.keyPressController}" onclick="{!c.onclickSearch}">
+                                    <ui:inputText updateOn="keyup"
+                                                  class="slds-lookup__search-input slds-input inputSize"
+                                                  value="{!v.SearchKeyWord}"
+                                                  placeholder="Search Keywords"/>
+                                    
+                                </div>
+                    
+                         
+                   <div style="{!v.isShowSearchResult?'display:block;':'display:none;'}">
+                        <div aura:id="searchRes" style="height:150px;border:1px solid black;">
+                            <div class="slds-scrollable_y">
+                                <table id="tblInventors" class="slds-table  slds-border_left slds-border_right slds-border_bottom">
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                         
+                </div>
+              
+	</lightning:layoutItem>
+    </lightning:layout>
+        
+        <br/>
+    <aura:if isTrue="{!v.displaytable}">
+        
+       <aura:iteration items="{!v.selectedkeyIds}" var="item">
+            {!item.key}<br/>
+        </aura:iteration>
+    </aura:if>
+        <br/>
+          <ui:spinner aura:id="spinner" isVisible="False" />
+	<aura:if isTrue="{!v.keywordslist.length>0}">
+	 <div class="mainWrap">
+	   <div class="slds-box" >
+        <ui:scrollerWrapper class="sWrapTest">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped">
+			<thead>
+                <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate">Keyword</div>
+                        </th>
+                    <th class="" scope="col" >
+                            <div class="slds-truncate" title="Description">Code</div>
+                        </th> </tr>
+            </thead>
+                <tbody>
+            <aura:iteration items="{!v.keywordslist}" var="item">
+                <tr>
+                    <td>
+                		<lightning:button variant="base" label="{!item.label}" title="{!item.value}" onclick="{!c.handlekeywordClick}" />
+                        <br/>
+                       <aura:if isTrue="{!item.secondary}">
+                     Secondary:
+                          <ui:inputCheckbox class="myCheckbox" disabled="{!v.CurrentUser.Profile.Name=='Business User'}" aura:id="checkbox1" change="{!c.chekfalse}" value="true" text="{!item.Id}"/>
+                         
+                    <aura:set attribute="else">
+                    Secondary:<ui:inputCheckbox class="myCheckbox" disabled="{!v.CurrentUser.Profile.Name=='Business User'}" aura:id="checkbox" change="{!c.chekkey}" text="{!item.Id}"/>
+                         </aura:set>
+                           </aura:if> 
+                    </td>
+                  
+                    <td style="width:10%;" class="slds-cell-wrap">
+                        <div class="slds-line-clamp" title="{!item.description}">
+                        	{!item.description == 'null'?'':item.description}
+                        </div>
+                    </td>
+                
+                </tr>
+            </aura:iteration>
+                </tbody>
+        </table>
+		  </ui:scrollerWrapper>
+		  </div>
+    </div>
+	</aura:if>
+	<aura:if isTrue="{!v.isLoading}">
+        <div class="exampleHolder">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </div>
+	</aura:if>
+	
+	<aura:if isTrue="{!v.displaytree}">
+        <div style="margin-top:5px;">
+        <div class="slds-border_top">
+        <div class="slds-box" style="color:blue">
+    	<lightning:tree items="{!v.items}" header="Hierarchy"/>
+            </div>
+            </div></div>
+	</aura:if>
+	
+    </footer>
+    </article>
+    
+</aura:component>

@@ -1,0 +1,4 @@
+<!--IDFOtherContribution-->
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="otherContribution" type="String"/>
+</aura:event>

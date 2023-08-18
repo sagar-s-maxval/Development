@@ -1,0 +1,729 @@
+<aura:component controller="IDFRecordDetailPageController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action = "{!c.Onload}"/>
+    <aura:attribute name="options" type="List" />
+    <!--<aura:attribute name="value" type="List" default="{!v.IDFRecord.SymphonyIPM__Sold__c}"/>-->
+    <aura:attribute name="wrapperRecordDetails" type="object"/>
+    <aura:attribute name="recid" type="string"/>
+    <!--<p align="center" style="margin-top:20px;font-size:25px;"><B>Invention Disclosure</B></p>-->
+    
+    
+    <div>
+    	<table>
+            <tr>
+            	<td>
+                	<div>
+                        <lightning:input type="string" name="title" label="Title of Invention " disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Title__c}" />
+                    </div>
+                </td>
+                    
+                   
+            </tr>
+                <br/>
+             <tr>
+            	<td>
+                	<div>
+                         <!-- Summary Of the Invention Field Added-https://maxval.atlassian.net/jira/core/projects/UCR/timeline?selectedIssue=UCR-5 By MVSL1383-Sagar S--> 
+                        <ui:inputTextArea aura:id="comments" label="Summary of the Invention" disabled="true"  value="{!v.wrapperRecordDetails.InventionDisclosure.UHG_Summary__c}" rows="3"/>
+                    </div>
+                 </td>
+                    
+                   
+            </tr><br/>
+            <tr>
+            	<td>
+                	<div>
+                        <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Disclosure_Status__c == 'Submitted'}">
+                        	<lightning:input type="date" name="title" label="Date Submitted" disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Submitted_Date__c}" />
+                    	</aura:if>
+                    </div>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div style = "font-size:12px;">
+                        <B>Funding Source</B><br/>
+                        <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Funding_Source__c == 'PRB/Central Budget'}">
+                            <input type="radio" name="foobar" checked="checked" disabled="true"/><label for="PRB/Central Budget"> PRB/Central Budget</label><br/>
+                            <input type="radio" name="Business Segment " disabled="true"/> <label for="Business Segment"> Business Segment</label><br/>
+                                   
+                            <aura:set attribute="else">
+                                 <input type="radio" name="foobar"  disabled="true"/><label for="PRB/Central Budget"> PRB/Central Budget</label><br/>
+                            <input type="radio" name="Business Segment " checked="checked" disabled="true"/> <label for="Business Segment"> Business Segment</label><br/>
+                                 </aura:set>
+                        </aura:if>
+                        
+                  <!-- <lightning:input type="radio" name="InventionProgram" label="Invention Program"  checked="{!v.wrapperRecordDetails.InventionDisclosure.Invention_Program__c}" disabled="true"/>
+                    <lightning:input type="radio" name="BusinessProgram" label="Business Program"  checked="{!v.wrapperRecordDetails.InventionDisclosure.Business_Program__c}" disabled="true"/> -->
+                    </div>
+                 </td>
+            </tr><br/> 
+            <!-- Managing Segment -->
+			<tr>
+            	<td>
+                	<div>
+                        <lightning:select name="Managing Segment" label="Business Segment" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Business_Segment__c}</option>
+                        </lightning:select>    
+                    </div>
+                </td>
+            </tr><br/>
+            <!-- end -->
+            <tr>
+            	<td>
+                	<div>
+                        
+                        <lightning:select name="Primary Contact" label="Primary Contact" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Primary_Contact__r.Name}</option>
+                        </lightning:select>    
+                    </div>
+                </td>
+            </tr><br/> 
+            <aura:if isTrue="{!not(empty(v.wrapperRecordDetails.InventionDisclosure.Other_Segment__c))}"> 
+            <tr>
+            	<lightning:select name="ManagingSegment" aura:id="ManagingSeg"  label="Other Business Segment" disabled="true" >
+               		<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Other_Segment__c}</option>
+                </lightning:select>
+            </tr><br/> 
+            <tr>
+            	<lightning:select name="othertxtsearchinventors" aura:id="othertxtsearchinventors"  label="Contact from Other Business Segment" disabled="true" >
+               		<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Other_Contact__r.Name}</option>
+                </lightning:select>
+               
+            </tr><br/> 
+            <tr>
+            	<lightning:textarea aura:id ="comment"  name="Comment" label="Describe Contribution from Other Business Segment" disabled="true" maxlength="255" value="{!v.wrapperRecordDetails.InventionDisclosure.Other_Contribution__c}" />
+            </tr><br/> 
+            </aura:if>
+            <tr>
+            	<lightning:textarea aura:id="newproblem"   name="newproblem" label="What individual or business first identified the problem, or business need, to be solved by this invention?" disabled="true" maxlength="255" value="{!v.wrapperRecordDetails.InventionDisclosure.IndividualOrBusiness__c}"/>
+            </tr><br/> 
+            <tr>
+            	<td>
+                	<div>
+                        <lightning:select name="Invention Technology Domain" label="PRB Technology Area" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Hierarchy__r.Name}</option>
+                        </lightning:select>    
+                    </div>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                	<div>
+                        <lightning:select name="Current stage of invention" label="Current Stage of Invention" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Current_Stage_of_Invention__c}</option>
+                        </lightning:select>    
+                    </div>
+                </td>
+            </tr><br/><br/>
+            <tr>
+            	<td>
+                	<div style = "font-size:18px;" align="center">
+                        <B>&nbsp;Contributor Information</B>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+            	<td>
+          <!--      	<div>
+                        <lightning:select name="Primary Inventor" label="Primary Inventor" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Primary_Inventor__r.Name}</option>
+                        </lightning:select>    
+                    </div> -->
+                </td>
+            </tr>
+            
+            <!--<tr>
+            	<td>
+                	<div>
+                        <lightning:select name="Mentor" label="Mentor" disabled = "true">
+                        	<option value="">{!v.wrapperRecordDetails.InventionDisclosure.Mentors__c}</option>
+                        </lightning:select>    
+                    </div>
+                </td>
+            </tr><br/>-->
+           
+            <!--Additional Inventors-->
+            <tr>
+            	<td>
+                	<div>
+                        <div style="font-size:12px;">Inventors</div><br/>
+                        <aura:if isTrue="{!not(empty(v.wrapperRecordDetails.ListAdditionalInventors))}">
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="table-layout: fixed;">
+                                <thead class="headerCSS"> 
+                                    <tr class="">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Name">Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Email">Email</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Role of Conception">Role in Conception</div>
+                                        </th>
+                                       <!-- <th class="" scope="col">
+                                            <div class="slds-truncate" title="Is primary">Is First Named Inventor</div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.wrapperRecordDetails.ListAdditionalInventors}" var="item">
+                                        <tr class="slds-hint-parent">
+                                            <td data-label="Name">
+                                                <div class="slds-truncate slds-truncate_container_80" style="width: 300px;">{!item.SymphonyIPM__Inventor__r.Name}</div>
+                                            </td>
+                                            <td data-label="Email">
+                                                <div class="slds-truncate slds-truncate_container_80" style="width: 300px;">{!item.SymphonyIPM__Inventor_Email__c}</div>
+                                            </td>
+                                            <td data-label="Role of Conception">
+                                                <div class="slds-truncate slds-truncate_container_80" style="width: 300px;">{!item.Role_In_Conception__c}</div>
+                                            </td>
+                                          <!--  <td data-label="Is Primary">
+                                                <lightning:input type="checkbox" disabled="true" checked="{!item.Is_Primary__c}"/>
+                                            </td>-->
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        	<aura:set attribute="else">
+                                
+                                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- None --</div>
+                        	</aura:set>
+                        </aura:if>
+                    </div>
+                </td>
+            </tr><br/><br/>
+           
+             <tr>
+            	<td>
+                	<div>
+                        <div style="font-size:12px;">Mentors <lightning:formattedUrl value="http://goto.uhg.com/mentors" label = "Click here to find a mentor"/></div><br/>
+                        <aura:if isTrue="{!not(empty(v.wrapperRecordDetails.ListInventors))}">
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="table-layout: fixed;">
+                                <thead class="headerCSS"> 
+                                    <tr class="slds-text-title">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Name">Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Email">Email</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.wrapperRecordDetails.ListInventors}" var="item">
+                                        <tr class="slds-hint-parent">
+                                            <td data-label="Name">
+                                                <div class="slds-truncate slds-truncate_container_80" style="width: 300px;">{!item.Name}</div>
+                                            </td>
+                                            <td data-label="Email">
+                                                <div class="slds-truncate slds-truncate_container_80" style="width: 300px;">{!item.SymphonyIPM__Email__c}</div>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        	<aura:set attribute="else">
+                                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- None --</div>
+                                
+                        	</aura:set>
+                        </aura:if>
+                    </div>
+                </td>
+            </tr><br/><br/>
+            <tr>
+            	<td>
+                	<div style = "font-size:18px;" align="center">
+                        <B>&nbsp;Invention Description</B>
+                    </div>
+                </td>
+            </tr><br/>
+            <tr>
+               <td>
+                   <div>
+                       If needed, you may submit the content for sections 1.1 through 1.4 in a file attached to this IDF. If you do, please ensure that you address each item from sections 1.1 through 1.4. You can use this <lightning:formattedUrl value="http://goto.uhg.com/patents/idf" label = "template"/> for the supplement to the IDF.
+                   </div> 
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>1.1&nbsp;&nbsp;Describe (a) the problem to be solved or addressed by the invention and (b) any known solutions and drawbacks to those existing solutions.</B>
+                         Please cite any relevant technical documents.  For software related inventions, describe whether there is a technical problem (e.g., in the field of computers or technological arts) that is being solved or addressed by the invention.
+					</div><br/>
+                	<div>
+                        <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Invention_Description__c}" />
+                    </div>
+                </td>
+            </tr><br/><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>1.2&nbsp;&nbsp;Describe the invention, including how it solves the problem described in Section 1.1.</B>
+                         Describe how the invention works, in a manner that someone having the requisite technical experience could implement or practice the invention.  For software-related inventions, describe how the invention provides a technical solution to a technical problem (e.g., in the field of computers or technological arts). 
+                         If possible, include all essential structural/system components and process steps.  Include or attach any relevant flowcharts, drawings, technical specifications, presentations, and other supporting documents.
+					</div><br/>
+                	<div>
+                        <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Detailed_Description__c}" />
+                    </div>
+                </td>
+            </tr><br/><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>1.3&nbsp;&nbsp;How is the invention new or “novel” compared to known solutions?</B>
+                         Consider whether the underlying technical methodology is unique compared to existing solutions, even those in different industries.  Please identify which steps described in Section 1.2 are novel.
+					</div><br/>
+                	<div>
+                        <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Inventive_Features__c}" />
+                    </div>
+                </td>
+            </tr><br/><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>1.4&nbsp;&nbsp;Describe any alternative ways of operating or structuring the invention.</B>
+                          E.g., Is there more than one way to practice any of the steps of your invention described in Section 1.2 (if so provide examples of variations)?
+					</div><br/>
+                	<div>
+                        <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.SymphonyIPM__Alternative_Implementations_New__c}" />
+                    </div>
+                </td>
+            </tr><br/><br/><br/>
+            <tr>
+            	<td>
+                	<div style = "font-size:18px" align="center">
+                        <B>Additional Questions</B>
+                    </div>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.1&nbsp;&nbsp;Prior Submissions.</B>
+                         Is this related to any earlier UHG Invention Disclosure or any pending or registered UHG patent? If yes, please identify the disclosure(s) or patent(s).
+					</div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Prior_Submissions__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Prior_Submissions__c}">
+                                <input type="radio" name="Isprioryes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                                <input type="radio" name="Ispriorno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                                <aura:set attribute="else">
+                                    <input type="radio" name="Isprioryes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                                    <input type="radio" name="Ispriorno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                                </aura:set>
+                            </aura:if>
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Prior_Submissions__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Prior_Submission_Description__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.2&nbsp;&nbsp;Public Disclosures.</B>
+                        Has the invention been used outside of UHG, or do you plan to do so? This would include using the invention in a pilot involving third parties, disclosing the invention to potential customers or suppliers, any publications, or any descriptions of any aspect of the invention to third parties (e.g., in a presentation, publication, abstract, advertisement, etc.). If so, please describe  below. Note: If currently unpublished, please keep the IP Legal Team updated on any future plans for non-confidential or public disclosures, publications or disseminations.
+                    </div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Public_Disclosure__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Public_Disclosure__c}">
+                        <input type="radio" name="Ispublicyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="Ispublicno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="Ispublicyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="Ispublicno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Public_Disclosure__c}">
+                        <div>
+                        	<lightning:input type="date" name="" label="" disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Public_Disclosure_Date__c}" />
+                        </div><br/>
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Public_Disclosure__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.3&nbsp;&nbsp;Current Commercial Use.</B>
+                         Is this invention currently implemented in a UHG product or solution? If yes, please (a) identify the <U>product or solution</U>, (b) the <U>earliest date</U> that the invention was put into use, (c) the <U>nature of the use</U> (e.g., in production vs. experimental), and (d) whether the invention is part of or directly supports a <U>commercial</U> product or solution.
+                    </div><br/>
+                	<!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Current_Commercisl__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Current_Commercisl__c}">
+                        <input type="radio" name="IsCurrentCommeryes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsCurrentCommerno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsCurrentCommeryes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsCurrentCommerno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Current_Commercisl__c}">
+                        <div>
+                        	<lightning:input type="date" name="" label="" disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.UHG_First_Use_Date__c}" />
+                        </div><br/>
+                    	<div>
+                        	<lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Current_Commercial_Use__c}" />
+                    	</div>
+                    </aura:if><br/>
+                    <p> <B>External Use.</B> Is the invention used to provide products or services to others outside of UHG; or licensed, offered for sale, advertised, or marketed to others outside of UHG? Please identify the <U>earliest date</U> that the invention was exposed to others outside of UHG. </p><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_External__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_External__c}">
+                        <input type="radio" name="IsExternalyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsExternalno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsExternalyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsExternalno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if>
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_External__c}">
+                       <div> <lightning:input type="date" name="" label="" disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.UHG_First_External_Use_Date__c}" />
+                        </div><br/>
+                    	<div>
+                          	<lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.External_Use__c}" />
+                    	</div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.4&nbsp;&nbsp;Third-Party Payor Confidentiality.</B>
+                        Was any part of this invention developed with, or for, a payor other than UHC? If yes, please provide a brief explanation.
+                    </div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Confidentiality__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Confidentiality__c}">
+                        <input type="radio" name="IsThirdPartyyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsThirdPartyno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsThirdPartyyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsThirdPartyno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Confidentiality__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Third_Party_Confidentiality__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.5&nbsp;&nbsp;Future Implementation.</B>
+                        If the invention is not currently implemented, are there plans to implement it? If yes, please (a) identify the <U>product or solution</U>, (b) the <U>earliest date</U> that the invention could be put into use, (c) the <U>nature of the use</U> (e.g., in production vs. experimental), and (d) whether the invention is part of or directly supports a <U>commercial</U> product or solution.
+                    </div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Future_Implementation__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Future_Implementation__c}">
+                        <input type="radio" name="IsFutureImpyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsFutureImpno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsFutureImpyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsFutureImpno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Future_Implementation__c}">
+                         <div>
+                        	<lightning:input type="date" name="" label="" disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.UHG_Future_Use_Date__c}" />
+                        </div><br/>
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Future_Implementation__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.6&nbsp;&nbsp;Competing Products / Solutions.</B>
+                       		 Are there known competitive UHG or third party products(s) or solution(s) ? If so, please provide details.
+                         <!--Please list the closest known competitive UHG or third party product(s) or solution(s).-->
+                    </div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Competing_Products_Solutions__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Competing_Products_Solutions__c}">
+                        <input type="radio" name="IsCompetingyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsCompetingno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsCompetingyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsCompetingno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if>
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Competing_Products_Solutions__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Competing_Products_Solutions__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.7&nbsp;&nbsp;Third Party Contributions.</B>
+                         Was the invention developed in conjunction with any third parties (e.g., vendors, contractors or third party partners)?  Does the invention include any third party materials, including software code?  If so, please describe.
+                    </div><br/>
+                    <!--<div>
+                        <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Contribution__c}" label="Yes" disabled="true"/>
+                    </div>-->
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Contribution__c}">
+                        <input type="radio" name="IsThirdPartyContributionyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsThirdPartyContributionno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsThirdPartyContributionyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsThirdPartyContributionno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if>
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Third_Party_Contribution__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Third_Party_Contribution__c}" />
+                        </div>
+                    </aura:if>
+                </td>
+            </tr><br/>
+            <tr>
+            	<td>
+                    <div>
+                        <B>2.8&nbsp;&nbsp;Detection.</B>
+                        A patent is only enforceable if we can detect that another party is using the same process/system that we invented.  How could UHG detect if a third party is using this invention? <br/>
+                        <br/><B>Check all that apply and describe in detail how this would be accomplished.</B>
+                    </div><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        
+                        
+                       <lightning:layout>
+                            <lightning:layoutitem>
+                                 <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reverse_Engineering__c}"  disabled="true"/>
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Reverse engineering or code examination.</B> Based on the invention are we likely to have access to a third party’s code or other information that would allow reverse engineering?  If so, how would we determine the entity is using this invention?
+                            </lightning:layoutitem> 
+                        </lightning:layout> 
+                        
+                     <!--   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Reverse engineering or code examination.</B> 
+							<lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reverse_Engineering__c}" label="Reverse engineering or code examination. Based on the invention are we likely to have access to a third party’s code or other information that would allow reverse engineering?  If so, how would we determine the entity is using this invention?" disabled="true"/> 
+                         -->
+                                                                                                                       
+                    </div>
+                  <!--  <div>
+                    Reverse engineering or code examination. Based on the invention are we likely to have access to a third party’s code or other information that would allow reverse engineering? If so, how would we determine the entity is using this invention?
+                    </div><br/>
+                	<aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reverse_Engineering__c}">
+                        <input type="radio" name="IsReverseyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsReverseno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsReverseyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsReverseno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                	<br/>
+           			<aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reverse_Engineering__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Reverse_Engineering__c}" />
+                        </div>
+                    </aura:if><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <lightning:layout>
+                            <lightning:layoutitem>
+                                 <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Testing_a_competitive_solution__c}"  disabled="true"/>
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Testing a competitive solution/ view product operation.</B> Based on the invention what access are we likely to have to a competitive solution and how would we determine if that solution is infringing?
+                            </lightning:layoutitem> 
+                        </lightning:layout>
+                        
+                        
+                      <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Testing a competitive solution/ view product operation.       
+							<lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Testing_a_competitive_solution__c}" label="Testing a competitive solution/ view product operation. Based on the invention what access are we likely to have to a competitive solution and how would we determine if that solution is infringing?" disabled="true"/>  </B>  --> 
+                        
+                    </div>
+                 <!--   <div>
+                    Testing a competitive solution/ view product operation. Based on the invention what access are we likely to have to a competitive solution and how would we determine if that solution is infringing?
+                    </div><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Testing_a_competitive_solution__c}">
+                        <input type="radio" name="IsTestingyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsTestingno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsTestingyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsTestingno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Testing_a_competitive_solution__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Testing_a_competitive_solution__c}" />
+                        </div>
+                    </aura:if><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                	<div>
+                        <lightning:layout>
+                            <lightning:layoutitem>
+                                 <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reading_Product_literature__c}"  disabled="true"/>
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Reading product literature.</B> Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?
+                            </lightning:layoutitem> 
+                        </lightning:layout>
+                        
+                        
+                        
+                       <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Reading product literature.        
+							<lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reading_Product_literature__c}" label="Reading product literature. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?" disabled="true"/> </B>-->
+                        
+                    </div>
+                  <!--  <div>
+                    Reading product literature. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?
+                    </div><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reading_Product_literature__c}">
+                        <input type="radio" name="IsReadingyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsReadingno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsReadingyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsReadingno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Is_Reading_Product_literature__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Reading_Product_literature__c}" />
+                        </div>
+                    </aura:if><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <lightning:layout>
+                            <lightning:layoutitem>
+                                 <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Impossible_unless_3rd_party_admitted_use__c}"  disabled="true"/> 
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Impossible, unless 3rd party admitted use.</B>
+                            </lightning:layoutitem> 
+                        </lightning:layout>
+                        
+                        
+                        
+                      <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Impossible, unless 3rd party admitted use.       
+								label="Impossible, unless 3rd party admitted use. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?"</B>-->
+                       
+                    </div>
+                <!--    <div>
+                    Impossible, unless 3rd party admitted use. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?
+                    </div><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Impossible_unless_3rd_party_admitted_use__c}">
+                        <input type="radio" name="IsImpossibleyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsImpossibleno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsImpossibleyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsImpossibleno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                 	<div>
+                      <!--  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Don’t know       
+								label="Don’t know. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?" </B>-->
+                        <lightning:layout>
+                            <lightning:layoutitem>
+                                <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Don_t_know__c}"  disabled="true"/> 
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Don’t know.</B>
+                            </lightning:layoutitem> 
+                        </lightning:layout>
+                       
+                   		
+                    </div>
+                 <!--   <div>
+                    Don’t know. Based on the invention what type of third party product literature is likely to be produced and is it likely to provide detailed information that would identify whether a third party is infringing?
+                    </div><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Don_t_know__c}">
+                        <input type="radio" name="IsDontKnowyes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsDontKnowno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsDontKnowyes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsDontKnowno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <div>
+                       <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Other       
+							<lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Other__c}" label="Other" disabled="true"/></B> -->
+                        <lightning:layout>
+                            <lightning:layoutitem>
+                                <lightning:input type="checkbox" checked="{!v.wrapperRecordDetails.InventionDisclosure.Other__c}"  disabled="true"/>
+                            </lightning:layoutitem> 
+                            <lightning:layoutitem>
+                                <B>Other.</B>
+                            </lightning:layoutitem> 
+                        </lightning:layout>
+                        
+                    </div>
+                 <!--   <div>
+                    Other
+                    </div><br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Other__c}">
+                        <input type="radio" name="IsOtheryes" disabled="true" checked="true"/><label for="Yes">&nbsp;Yes</label><br/>
+                        <input type="radio" name="IsOtherno" disabled="true" /> <label for="No">&nbsp;No</label><br/>
+                        <aura:set attribute="else">
+                            <input type="radio" name="IsOtheryes" disabled="true" /><label for="Yes">&nbsp;Yes</label><br/>
+                            <input type="radio" name="IsOtherno" disabled="true" checked="true"/> <label for="No">&nbsp;No</label><br/>
+                        </aura:set>
+                    </aura:if> -->
+                    <br/>
+                    <aura:if isTrue="{!v.wrapperRecordDetails.InventionDisclosure.Other__c}">
+                        <div>
+                            <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.Others__c}" />
+                        </div>
+                    </aura:if><br/>
+                </td>
+            </tr><br/>
+             <tr>
+            	<td>
+                    <div>
+                        <B>2.9&nbsp;&nbsp;Business Value.</B>
+                         What is the business value of this invention to UHG, such as revenue generated,costs prevented, or time saved?
+					</div><br/>
+                	<div>
+                        <lightning:inputRichText disabled="true" value="{!v.wrapperRecordDetails.InventionDisclosure.UHG_Business_Value__c}" />
+                    </div>
+                </td>
+            </tr><br/><br/>
+        </table>
+    </div>
+</aura:component>

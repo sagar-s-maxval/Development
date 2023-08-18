@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Used for Adding New Row">
+	<aura:attribute name="indexVal" type="Integer"/>
+    <aura:attribute name="PrimaryChkStatus" type="Boolean"/>
+</aura:event>

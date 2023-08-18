@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionNumber>36</activeVersionNumber>
+    <description>PRC to PRB Name change Done.
+
+
+Removed Disclosure Status for PRB under Review in &quot;Set disclosure assigned to PRC Meeting&quot; assignment
+
+Change PRC naming defaults/convention to [PRB Technology Area] [YYYY-MM-DD] (i.e., remove &quot;PRC-&quot; prefix, remove time suffix, and remove dash between PRB and date) - 22/6/20
+
+Chenged value for PRB Review Scheduled - 09/07/2020
+
+Disclosure Status set as Ready for PRB Review after the PRB meeting deleted - 29/06/2023</description>
+    <masterLabel>Add to PRB Meeting</masterLabel>
+</FlowDefinition>

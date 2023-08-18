@@ -1,0 +1,155 @@
+<aura:component controller="InventorControllerNew" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="arrSelectedInventorIds" type="List" />
+    <aura:attribute name="strSelectedInventorIds" type="string" access="global"/>
+    <aura:attribute name="strSelectedInventorInfo" type="string" access="global"/>
+    <aura:attribute name="lstSelectedInventors" type="List" />
+    <aura:attribute name="lstInventors" type="List"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="DuplicateInventor" type="boolean" default="false"/>
+    <aura:attribute name="DisclosureId" type="String" access="global"/>
+    <aura:attribute name="DisplayTitle" type="String" access="global"/>
+    <aura:attribute name="DisplayDocketNo" type="String" access="global"/>
+    <aura:attribute name="DisplayText" type="String" access="global"/>
+    <!-- Event -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesController}"/>
+    <aura:registerEvent name="SelectedInventorsListEvt" type="c:SelectedInventorsListEvt"/><!-- To pass selected inventors ids to child component on load for edit -->    
+    <aura:registerEvent name="SelectedInventorsListFooterEvt" type="c:SelectedInventorsListFooterEvt"/>
+    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.CheckBoxValidation}"/>
+    <aura:handler event="c:SelectedInventorEvt" action="{!c.AddSelectedInvToList}"/>
+    <aura:handler event="c:RowIndexEvt" action="{!c.RemoveInventorFromList}"/>
+    
+    <aura:handler event="c:InventorsFinalSelectedListEvt" action="{!c.SetFinalValue}"/>
+    <aura:registerEvent name="OnloadSelectedInventorsEvt" type="c:OnloadSelectedInventorsEvt"/>
+    
+    
+	<!--<aura:handler name="change" value="{!v.records}" action="ss{!c.ChangeValue}"/>-->
+    <!-- Add inventors new - begin -->
+    <aura:attribute name="records" type="Object[]" />
+    <aura:attribute name="Index" type="Integer"/>
+    <aura:attribute name="SuccessMsg" type="Boolean" default = "false"/>
+    <aura:attribute name="PriamryInvSelected" type="Boolean" default = "false"/>
+    <aura:attribute name="ValidatePrimaryInventor" type="Boolean" default = "false"/>
+    <aura:attribute name="ErrorMessage" type="String"  /> 
+    <div>
+        <lightning:card title="Add Inventor(s)">
+          <!--  &nbsp;&nbsp;&nbsp;&nbsp;If any co-inventors cannot be found in the fields below, please list their names and email addresses in section 1.1.<br/>-->
+            &nbsp;&nbsp;&nbsp;&nbsp;Please contact <a href="{!v.DisplayText}" target="_blank" rel="noopener noreferrer">IP Legal</a> with any changes to the list of inventors. <br/><br/>
+             <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>Note: These individuals may later be considered inventors of the disclosed invention. IPLegal will provide guidance to determine final inventorship.</i>
+        <br/><br/> -->
+        <aura:set attribute="actions"> 
+            
+            <lightning:button label="Add" variant="brand" title="" onclick="{!c.addNewRow }" disabled = "true" />
+            
+        <!-- Removing + sign and replacing with Add button SYMSER-761 ***
+			   <a onclick="{!c.addNewRow}">
+                <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                <span class="slds-assistive-text">Add Icon</span>
+            </a>  -->
+        </aura:set>
+        <!--<aura:set attribute="actions">
+            <a onclick="{!c.addRow}">
+                <lightning:icon iconName="utility:add" size="small" alternativeText="add"/>
+            </a>
+        </aura:set>-->
+        <div role="dialog" tabindex="-1">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="width:100%">
+            <thead class="headerCSS">
+                <tr class="slds-text-title">
+                    <lightning:layout>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Lightning:layoutitem padding="around-small">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Name"><span style="color:red">*</span><B>&nbsp;Name</B></div>
+                            </th>
+                        </Lightning:layoutitem>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Lightning:layoutitem  padding="around-small" >
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Role in Conception"><span style="color:red">*</span><B>&nbsp;Role in Conception</B>&nbsp;
+                                <lightning:helptext content="Provide details on each individual’s contribution to the development of this invention"></lightning:helptext>
+                            </div></th>
+                        </Lightning:layoutitem>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Lightning:layoutitem  padding="around-small">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="IsPrimary"><!--<B>First Named Inventor</B>&nbsp; -->
+                             <!--   <lightning:helptext content="Please check only for First Named Inventor ..."></lightning:helptext>-->
+                                </div>
+                                
+                            </th>
+                        </Lightning:layoutitem>    
+                    </lightning:layout>	
+                </tr>
+            </thead>
+        
+            <tbody>
+        <aura:iteration items="{!v.records}" var="rec" indexVar="index">
+            <tr>
+            <lightning:layout>
+                <lightning:layoutItem  padding="around-small" flexibility="auto, no-grow">
+                    <div class="slds-text-heading_small slds-text-align_center">{!index + 1}.</div>
+                </lightning:layoutItem>
+                <!--<c:cmpInventorsDataTable record="{!rec}"/>
+                <lightning:layoutItem  padding="around-small" alignmentBump="left">
+                    <a name="{!index}" onclick="{!c.removeRow}">
+                        <lightning:icon iconName="utility:delete" size="small" alternativeText="delete"/>
+                    </a>
+                </lightning:layoutItem>-->
+                
+                <c:cmpInventorsDataTableNotEditable record="{!rec}" rowIndex="{!index}" listOfSelectedInventorIds="{!v.lstInventors}"/>
+                
+            </lightning:layout>
+                </tr>
+        </aura:iteration>
+            </tbody>
+            </table><br/>
+        <div align = "right">
+            <aura:if isTrue="{!v.SuccessMsg}">
+                <article class="slds-card">
+                    <p style="color:green;text-align:center">{!v.ErrorMessage}</p>
+                </article>
+            </aura:if>
+            <aura:if isTrue="{!v.ValidatePrimaryInventor}">
+                <article class="slds-card">
+                    <p style="color:red;text-align:center">{!v.ErrorMessage}</p>
+                </article>
+            </aura:if>
+            
+            
+        	<!--<lightning:button label="Save" variant="brand" title="" onclick="{!c.handleClick }"/>&nbsp;&nbsp;&nbsp;-->
+        </div>
+            </div><br/><br/>
+        
+    </lightning:card>
+        </div>
+    <br/><br/>
+    <!-- end -->
+    
+    <!--<div onkeyup="{! c.searchInventorsController }">
+          <lightning:input
+                         aura:id="txtSearchInventors"	
+                         name="txtSearchInventors"
+                         label="Search Inventors"
+                         placeholder = "Search Inventors"
+                         type="search"
+                         variant="label-hidden"
+                         />
+      </div>
+      <aura:if isTrue="{!v.isShowSearchResult==true}">
+         <ui:scrollerWrapper class="scrollerSize">
+             <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+             </ui:inputSelect>
+          </ui:scrollerWrapper>
+      </aura:if>
+        
+            <div>
+            </div>
+             <p><lightning:pillContainer items="{!v.lstSelectedInventors}" onitemremove="{!c.removeSelectedInventorsController}"></lightning:pillContainer></p> 
+            <br/><br/>-->
+    
+</aura:component>

@@ -1,0 +1,4 @@
+<!-- IDFOtherBusinessProblem-->
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="OtherBusinessProblem" type="String"/>
+</aura:event>

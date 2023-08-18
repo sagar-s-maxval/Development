@@ -1,0 +1,41 @@
+<aura:component controller="MentorController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global">
+    <aura:attribute name="arrSelectedInventorIds" type="List" />
+    <aura:attribute name="onloadarray" type="List" />
+    <aura:attribute name="strSelectedInventorIds" type="string" access="global"/>
+    <aura:attribute name="strRemovedInventorIds" type="string" access="global"/>
+    <aura:attribute name="lstSelectedInventors" type="List" />
+    <aura:attribute name="lstInventors" type="List"/>
+    <aura:attribute name="isShowSearchResult" type="boolean" default="false"/>
+    <aura:attribute name="DisclosureIds" type="String" access="global" default="false"/>
+    
+    <!-- Event -->
+    <aura:handler name="init" value="{!this}" action="{!c.loadValuesControllers}"/>
+    <div style="color:black">
+    <div> <B>Mentor(s)</B>&nbsp;<lightning:helptext content="If you have reached out, or will reach out, to the IP Legal team or Patent Business Operations team for mentoring, list the team member here to allow them to access your draft IDF."></lightning:helptext>
+        &nbsp;<lightning:formattedUrl value="http://goto.uhg.com/mentors" label = "Click here to find a mentor"/></div><br/>
+    
+    
+    <div onkeyup="{! c.searchInventorsController }">
+        <lightning:input
+                         aura:id="txtSearchInventors"
+                         name="txtSearchInventors"
+                         label="Search Inventors"
+                         placeholder = "Search Mentors"
+                         type="search"
+                         variant="label-hidden"
+                         autocomplete="off"
+                         /> 
+    </div>
+    <aura:if isTrue="{!v.isShowSearchResult==true}">
+        <ui:scrollerWrapper class="scrollerSize">
+            <ui:inputSelect multiple="true" class="multiple" aura:id="lstAvailableInventors" change="{!c.getSelectedInventorsController}" >
+            </ui:inputSelect>
+        </ui:scrollerWrapper>
+    </aura:if>
+    
+    <div>
+    </div>
+    <p><lightning:pillContainer items="{!v.lstSelectedInventors}" onitemremove="{!c.removeSelectedInventorsController}"></lightning:pillContainer></p>
+    <br/><br/>
+    </div>
+</aura:component>

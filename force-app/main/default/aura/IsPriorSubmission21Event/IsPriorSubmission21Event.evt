@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <!--<aura:attribute name="IsPriorsubmission21" type="boolean"/>-->
+    <aura:attribute name="IsPriorsubmission21" type="string"/>
+</aura:event>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="strSelectedInventorIdsEvt" type="string"/>
+    <aura:attribute name="strSelectedInventorInfoEvt" type="string"/>
+</aura:event>

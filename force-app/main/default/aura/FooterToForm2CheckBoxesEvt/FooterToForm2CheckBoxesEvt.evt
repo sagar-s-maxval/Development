@@ -1,0 +1,23 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="IsPrior" type="String"/>
+    <aura:attribute name="IsPublic" type="String"/>
+    <aura:attribute name="IsCommercial" type="String"/>
+    <aura:attribute name="IsExternal" type="String"/>
+    <aura:attribute name="IsFuture" type="String"/>
+    <aura:attribute name="IsProduct" type="String"/>
+    <aura:attribute name="IsThirdparty" type="String"/>
+    <aura:attribute name="IsThirdPartyConf" type="String"/>
+    <aura:attribute name="PriorText" type="String"/>
+    <aura:attribute name="PublicDate" type="String"/>
+    <aura:attribute name="PublicDate1" type="String"/>
+    <aura:attribute name="PublicDate2" type="String"/>
+    <aura:attribute name="PublicDate3" type="String"/>
+
+    <aura:attribute name="PublicText" type="String"/>
+    <aura:attribute name="CommercialText" type="String"/>
+    <aura:attribute name="ExternalText" type="String"/>
+    <aura:attribute name="FutureText" type="String"/>
+    <aura:attribute name="ProductText" type="String"/>
+    <aura:attribute name="ThirdPartyText" type="String"/>
+    <aura:attribute name="ThirdPartyConfiText" type="String"/>
+</aura:event>

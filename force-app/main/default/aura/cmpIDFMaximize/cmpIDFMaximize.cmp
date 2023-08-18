@@ -1,0 +1,45 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="HomePage" type="boolean" default="false"/>
+    <lightning:card  title="Invention Disclosure Submission">
+        
+        <div class="c1" style="text-align: center">  
+            <lightning:button variant="Brand" label="Create Invention Disclosure" title="Create Invention Disclosure" onclick="{! c.handleClick }" />&nbsp;&nbsp;&nbsp;&nbsp;</div><br/>
+        <div class="demo-only" style="padding:0.5rem;background:#157DEC">
+            <div class="FIRSTPOINT" style="text-align: center; color: white; font-weight: bold" >Instructions </div>
+        </div>
+        <ul class="slds-list--dotted">
+            <br/>
+            <li style="list-style-type:disc; font-weight: bold"> Provide as much detail as possible.</li><br/>
+            <lightning:layout>
+                <lightning:layoutitem>Attach additional explanatory documents or materials (e.g. technical specifications, drawings, flowcharts, manuals, PPT presentations).</lightning:layoutitem><br/></lightning:layout>
+            <br/><lightning:layout>
+                <lightning:layoutitem>Content for sections 1.1 through 1.4 may be submitted in a file attached to an IDF submission for ease of formatting. Please ensure that each item from sections 1.1 through 1.4 is addressed. This <a style="color: blue;" href="http://goto.uhg.com/patents/idf">IDF Supplement template</a> can be used.</lightning:layoutitem><br/></lightning:layout>
+            
+            <br/><li style="list-style-type:disc; font-weight: bold">  Timing is critical to patent protection.</li><br/>
+            
+            <lightning:layout>
+                <lightning:layoutitem><p class="f2" style="color: blue; font-weight: bold" >Talk to IP Legal before any use, sale, offer for sale, or public disclosure.  - </p>If the invention is patentable, premature publication, commercial activity, or other non-confidential disclosure may damage or preclude patent protection for your invention in many countries, including the United States.</lightning:layoutitem><br/></lightning:layout>
+            <lightning:layout>
+            <lightning:layoutitem><br/><p class="f2" style="color: blue; font-weight: bold" >Submit an invention disclosure as soon as the invention is clearly conceptualized.  -  </p>You do not need to wait until the invention is completely developed to seek patent protection. Filing as early as possible is preferable, even critical, to obtaining effective patent protection. This is particularly true where others are filing patent applications in the same or adjacent technology areas.</lightning:layoutitem><br/></lightning:layout>
+            
+            <br/><li style="list-style-type:disc; font-weight: bold">Questions or don't know where to start?</li><br/>
+            <lightning:layout>
+                <lightning:layoutitem>If you are having trouble filling out an Invention Disclosure Form (IDF) or would like help vetting your idea before filling out an IDF, you can request a mentor using the button below.</lightning:layoutitem><br/></lightning:layout>
+            <div class="c1" style="text-align: center"><br/>  
+            <a href="mailto:patents@uhg.com?cc=linhda.nguyen@uhg.com&amp;subject=Please%20assign%20a%20mentor%20to%20assist%20me%20with%20the%20invention%20disclosure%20process%20regarding:%20"><lightning:button variant="Brand" label="Request Mentor" title="Request Mentor" /></a>&nbsp;&nbsp;&nbsp;&nbsp;</div><br/>
+            <lightning:layout>
+                <lightning:layoutitem>Contact <a style="color: blue;" href="mailto:patents@uhg.com?subject=Legal/patent%20question%20related%20to:%20">UHG IP Legal</a> with any legal questions related to an IDF or patents generally.</lightning:layoutitem><br/><br/></lightning:layout>
+            <lightning:layout>
+                <lightning:layoutitem>Contact the <a style="color: blue;" href="mailto:invention@uhg.com?subject=PRB%20question%20related%20to:%20">Patent Business Operations Team</a> with any questions related to the UHG Patent Review Board (PRB) process.</lightning:layoutitem><br/><br/></lightning:layout>
+            <br/><lightning:layout>
+                <lightning:layoutitem>IP Legal holds <a style="color: blue;" href="https://teams.microsoft.com/l/meetup-join/19:meeting_ZDEyYjk2NWQtYjIyMC00ZTUzLTliYTktNjcxYmFjZjM4MDJj%40thread.v2/0?context=%7b%22Tid%22:%22db05faca-c82a-4b9d-b9c5-0f64b6755421%22%2c%22Oid%22:%22d9820ba1-fc9a-40c2-a6ef-cb3fe426343e%22%7d">office hours</a> every Wednesday at 10am CT.</lightning:layoutitem><br/></lightning:layout>
+            
+            
+        </ul><br/>
+        <!--<div class="demo-only" style="padding:0.5rem;background:#157DEC">
+            <div class="LASTPOINT" style="text-align: left; color: black; font-weight: bold" >Send completed form and all attachement to: IPLegal@uhg.com  </div>
+        </div><br/>
+        <div class="c1" style="text-align: right">  
+            <lightning:button variant="Brand"  class="slds-button_stretch" label="Create Disclosure" title="Click to Continue" onclick="{! c.handleClick }" />&nbsp;&nbsp;&nbsp;&nbsp;</div>-->
+     </lightning:card>
+</aura:component>

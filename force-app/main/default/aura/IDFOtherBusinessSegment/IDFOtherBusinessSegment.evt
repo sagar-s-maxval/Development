@@ -1,0 +1,4 @@
+<!--IDFOtherBusinessSegment-->
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="otherSelectedInventors" type="String"/>
+</aura:event>

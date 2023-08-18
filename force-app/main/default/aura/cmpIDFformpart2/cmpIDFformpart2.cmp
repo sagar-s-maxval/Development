@@ -1,0 +1,673 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+        
+    <aura:attribute name="vText" type="String"/>
+    <aura:attribute name="vLimit" type="Integer"/>
+    <aura:attribute name="isRichText" type="Boolean"/>  
+    <aura:attribute name="que1" type="string" access="global" />
+    <aura:attribute name="que2" type="string" access="global" />
+    <aura:attribute name="que3" type="string" access="global" />
+    <aura:attribute name="que4" type="string" access="global" />
+    <aura:attribute name="selectans1" type="boolean" access="global" default="false"/>
+    <aura:attribute name="selectans2" type="boolean" access="global" default="false"/>
+    <aura:attribute name="questions21" type="boolean" default="false"/>
+    <aura:attribute name="questions22" type="boolean" default="false" />
+    <aura:attribute name="ques21" type="string" access="global" default=' '/>
+    <aura:attribute name="ques22" type="string" access="global" default=' '/>
+    <aura:attribute name="ques23" type="string" access="global" default=' '/>
+    <aura:attribute name="questions23" type="boolean" default="false"/>
+    <aura:attribute name="selectans3" type="boolean" access="global" default="false"/>
+    <aura:attribute name="ques230" type="string" access="global"/>
+    <aura:attribute name="questions230" type="boolean" default="false"/>
+    <aura:attribute name="selectans230" type="boolean" access="global" default="false"/>
+    <aura:attribute name="ques24" type="string" access="global"/>
+    <aura:attribute name="questions24" type="boolean" default="false"/>
+    <aura:attribute name="selectans4" type="boolean" access="global" default="false"/>
+    <aura:attribute name="ques24added" type="boolean" default="false"/>
+    <aura:attribute name="q24added" type="string" access="global"/>
+    <!--   <aura:attribute name="options25" type="List" default="[{'label': 'Yes', 'value25':'options25'}]"/> -->
+    <aura:attribute name="ques25" type="string" access="global"/>
+    <aura:attribute name="questions25" type="boolean" default="false"/>
+    <aura:attribute name="selectans5" type="boolean" access="global" default="false"/>
+    <!--   <aura:attribute name="options26" type="List" default="[{'label': 'Yes', 'value26':'options26'}]"/> -->
+    <aura:attribute name="ques26" type="string" access="global"/>
+    <aura:attribute name="questions26" type="boolean" default="false"/>
+    <aura:attribute name="selectans6" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value270" type="boolean" default="false"/>
+    <aura:attribute name="ques270" type="string" access="global"/>  
+    <aura:attribute name="CheckboxNew" type="boolean" access="global" default="false"/>
+    <aura:attribute name="CheckboxNew1" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value271" type="boolean" default="false"/>
+    <aura:attribute name="ques271" type="string" access="global"/>
+    <aura:attribute name="CheckboxNew2" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value272" type="boolean"  default="false"/>
+    <aura:attribute name="ques272" type="string" access="global"/>
+    <aura:attribute name="CheckboxNew3" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value273" type="boolean"  default="false"/>
+    <aura:attribute name="ques273" type="string" access="global"/>
+    <aura:attribute name="ques273check" type="boolean" access="global" default="false"/>
+    <aura:attribute name="CheckboxNew4" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value274" type="boolean" default="false"/>
+    <aura:attribute name="ques274" type="string" access="global"/>
+    <aura:attribute name="ques274check" type="boolean" access="global" default="false"/>
+    <aura:attribute name="CheckboxNew5" type="boolean" access="global" default="false"/>
+    <aura:attribute name="value275" type="boolean"  default="false"/>
+    <aura:attribute name="ques275" type="string" access="global"/>
+    <aura:attribute name="todaydate" type="String" default=" "  />
+    <aura:attribute name="todaydate2" type="String" default=" "  />
+    <aura:attribute name="todaydate3" type="String" default=" "  />
+    <aura:attribute name="todaydate4" type="String" default=" "  />
+    <aura:attribute name="storedate" type="Date" default=" "  />
+    <aura:attribute name="storedate2" type="Date" default=" "  />
+    <aura:attribute name="storedate3" type="Date" default=" "  />
+    <aura:attribute name="storedate4" type="Date" default=" "  />
+    <aura:attribute name="futuredate" type="Date" default=" "  />
+    <aura:attribute name="futuredate1" type="Date" default=" "  />
+    <aura:attribute name="futuredate2" type="Date" default=" "  />
+    <aura:attribute name="futuredate3" type="Date" default=" "  />
+    
+    <aura:attribute name="validatedate" type="boolean"  default="false"/>
+    <aura:attribute name="validateearlierusedate" type="boolean"  default="false"/>
+    <aura:attribute name="validateEarliestExternalUsedate" type="boolean"  default="false"/>
+    <aura:attribute name="validateEarliestPlannedUseDate" type="boolean"  default="false"/>
+    
+    <aura:attribute name="IDF" type="String" default="false"/>
+    <aura:attribute name="businessValue" type="string" access="global" />
+    
+    <!-- Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"  />
+    <aura:handler event="c:FooterToForm2CheckBoxesEvt" action="{!c.setcheckboxesfromfooter}"  />
+    <!-- Handling events -->
+    <aura:registerEvent name="problemstatementQ11" type="c:problemstatementQ11" />
+    <aura:registerEvent name="FeatureQue13" type="c:FeatureQue13" />
+    <aura:registerEvent name="solutionQ12Event" type="c:solutionQ12Event" />
+    <aura:registerEvent name="AlternativeQue14" type="c:AlternativeQue14" />
+    <aura:registerEvent name="PriorsubmissionEvent21" type="c:PriorsubmissionEvent21" />
+    <aura:registerEvent name="PublicDisclosure22" type="c:PublicDisclosure22" />
+    
+    <aura:registerEvent name="PublicDisclosureDateEvent23Chk" type="c:PublicDisclosureDateEvent23Chk" />
+    <aura:registerEvent name="DateofEarliestUseEvent" type="c:DateofEarliestUseEvent" />
+    
+    <aura:registerEvent name="CommercialEvent23" type="c:CommercialEvent23" />
+    <aura:registerEvent name="FutureEventQ24" type="c:FutureEventQ24" />
+    <aura:registerEvent name="productsQ25" type="c:ProductsQ25" />
+    <aura:registerEvent name="ThirdPartyQ26" type="c:ThirdPartyQ26" />
+    <aura:registerEvent name="IsPriorsubmission21Event" type="c:IsPriorSubmission21Event" />
+    <aura:registerEvent name="ISPublicDisclosureCheckQ22" type="c:ISPublicDisclosureCheckQ22" />
+    <aura:registerEvent name="IsCommercialCheckQ23" type="c:IsCommercialCheckQ23" />
+    
+    <aura:registerEvent name="DateofEarliestPlannedUseEvent" type="c:DateofEarliestPlannedUseEvent" />
+    <aura:registerEvent name="Futureimplementation24checkbox" type="c:Futureimplementation24checkbox" />
+    
+    <aura:registerEvent name="IsproductsQ25checkbox" type="c:IsproductsQ25checkbox" />
+    <aura:registerEvent name="IsThirdparty26checkbox" type="c:IsThirdparty26checkbox" />
+    <aura:registerEvent name="ExternalTxt230Event" type="c:ExternalTxt230Event" />
+    
+    <aura:registerEvent name="DateofEarliestExternalUseEvent" type="c:DateofEarliestExternalUseEvent" />
+    
+    <aura:registerEvent name="ExternalUseEvent23Chk" type="c:ExternalUseEvent23Chk"/>
+    <aura:registerEvent name="IsReverseDetectionEvent" type="c:IsReverseDetectionEvent" />
+    <aura:registerEvent name="ReverseDetectionEvent" type="c:ReverseDetectionEvent" />
+    <aura:registerEvent name="literatureTxtEvent27c" type="c:literatureTxtEvent27c" />
+    <aura:registerEvent name="IsliteraturecheckboxEvent27c" type="c:IsliteraturecheckboxEvent27c" />
+    <aura:registerEvent name="IsTestingcheckboxEvent27b" type="c:IsTestingcheckboxEvent27b" />
+    <aura:registerEvent name="TestingTxtboxEvent27b" type="c:TestingTxtboxEvent27b" />
+    <aura:registerEvent name="IsOthercheckboxEvent27f" type="c:IsOthercheckboxEvent27f" />
+    <aura:registerEvent name="OtherTxtboxEvent27f" type="c:OtherTxtboxEvent27f" />
+    <aura:registerEvent name="IsThirdPartyConfidentiality" type="c:IsThirdPartyConfidentiality" />
+    <aura:registerEvent name="ThirdPartyConfidentiality" type="c:ThirdPartyConfidentiality" />
+    <aura:registerEvent name="ImpossibleEvent" type="c:ImpossibleEvent" />
+    <aura:registerEvent name="DontknowEvent" type="c:DontknowEvent" />
+    <aura:registerEvent name="businessValueInventionEvent" type="c:businessValueInventionEvent" />
+    <!-- end -->
+    
+    <!-- Change from checkboxes to Radio buttons (yes/no) -->
+    <aura:attribute name="Options21" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options22A" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options23" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options230" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options24" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options25" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options26" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options27" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28B" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28C" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28D" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28E" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    <aura:attribute name="options28F" type="List" default="[{'label': 'Yes', 'value': 'true'},{'label': 'No', 'value': 'false'} ]"/>
+    
+    <aura:attribute name="chkboxval21" type="boolean" access="global" default=""/>
+    <aura:attribute name="optionsvaluedefault" type="string" access="global" default=""/>
+    <aura:attribute name="publicDisclosurechk" type="string" access="global" default=""/>
+    <aura:attribute name="CurrentCommercial23" type="string" access="global" default=""/>
+    <aura:attribute name="useExternal230" type="string" access="global" default=""/>
+    <aura:attribute name="ThirdPartyConfidentiality24" type="string" access="global" default=""/>
+    <aura:attribute name="FutureImplementation25" type="string" access="global" default=""/>
+    <aura:attribute name="CompetingProducts26" type="string" access="global" default=""/>
+    <aura:attribute name="ThirdPartyContributions27" type="string" access="global" default=""/>
+    <aura:attribute name="ReverseEngineering28" type="string" access="global" default=""/>
+    <aura:attribute name="competitivesolution28B" type="string" access="global" default=""/>
+    <aura:attribute name="literature28C" type="string" access="global" default=""/>
+    <aura:attribute name="impossible28D" type="string" access="global" default=""/>
+    <aura:attribute name="Dontknow" type="string" access="global" default=""/>
+    <aura:attribute name="other28F" type="string" access="global" default=""/>
+    
+    
+    <!-- end -->
+    <div style="color:black">
+        <DIV style="font-size:18px; color:black;" ALIGN="Center" ><B>Invention Description</B></DIV><br/>
+        <div style="font-size:14px;color:black;">If needed, you may submit the content for sections 1.1 through 1.4 in a file attached to this IDF. If you do, please ensure that you address each item from sections 1.1 through 1.4. You can use this <lightning:formattedUrl 
+                                                                                                                                                                                                                                                                                value="http://goto.uhg.com/patents/idf"
+                                                                                                                                                                                                                                                                                label="template"
+                                                                                                                                                                                                                                                                                target="_blank" /> for the supplement to the IDF.</div>
+        <br/>
+        <!--div style="font-size:14px;color:red;">
+    <b>Required</b>: Is this invention being developed in connection with, or with funding from, a business segment within UHG other than your business segment? If so, indicate at the beginning of section 1.1 the other business segment, a name and email address of a contact from the other business segment, and a short description of the contribution made by the other business segment to the invention. If not, indicate "No other business segment" in section 1.1.
+        <br/><br/>
+    Also at the beginning of section 1.1, indicate the individual or business that first identified the problem, or business need, to be solved by this invention. 
+    </div-->
+        
+        <!-- part2 questions -->
+        <lightning:layout>
+            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;
+            <lightning:layoutitem>
+                <tr><td>
+                    <div style="font-size:13px;color:black;"><B>1.1 Describe (a) the problem to be solved or addressed by the invention and (b) any known solutions and drawbacks to those existing solutions.</B>  Please cite any relevant technical documents. Documents can be uploaded via link below. For software related inventions, describe whether there is a technical problem (e.g., in the field of computers or technological arts) that is being solved or addressed by the invention.</div>
+                    </td></tr>
+                
+                <tr><td> <lightning:inputRichText class="makeBlack" aura:id="q1" value="{!v.que1}" onblur ="{!c.question11}" /></td></tr>
+                <c:cmpTextLimit vText="{!v.que1}" vLimit="32768" isRichText="true"  />
+                <aura:if isTrue="{!greaterthan(v.que1.length-7,32768)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                        input.
+                    </div>
+                </aura:if> 
+            </lightning:layoutitem>
+        </lightning:layout>
+        <br/>
+        
+        <lightning:layout>
+            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;
+            <lightning:layoutitem>
+                <tr><td>
+                    <p style="font-size:13px;color:black;"><B>1.2  Describe the invention, including how it solves the problem described in Section 1.1.</B>  Describe how the invention works, in a manner that someone having the requisite technical experience could implement or practice the invention.  For software-related inventions, describe how the invention provides a technical solution to a technical problem (e.g., in the field of computers or technological arts). If possible, include all essential structural/system components and process steps.  Include or attach any relevant flowcharts, drawings, technical specifications, presentations, and other supporting documents. </p>
+                    </td></tr>
+                <tr><td> <lightning:inputRichText class="makeBlack" aura:id="q2" value="{!v.que2}" onblur ="{!c.question12}"/></td></tr>
+                <c:cmpTextLimit vText="{!v.que2}" vLimit="32768" isRichText="true" />
+                <aura:if isTrue="{!greaterthan(v.que2.length-7, 32768)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                        input.
+                    </div>
+                </aura:if>
+            </lightning:layoutitem></lightning:layout>
+        <br/>
+        <lightning:layout>
+            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;
+            <lightning:layoutitem>
+                <tr><td>
+                    <p style="font-size:13px;color:black;"><B>1.3 How is the invention new or “novel” compared to known solutions?</B> Consider whether the underlying technical methodology is unique compared to existing solutions, even those in different industries.  Please identify which steps described in Section 1.2 are novel. </p>
+                    </td></tr>
+                <tr><td> <lightning:inputRichText class="makeBlack" aura:id="q3" value="{!v.que3}" onblur ="{!c.question13}"/></td></tr>
+                <c:cmpTextLimit vText="{!v.que3}" vLimit="32768" isRichText="true" />
+                <aura:if isTrue="{!greaterthan(v.que3.length-7, 32768)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                        input.
+                    </div>
+                </aura:if>
+            </lightning:layoutitem></lightning:layout>
+        <br/>
+        <lightning:layout>
+            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;
+            <lightning:layoutitem>
+                <tr><td>
+                    <p style="font-size:13px;color:black;"><B>1.4 Describe any alternative ways of operating or structuring the invention.</B>  E.g., Is there more than one way to practice any of the steps of your invention described in Section 1.2 (if so provide examples of variations)?  </p>
+                    </td></tr>
+                
+                <tr><td>  <lightning:inputRichText class="makeBlack" aura:id="q4" value="{!v.que4}" onblur ="{!c.question14}"/></td></tr>
+                <c:cmpTextLimit vText="{!v.que4}" vLimit="32768" isRichText="true" />
+                <aura:if isTrue="{!greaterthan(v.que4.length-7, 32768)}">
+                    <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                        input.
+                    </div>
+                </aura:if>
+            </lightning:layoutitem></lightning:layout>
+        
+        <br/>
+        <p style="font-size:18px;color:black;" align="Center"> <B>Additional Questions</B> </p>
+        <br/>
+    </div>
+    <div>
+        
+        
+        <div style="color:black">
+            <!--<p style="font-size:14px;color:black;"><p style="color:red;">*</p>&nbsp;-->
+            <label style="color:red">* </label>   <B>2.1 Prior Submissions.</B>
+            Is this related to any earlier UHG Invention Disclosure or any pending or registered UHG patent? If yes, please identify  the disclosure(s) or patent(s). <!--</p>-->
+            
+            <!--<lightning:input type="checkbox" aura:id="question21" checked="{!v.questions21}"                                      
+                         onchange="{!c.ans21}" label="Yes"/> Changed to Radio button--> 
+            <!--<aura:if isTrue="{!v.questions21}">
+            <br/>
+            <lightning:layout>
+                <lightning:layoutitem padding="horizontal-medium"> 
+           <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText  aura:id="que21Id" value="{!v.ques21}" onblur ="{!c.quest21}"/></div>
+                </lightning:layoutitem></lightning:layout>
+            <br/>
+        </aura:if>-->
+            <div>
+                <lightning:radioGroup class="test" aura:id="question21" name="question21"  type="radio" options="{!v.Options21}" value="{!v.optionsvaluedefault}" onchange="{!c.ans21}"/>&nbsp;
+                <aura:if isTrue="{!v.optionsvaluedefault}">
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem padding="horizontal-medium"> 
+                            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                            <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que21Id" value="{!v.ques21}" onblur ="{!c.quest21}"/></div>
+                            <c:cmpTextLimit vText="{!v.ques21}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques21.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                        </lightning:layoutitem></lightning:layout>
+                    <br/>
+                </aura:if>
+            </div>
+            
+            
+            <br/>
+            <tr><td>
+                
+                
+                <!--  <p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+                <label style="color:red">* </label> <B>2.2 Public Disclosures.</B> Has the invention been used outside of UHG, or do you plan to do so? This would include using the invention in a pilot involving third parties, disclosing the invention to potential customers or suppliers, any publications, or any descriptions of any aspect of the invention to third parties (e.g., in a presentation, publication, abstract, advertisement, etc.). If so, please describe  below. Note: If currently unpublished, please keep the IP Legal Team updated on any future plans for non-confidential or public disclosures, publications or disseminations.<!-- </p>-->
+                <!--<lightning:input type="checkbox" aura:id="question22" checked="{!v.questions22}"                                      
+                             onchange="{!c.ans22}" label="Yes"/> -->
+                
+                </td></tr>
+            
+            
+            <lightning:radioGroup class="test" name="public" aura:id="question22" value="{!v.publicDisclosurechk}" 
+                                  options="{!v.options22A}" type="radio" onchange="{!c.ans22}"/> 
+            <br/>
+            <aura:if isTrue="{!v.publicDisclosurechk}">
+                
+                <lightning:layoutitem  padding="horizontal-medium"> 
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"><!-- <lightning:input type="date" name="PublicDiscDate" label="Date" format="MMM d,yyyy" aura:id="datein" onblur="{!c.setPublicDisclosureDate}"  value="{!v.todaydate}"/> -->
+                        <!--<ui:inputDate required="true" class="tallTextArea" aura:id="datein" label="Date"  displayDatePicker="true" value="{!v.storedate}" change="{!c.setPublicDisclosureDate}"/> commented on 12/06/2020 for validation date -->
+                        <lightning:input  type="date"  class="tallTextArea" aura:id="datein" label="Date of Earliest Public Disclosure"  displayDatePicker="true" value="{!v.storedate}" onchange="{!c.setPublicDisclosureDate}"/>
+                        <aura:if isTrue="{!v.validatedate}">
+                            <p style="color:red">Date selected should be current date or future date.</p>
+                        </aura:if>
+                    </div>
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que22Id" value="{!v.ques22}" onblur ="{!c.quest22}"/></div>
+                <c:cmpTextLimit vText="{!v.ques22}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques22.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem> 
+            </aura:if>
+            <br/>
+            <tr><td> 
+                <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp; -->
+                <label style="color:red">* </label><B>2.3 Current Commercial Use.</B> Is this invention currently implemented in a UHG product or solution? If yes, please (a) identify the <U>product or solution</U>, (b) the <U>earliest date</U> that the invention was put into use, (c) the <U>nature of the use</U> (e.g., in production vs. experimental), and (d) whether the invention is part of or directly supports a <U>commercial</U> product or solution. <!--</p>-->
+                <!--    <lightning:input type="checkbox" aura:id="question23" checked="{!v.questions23}"                                      
+                             onchange="{!c.ans23}" label="Yes"/>
+            <br/> -->
+                </td></tr>
+            <lightning:radioGroup class="test" name="radioGroupRequired3" aura:id="question23" options="{!v.options23}"                  
+                                  value="{!v.CurrentCommercial23}"  type="radio" onchange="{!c.ans23}"/>
+            
+            <aura:if isTrue="{!v.CurrentCommercial23}">
+                <lightning:layoutitem  padding="horizontal-medium"> 
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px">
+                        <lightning:input  type="date"  class="tallTextArea" aura:id="datein2" label="Date of Earliest Use"  displayDatePicker="true" value="{!v.storedate2}" onchange="{!c.setEarliestUseDate}"/>
+                        <aura:if isTrue="{!v.validateearlierusedate}">
+                            <p style="color:red">Date selected should be current date or future date.</p>
+                        </aura:if>
+                    </div>
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que23Id" value="{!v.ques23}" onblur ="{!c.quest23}"/></div>
+                <c:cmpTextLimit vText="{!v.ques23}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques23.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            
+            <br/>
+            <!--<p style="font-size:14px;color:black;">-->		<B>External Use.</B> Is the invention used to provide products or services to others outside of UHG; or licensed, offered for sale, advertised, or marketed to others outside of UHG? Please identify the <U>earliest date</U> that the invention was exposed to others outside of UHG.<!--</p> -->
+            <!--    <lightning:input type="checkbox" aura:id="question230" checked="{!v.questions230}"                                      
+                         onchange="{!c.ans230}" label="Yes"/> -->
+            
+            <lightning:radioGroup  class="test" name="radioGroupRequired30" aura:id="question230"
+                                  options="{!v.options230}"
+                                  value="{!v.useExternal230}"
+                                  type="radio" onchange="{!c.ans230}"/> 
+            
+            <br/>
+            <aura:if isTrue="{!v.useExternal230}">
+                <lightning:layoutitem  padding="horizontal-medium"> 
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px">
+                        <lightning:input  type="date"  class="tallTextArea" aura:id="datein3" label="Date of Earliest External Use"  displayDatePicker="true" value="{!v.storedate3}" onchange="{!c.setEarliestExternaluseDate}"/>
+                        <aura:if isTrue="{!v.validateEarliestExternalUsedate}">
+                            <p style="color:red">Date selected should be current date or future date.</p>
+                        </aura:if>
+                    </div>
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que230Id" value="{!v.ques230}" onblur="{!c.setExternalUseDes}"/></div>
+                <c:cmpTextLimit vText="{!v.ques230}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques230.length-7, 32768)}">
+                                <div class="slds-text-col`or_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            <br/>
+            
+            <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+            <label style="color:red">* </label><B>2.4 Third-Party Payor Confidentiality.</B>  Was any part of this invention developed with, or for, a payor other than UHC? If so, please provide a brief explanation. <!--</p> -->
+            
+            <!--    <lightning:input type="checkbox" aura:id="queadd" checked="{!v.ques24added}"                                      
+                         onchange="{!c.que24added}" label="Yes"/> -->
+            
+            <lightning:radioGroup class="test" name="radioGroupRequired4Added" aura:id="queadd"
+                                  options="{!v.options24}"
+                                  value="{!v.ThirdPartyConfidentiality24}"
+                                  type="radio" onchange="{!c.que24added}"/> 
+            
+            <br/>
+            <aura:if isTrue="{!v.ThirdPartyConfidentiality24}">
+                <lightning:layoutitem  padding="horizontal-medium">
+                    <p> <span  style="color:red;">* </span >
+                        Brief explanation of work for payer</p>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que24Idadded" value="{!v.q24added}" onblur ="{!c.quest24added}"/></div>
+                <c:cmpTextLimit vText="{!v.q24added}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.q24added.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            <br/>
+            
+            
+            <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+            <label style="color:red">* </label><B>2.5 Future Implementation.</B> If the invention is not currently implemented, are there plans to implement it? If yes, please (a) identify the <U>product or solution</U>, (b) the <U>earliest date</U> that the invention could be put into use, (c) the <U>nature of the use</U> (e.g., in production vs. experimental), and (d) whether the invention is part of or directly supports a <U>commercial</U> product or solution.<!--</p>-->
+            <!--<lightning:input type="checkbox" aura:id="question24" checked="{!v.questions24}"                                      
+                         onchange="{!c.ans24}" label="Yes"/>  -->  
+            
+            <lightning:radioGroup class="test" name="radioGroupRequired4" aura:id="question24"
+                                  options="{!v.options25}"
+                                  value="{!v.FutureImplementation25}"
+                                  type="radio" onchange="{!c.ans24}"/> 
+            
+            <br/>
+            <aura:if isTrue="{!v.FutureImplementation25}">
+                <lightning:layoutitem padding="horizontal-medium">
+                    <lightning:layoutitem> <p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px">
+                        <lightning:input  type="date"  class="tallTextArea" aura:id="datein4" label="Date of Earliest Planned Use"  displayDatePicker="true" value="{!v.storedate4}" onchange="{!c.setEarliestPlannedDate}"/>
+                        <aura:if isTrue="{!v.validateEarliestPlannedUseDate}">
+                            <p style="color:red">Date selected should be current date or future date.</p>
+                        </aura:if>
+                    </div>
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack"  aura:id="que24Id" value="{!v.ques24}" onblur ="{!c.quest24}"/></div>
+                <c:cmpTextLimit vText="{!v.ques24}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques24.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            <br/> 
+            <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+            <label style="color:red">* </label><B>2.6	Competing Products / Solutions.</B>  Are there known competitive UHG or third party products(s) or solution(s)? If so, please provide details.<!--</p>-->
+            <!--  <lightning:input type="checkbox" aura:id="question25" checked="{!v.questions25}"                                      
+                         onchange="{!c.ans25}" label="Yes"/>    -->
+            
+            <lightning:radioGroup class="test" name="radioGroupRequired6" aura:id="question25"
+                                  options="{!v.options26}"
+                                  value="{!v.CompetingProducts26}"
+                                  type="radio" onchange="{!c.ans25}"/>
+            
+            
+            <br/>
+            <aura:if isTrue="{!v.CompetingProducts26}">
+                
+                <lightning:layoutitem  padding="horizontal-medium"> 
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que25Id" value="{!v.ques25}" onblur ="{!c.quest25}"/></div>
+                 <c:cmpTextLimit vText="{!v.ques25}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques25.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            <br/>
+            
+            <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+            <label style="color:red">* </label><B>2.7 Third Party Contributions.</B> Was the invention developed in conjunction with any third parties (e.g., vendors, contractors or third party partners)? Does the invention include any third party materials, including software code?  If so, please describe.<!--</p>-->
+            <!--<lightning:input type="checkbox" aura:id="question26" checked="{!v.questions26}"                                      
+                         onchange="{!c.ans26}" label="Yes"/>     -->
+            
+            <lightning:radioGroup class="test" name="radioGroupRequired7" aura:id="question26"
+                                  options="{!v.options27}"
+                                  value="{!v.ThirdPartyContributions27}"
+                                  type="radio" onchange="{!c.ans26}"/>
+            
+            
+            <br/>
+            <aura:if isTrue="{!v.ThirdPartyContributions27}">
+                
+                <lightning:layoutitem  padding="horizontal-medium"> 
+                    <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                    <div style="width:1050px"> <lightning:inputRichText class="makeBlack" aura:id="que26Id" value="{!v.ques26}" onblur ="{!c.quest26}"/></div>
+               <c:cmpTextLimit vText="{!v.ques26}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques26.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                </lightning:layoutitem>
+            </aura:if>
+            <br/>
+            
+            <!--<p style="font-size:14px;color:black;"><lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;-->
+            <label style="color:red">* </label><B>2.8 Detectability .</B>  A patent is only enforceable if we can detect that another party is using the same process/system that we invented.  How could UHG detect if a third party is using this invention?
+            <br/><B>&nbsp;Check all that apply and describe in detail how this would be accomplished.</B><!--</p>-->
+            <div>
+                <table>
+                    <br></br>
+                    <lightning:layout>
+                        
+                        <!--  <lightning:input type="checkbox" aura:id="boxPack" checked="{!v.CheckboxNew}"                                      
+                            onchange="{!c.checkboxSelect}" ></lightning:input> -->
+                        <lightning:layoutitem>	
+                            <!--       <lightning:radioGroup name="radioGroupRequired28" aura:id="boxPack"
+                          options="{!v.options28}"
+                          value="{!v.ReverseEngineering28}"
+                              type="radio" onchange="{!c.checkboxSelect}"/> -->
+                            <lightning:input type="checkbox" aura:id="boxPack" checked="{!v.CheckboxNew}"                                      
+                                             onchange="{!c.checkboxSelect}" ></lightning:input>
+                        </lightning:layoutitem>
+                        
+                        <lightning:layoutitem><B>Reverse engineering or code examination.</B> Based on the invention are we likely to have access to a third party’s code or other information that would allow reverse engineering ?   If so, how would we determine  the entity is using this invention?
+                            
+                            
+                        </lightning:layoutitem></lightning:layout>
+                    <aura:if isTrue="{!v.CheckboxNew}">
+                        <tr><td>
+                            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                            <div style="width:1075px"> <lightning:inputRichText class="makeBlack" aura:id="que270Id"  value="{!v.ques270}" onblur="{!c.setReverseTxt}"/></div></td></tr>
+                    <c:cmpTextLimit vText="{!v.ques270}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques270.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                    </aura:if>
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem>
+                            <lightning:input type="checkbox" aura:id="boxPack1" checked="{!v.CheckboxNew1}"                                      
+                                             onchange="{!c.checkboxSelect1}" /> 
+                        </lightning:layoutitem>
+                        <lightning:layoutitem>
+                            <B>Testing a competitive solution/ view product operation.</B> Based on the invention what access are we likely to have to a competitive solution  and how would we determine  if that solution is infringing?
+                            
+                            <!--          <lightning:layoutitem>
+            <lightning:radioGroup name="radioGroupRequired28B" aura:id="boxPack1"
+                              options="{!v.options28B}"
+                              value="{!v.competitivesolution28B}"
+                                  type="radio" onchange="{!c.checkboxSelect1}"/> 
+                    </lightning:layoutitem> -->
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    <aura:if isTrue="{!v.CheckboxNew1}">
+                        <tr><td>
+                            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                            <div style="width:1075px"> <lightning:inputRichText class="makeBlack" aura:id="que271Id"  value="{!v.ques271}" onblur="{!c.setTestingTxt}"/></div></td></tr>
+                    <c:cmpTextLimit vText="{!v.ques271}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques271.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                    </aura:if>
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem>
+                            <lightning:layoutitem>
+                                <lightning:input type="checkbox" aura:id="boxPack2" checked="{!v.CheckboxNew2}"                                      
+                                                 onchange="{!c.checkboxSelect2}" /></lightning:layoutitem>
+                            <!--     <lightning:radioGroup name="radioGroupRequired28c" aura:id="boxPack2"
+                          options="{!v.options28C}"
+                          value="{!v.literature28C}"
+                              type="radio" onchange="{!c.checkboxSelect2}"/>  -->
+                            
+                        </lightning:layoutitem>
+                        <lightning:layoutitem>
+                            <B> Reading product literature.</B> Based on the invention what type  of third party product literature is likely to be produced and is it likely to provide  detailed information that would identify whether a third party is infringing? 
+                            
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    
+                    
+                    <aura:if isTrue="{!v.CheckboxNew2}">
+                        <tr><td>
+                            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                            <div style="width:1075px"><lightning:inputRichText class="makeBlack" aura:id="que272Id" value="{!v.ques272}" onblur="{!c.setLiteratureTxt}"/></div></td></tr>
+                    <c:cmpTextLimit vText="{!v.ques272}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques272.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                    </aura:if>
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem>
+                            <lightning:input type="checkbox" aura:id="boxPack3"  checked="{!v.ques273check}"                                      
+                                             onchange="{!c.checkboxSelect3}" />
+                            <!--       <lightning:radioGroup name="radioGroupRequired28D" aura:id="boxPack2"
+                          options="{!v.options28D}"
+                          value="{!v.impossible28D}"
+                              type="radio" onchange="{!c.checkboxSelect3}"/>  -->
+                        </lightning:layoutitem>
+                        <lightning:layoutitem><B>Impossible , unless 3rd party admitted use. </B>
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    
+                    <!--       <aura:if isTrue="{!v.CheckboxNew3}">
+                <tr><td>
+                    <lightning:textarea name="que273" aura:id="que273Id" value="{!v.ques273}" /></td></tr>
+            </aura:if>-->
+                    <br/> 
+                    <lightning:layout>
+                        <lightning:layoutitem>
+                            <lightning:input type="checkbox" aura:id="boxPack4" checked="{!v.ques274check}"                                      
+                                             onchange="{!c.checkboxSelect4}" /> 
+                            <!--         <lightning:radioGroup name="radioGroupRequired28E" aura:id="boxPack4"
+                          options="{!v.options28E}"
+                          value="{!v.Dontknow}"
+                              type="radio" onchange="{!c.checkboxSelect4}"/> -->
+                            
+                        </lightning:layoutitem>
+                        <lightning:layoutitem><B>Don’t know.</B>
+                            
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    
+                    <!--        <aura:if isTrue="{!v.CheckboxNew4}">
+                <tr><td>
+                    <lightning:textarea name="que274" aura:id="que274Id" value="{!v.ques274}" /></td></tr>
+            </aura:if> -->
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem>
+                            <lightning:input type="checkbox" aura:id="boxPack5" checked="{!v.CheckboxNew5}"                                      
+                                             onchange="{!c.checkboxSelect5}" /></lightning:layoutitem> 
+                        <lightning:layoutitem><B>Other.</B>
+                            <!--      <lightning:layoutitem>
+                    <lightning:radioGroup name="radioGroupRequired28E" aura:id="boxPack5"
+                          options="{!v.options28F}"
+                          value="{!v.other28F}"
+                              type="radio" onchange="{!c.checkboxSelect5}"/>
+                
+                </lightning:layoutitem> -->
+                        </lightning:layoutitem>
+                    </lightning:layout>
+                    
+                    
+                    <aura:if isTrue="{!v.CheckboxNew5}">
+                        <tr><td>
+                            <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>
+                            <div style="width:1075px">  <lightning:inputRichText class="makeBlack" aura:id="que275Id" value="{!v.ques275}" onblur="{!c.setOtherTxt}"/></div></td></tr>
+                    <c:cmpTextLimit vText="{!v.ques275}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.ques275.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                    </aura:if>  
+                    
+                    <br/>
+                    <lightning:layout>
+                        <lightning:layoutitem><p style="color:red;">*</p></lightning:layoutitem>&nbsp;
+                        <lightning:layoutitem>
+                            <tr><td>
+                                <p style="font-size:13px;color:black;"><B>2.9 Business Value.</B>  What is the business value of this invention to UHG, such as revenue generated, 
+                                    costs prevented, or time saved?. </p>
+                                </td></tr>
+                            <tr><td> <lightning:inputRichText class="makeBlack" aura:id="q29" value="{!v.businessValue}" onblur ="{!c.quest29}"/></td></tr>
+                       <c:cmpTextLimit vText="{!v.businessValue}" vLimit="32768" isRichText="true" />
+                            <aura:if isTrue="{!greaterthan(v.businessValue.length-7, 32768)}">
+                                <div class="slds-text-color_error">You have reached the maximum size (32768 characters) of the
+                                    input.
+                                </div>
+                            </aura:if>
+                            </lightning:layoutitem></lightning:layout>
+                    
+                </table>
+                <br/>
+                <DIV style="font-size:18px; color:black;" ALIGN="Center" ><B>Attachments</B></DIV><br/>
+            </div>
+            <br/>
+        </div>
+    </div>
+</aura:component>

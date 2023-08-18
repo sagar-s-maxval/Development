@@ -23,8 +23,7 @@ global with sharing class createInventor
             system.debug('strfed: ' + strfed);
             if(strfed.size()>0)
             {
-                //lstinv =[SELECT Id,SymphonyIPM__Employee_ID__c,EID__c FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
-                lstinv =[SELECT Id,SymphonyIPM__Employee_ID__c FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
+                lstinv =[SELECT Id,SymphonyIPM__Employee_ID__c,EID__c FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
                 for(SymphonyIPM__Inventor__c inv : lstinv)
                 {
                     if((inv.SymphonyIPM__Employee_ID__c!=Null && inv.SymphonyIPM__Employee_ID__c!=''))
@@ -35,8 +34,7 @@ global with sharing class createInventor
                 system.debug('Lst Inv: ' + lstinv);
             }
             list<SymphonyIPM__Inventor__c> updateInvs = New list<SymphonyIPM__Inventor__c>();
-            //list<SymphonyIPM__Inventor__c> lstinvRes =[SELECT Id,SymphonyIPM__Employee_ID__c,EID__c,SymphonyIPM__Email__c,SymphonyIPM__User__c,SymphonyIPM__RecordTypeName__c,RecordTypeId FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
-            list<SymphonyIPM__Inventor__c> lstinvRes =[SELECT Id,SymphonyIPM__Employee_ID__c,SymphonyIPM__Email__c,SymphonyIPM__User__c,SymphonyIPM__RecordTypeName__c,RecordTypeId FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
+            list<SymphonyIPM__Inventor__c> lstinvRes =[SELECT Id,SymphonyIPM__Employee_ID__c,EID__c,SymphonyIPM__Email__c,SymphonyIPM__User__c,SymphonyIPM__RecordTypeName__c,RecordTypeId FROM SymphonyIPM__Inventor__c WHERE SymphonyIPM__Employee_ID__c IN:strfed];
             if(lstinvRes.size()>0)
             {
                 for(SymphonyIPM__Inventor__c inv : lstinvRes)
@@ -85,13 +83,13 @@ global with sharing class createInventor
                             if(usr.FirstName !='')
                             {
                                 inventor.name =usr.FirstName + ' ' + usr.LastName;
-                                inventor.SymphonyIPM__FirstName__c=usr.FirstName;
-                                inventor.SymphonyIPM__LastName__c=usr.LastName;
+                                inventor.First_Name__c=usr.FirstName;
+                                inventor.Last_Name__c=usr.LastName;
                             }
                             else
                             {
                                 inventor.name =usr.LastName;
-                                inventor.SymphonyIPM__LastName__c=usr.LastName;
+                                inventor.Last_Name__c=usr.LastName;
                             }
                         }    
                         if (Schema.sObjectType.SymphonyIPM__Inventor__c.fields.SymphonyIPM__CitizenshipPicklist__c.isCreateable() && Schema.sObjectType.SymphonyIPM__Inventor__c.fields.SymphonyIPM__CitizenshipPicklist__c.isAccessible())
@@ -107,7 +105,7 @@ global with sharing class createInventor
                         if (Schema.sObjectType.SymphonyIPM__Inventor__c.fields.SymphonyIPM__User__c.isCreateable() && Schema.sObjectType.SymphonyIPM__Inventor__c.fields.SymphonyIPM__User__c.isAccessible())
                             inventor.SymphonyIPM__User__c = usr.id;
                         
-                        recType = ((usr.Profile.Name == 'Platform Inventor') ? 'Inventor' : (usr.Profile.Name == 'In-house Counsel') ? 'In house Counsel' : (usr.Profile.Name == 'Platform Outside Counsel') ? 'OC' : ''); 
+                        recType = ((usr.Profile.Name == 'Platform Inventor') ? 'Inventor' : (usr.Profile.Name == 'In-house Counsel') ? 'In house Counsel' : (usr.Profile.Name == 'Platform Outside Counsel') ? 'OC' : (usr.Profile.Name == 'Platform Reviewer') ? 'Reviewer': (usr.Profile.Name == 'Business User') ? 'Business User':'');
                         
                         if(!test.isrunningtest())
                         {
@@ -122,7 +120,7 @@ global with sharing class createInventor
                     }
                 }
                 
-                if(Schema.sObjectType.SymphonyIPM__Inventor__c.isAccessible() && Schema.sObjectType.SymphonyIPM__Inventor__c.isCreateable())
+                if(Inventortlist.size() > 0 && Schema.sObjectType.SymphonyIPM__Inventor__c.isAccessible() && Schema.sObjectType.SymphonyIPM__Inventor__c.isCreateable())
                     insert Inventortlist; 
                 
                 //Code added on 16-08-2019 by Anand for sharing records (IDF, Patent & Awards) with newly created SSO Users
@@ -331,6 +329,7 @@ global with sharing class createInventor
     @future
     public static void shareInventionDisclosure(set<Id> ReactivatedUsrIds, set<Id> personIds)
     {
+        String strAudit = '';
         try
         {
             List<SymphonyIPM__Invention_Disclosure_New__Share> objinventionToBeShared = new List<SymphonyIPM__Invention_Disclosure_New__Share>();
@@ -379,13 +378,148 @@ global with sharing class createInventor
                 }                    
             }
             
+            //INVENTION DISCLOSURE - Primary Contact-----------
+            List<SymphonyIPM__Invention_Disclosure_New__c> obPrimaryContractjInventions = [SELECT Id, Primary_Contact__c, Primary_Contact__r.SymphonyIPM__User__c, Primary_Contact__r.SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Invention_Disclosure_New__c WHERE Primary_Contact__c IN :personIds AND Primary_Contact__r.SymphonyIPM__User__c!=null];
+            for(SymphonyIPM__Invention_Disclosure_New__c  objInvention : obPrimaryContractjInventions)
+            {
+                if ((mapIDShare.containsKey(objInvention.Id + '_' + objInvention.Primary_Contact__r.SymphonyIPM__User__c)==false) && objInvention.Primary_Contact__r.SymphonyIPM__User__r.IsActive==true)
+                {
+                    SymphonyIPM__Invention_Disclosure_New__Share objinventionShare = new SymphonyIPM__Invention_Disclosure_New__Share();
+                    objinventionShare.ParentId = objInvention.Id;
+                    objinventionShare.UserOrGroupId = objInvention.Primary_Contact__r.SymphonyIPM__User__c; 
+                    objinventionShare.AccessLevel = 'Edit';
+                    objinventionToBeShared.add(objinventionShare);
+                    mapIDShare.put(objInvention.Id + '_' + objInvention.Primary_Contact__r.SymphonyIPM__User__c, objInvention.Id + '_' + objInvention.Primary_Contact__r.SymphonyIPM__User__c);
+                }
+            }
+            //---------------------------------------------
+            
+            //INVENTION DISCLOSURE - Mentors-----------
+            List<Id> listmentorids = new List<Id>();
+            listmentorids.addAll(personIds);
+            String mentorpersonid = '%'+listmentorids[0]+'%';
+            List<SymphonyIPM__Invention_Disclosure_New__c> obMentorInventions = [SELECT Id, MentorsIDs__c FROM SymphonyIPM__Invention_Disclosure_New__c WHERE MentorsIDs__c LIKE: mentorpersonid];
+            List<SymphonyIPM__Inventor__c> listInventor = [SELECT Id,SymphonyIPM__User__c,SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Inventor__c WHERE id =: listmentorids[0]];
+            for(SymphonyIPM__Invention_Disclosure_New__c  objInvention : obMentorInventions)
+            {
+                if(listInventor.size() > 0 && (mapIDShare.containsKey(objInvention.Id + '_' + listInventor[0].SymphonyIPM__User__c)==false) && listInventor[0].SymphonyIPM__User__r.IsActive==true)
+                {
+                    SymphonyIPM__Invention_Disclosure_New__Share objinventionShare = new SymphonyIPM__Invention_Disclosure_New__Share();
+                    objinventionShare.ParentId = objInvention.Id;
+                    objinventionShare.UserOrGroupId = listInventor[0].SymphonyIPM__User__c; 
+                    objinventionShare.AccessLevel = 'Edit';
+                    objinventionToBeShared.add(objinventionShare);
+                    mapIDShare.put(objInvention.Id + '_' + listInventor[0].SymphonyIPM__User__c, objInvention.Id + '_' + listInventor[0].SymphonyIPM__User__c);
+                }
+            }
+            //-------------------------------------------
+            
+            //INVENTION DISCLOSURE - Reviewers ------------------ 
+            set<id> setofhierarchy = new set<id>();
+            set<id> setofIDFids = new set<id>();
+            map<string,string> mapofhierarchyidwithuserid = new map<string,string>();
+            //Sharing IDF's
+            
+            List<SymphonyIPM__Hierarchy_Role__c> listHierarchyRoles = [SELECT id,SymphonyIPM__Hierarchy_Path__c,SymphonyIPM__User__c,SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Hierarchy_Role__c WHERE SymphonyIPM__User__c IN: ReactivatedUsrIds];
+            if(listHierarchyRoles.size() > 0)
+            {
+                for(SymphonyIPM__Hierarchy_Role__c objHierarchyRole : listHierarchyRoles)
+                {
+                    setofhierarchy.add(objHierarchyRole.SymphonyIPM__Hierarchy_Path__c);
+                    if(objHierarchyRole.SymphonyIPM__User__r.IsActive == true)
+                    {
+                        mapofhierarchyidwithuserid.put(objHierarchyRole.SymphonyIPM__Hierarchy_Path__c,objHierarchyRole.SymphonyIPM__User__c);
+                    }
+                }
+            }
+            strAudit += 'mapofhierarchyidwithuserid keys --->'+mapofhierarchyidwithuserid.keyset();
+            strAudit += 'mapofhierarchyidwithuserid values --->'+mapofhierarchyidwithuserid.values();
+            if(setofhierarchy.size() > 0)
+            {
+                List<SymphonyIPM__Invention_Disclosure_New__c> listInventionDisclosures = [SELECT Id,SymphonyIPM__Hierarchy__c FROM SymphonyIPM__Invention_Disclosure_New__c WHERE (SymphonyIPM__Hierarchy__c IN: setofhierarchy AND SymphonyIPM__Hierarchy__c != NULL)];
+                strAudit += 'Disclosures fetched ------------>'+listInventionDisclosures;
+                if(listInventionDisclosures.size() > 0)
+                {
+                    for(SymphonyIPM__Invention_Disclosure_New__c objIDF : listInventionDisclosures)
+                    {
+                        setofIDFids.add(objIDF.id);
+                        if(mapofhierarchyidwithuserid.containskey(objIDF.SymphonyIPM__Hierarchy__c))
+                        {
+                            if(mapIDShare.containsKey(objIDF.Id + '_' + mapofhierarchyidwithuserid.get(objIDF.SymphonyIPM__Hierarchy__c))==false)
+                            {
+                                strAudit += 'Entered if ------------>';
+                                SymphonyIPM__Invention_Disclosure_New__Share objinventionShare = new SymphonyIPM__Invention_Disclosure_New__Share();
+                                objinventionShare.ParentId = objIDF.Id;
+                                objinventionShare.UserOrGroupId = mapofhierarchyidwithuserid.get(objIDF.SymphonyIPM__Hierarchy__c); 
+                                objinventionShare.AccessLevel = 'Read';
+                                strAudit += 'Share record created ------------>'+objinventionShare;
+                                objinventionToBeShared.add(objinventionShare);
+                                mapIDShare.put(objIDF.Id + '_' + mapofhierarchyidwithuserid.get(objIDF.SymphonyIPM__Hierarchy__c), objIDF.Id + '_' + mapofhierarchyidwithuserid.get(objIDF.SymphonyIPM__Hierarchy__c));
+                            }
+                        }
+                    }
+                }
+            }
+            //Sharing PRC Meeting records
+            List<SymphonyIPM__PRC_Meeting__Share> listPRCMeetingShareToInsert = new List<SymphonyIPM__PRC_Meeting__Share>();
+            if(setofIDFids.size() > 0)
+            {
+                List<SymphonyIPM__PRC_Meeting_Details__c> listPRCMeetingDetails = [SELECT SymphonyIPM__PRC_Meeting__c,SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c,SymphonyIPM__Related_Invention_Disclosure__c FROM SymphonyIPM__PRC_Meeting_Details__c WHERE SymphonyIPM__Related_Invention_Disclosure__c IN: setofIDFids];
+                if(listPRCMeetingDetails.size() > 0)
+                {
+                    for(SymphonyIPM__PRC_Meeting_Details__c objPRCMeetingDetail : listPRCMeetingDetails)
+                    {
+                        if(mapofhierarchyidwithuserid.containskey(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c))
+                        {
+                            if(mapIDShare.containsKey(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__c + '_' + mapofhierarchyidwithuserid.get(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c))==false)
+                            {
+                                SymphonyIPM__PRC_Meeting__Share objPRCMeetingShare = new SymphonyIPM__PRC_Meeting__Share();
+                                objPRCMeetingShare.ParentId = objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__c;
+                                objPRCMeetingShare.AccessLevel = 'Edit';
+                                objPRCMeetingShare.UserOrGroupId = mapofhierarchyidwithuserid.get(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c);
+                                listPRCMeetingShareToInsert.add(objPRCMeetingShare);
+                                mapIDShare.put(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__c + '_' + mapofhierarchyidwithuserid.get(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c),objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__c + '_' + mapofhierarchyidwithuserid.get(objPRCMeetingDetail.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__c));
+                            }
+                        }
+                    }
+                }
+            }
+            //--------------------------------------------------- 
+             List<SymphonyIPM__Invention_Disclosure_New__c> obOtherContractjInventions = [SELECT Id, Other_Contact__c, Other_Contact__r.SymphonyIPM__User__c, Other_Contact__r.SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Invention_Disclosure_New__c WHERE Other_Contact__c IN :personIds AND Other_Contact__r.SymphonyIPM__User__c!=null];
+           for(SymphonyIPM__Invention_Disclosure_New__c  objInvention : obOtherContractjInventions)
+           {
+               if ((mapIDShare.containsKey(objInvention.Id + '_' + objInvention.Other_Contact__r.SymphonyIPM__User__c)==false) && objInvention.Other_Contact__r.SymphonyIPM__User__r.IsActive==true)
+               {
+                   SymphonyIPM__Invention_Disclosure_New__Share objinventionShare = new SymphonyIPM__Invention_Disclosure_New__Share();
+                   objinventionShare.ParentId = objInvention.Id;
+                   objinventionShare.UserOrGroupId = objInvention.Other_Contact__r.SymphonyIPM__User__c;
+                   objinventionShare.AccessLevel = 'Edit';
+                   objinventionToBeShared.add(objinventionShare);
+                   mapIDShare.put(objInvention.Id + '_' + objInvention.Other_Contact__r.SymphonyIPM__User__c, objInvention.Id + '_' + objInvention.Other_Contact__r.SymphonyIPM__User__c);
+               }
+           }
+            
             if(objinventionToBeShared.size()>0)
             {
                 insert objinventionToBeShared;
             }
+            if(listPRCMeetingShareToInsert.size() > 0)
+            {
+                INSERT listPRCMeetingShareToInsert;
+            }
         }
         catch(Exception exp)
         {
+            strAudit += 'ERROR line'+ exp.getLineNumber() + 'ERROR '+ exp.getMessage();
+            throw exp;
+        }
+        finally
+        {
+            SymphonyIPM__AuditTrail__c objAudit = new SymphonyIPM__AuditTrail__c();
+            objAudit.SymphonyIPM__CObjectName__c = 'Sharing';
+            objAudit.SymphonyIPM__Action__c = 'IDF Sharing';
+            objAudit.SymphonyIPM__Description__c = strAudit;
+            INSERT objAudit;
         }
     }
     
@@ -440,6 +574,58 @@ global with sharing class createInventor
                 }
             }
             
+            //PATENT - Reviewers ------------------ 
+            set<id> setofhierarchy = new set<id>();
+            map<string,string> mapofhierarchyidwithuserid = new map<string,string>();
+            //Sharing Patent's
+            List<SymphonyIPM__Hierarchy_Role__c> listHierarchyRoles = [SELECT id,SymphonyIPM__Hierarchy_Path__c,SymphonyIPM__User__c,SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Hierarchy_Role__c WHERE SymphonyIPM__User__c IN: ReactivatedUsrIds];
+            if(listHierarchyRoles.size() > 0)
+            {
+                for(SymphonyIPM__Hierarchy_Role__c objHierarchyRole : listHierarchyRoles)
+                {
+                    setofhierarchy.add(objHierarchyRole.SymphonyIPM__Hierarchy_Path__c);
+                    if(objHierarchyRole.SymphonyIPM__User__r.IsActive == true)
+                    {
+                        mapofhierarchyidwithuserid.put(objHierarchyRole.SymphonyIPM__Hierarchy_Path__c,objHierarchyRole.SymphonyIPM__User__c);
+                    }
+                }
+            }
+            if(setofhierarchy.size() > 0)
+            {
+                List<SymphonyIPM__Patent__c> listPatents = [SELECT Id,SymphonyIPM__Hierarchy__c FROM SymphonyIPM__Patent__c WHERE (SymphonyIPM__Hierarchy__c IN: setofhierarchy AND SymphonyIPM__Hierarchy__c != NULL)];
+                if(listPatents.size() > 0)
+                {
+                    for(SymphonyIPM__Patent__c objPatent : listPatents)
+                    {
+                        if(mapofhierarchyidwithuserid.containskey(objPatent.SymphonyIPM__Hierarchy__c))
+                        {
+                            if(mapPatentShare.containsKey(objPatent.Id + '_' + mapofhierarchyidwithuserid.get(objPatent.SymphonyIPM__Hierarchy__c))==false)
+                            {
+                                SymphonyIPM__Patent__Share objpatsShare = new SymphonyIPM__Patent__Share();
+                                objpatsShare.ParentId = objPatent.Id;
+                                objpatsShare.UserOrGroupId = mapofhierarchyidwithuserid.get(objPatent.SymphonyIPM__Hierarchy__c); 
+                                objpatsShare.AccessLevel = 'Read';
+                                objPatentToBeShared.add(objpatsShare);
+                                mapPatentShare.put(objPatent.Id + '_' + mapofhierarchyidwithuserid.get(objPatent.SymphonyIPM__Hierarchy__c), objPatent.Id + '_' + mapofhierarchyidwithuserid.get(objPatent.SymphonyIPM__Hierarchy__c));
+                            }
+                        }
+                    }
+                }
+            }
+            //--------------------------------------------------- 
+             List<SymphonyIPM__Patent__c> objBusinessContractjInventions = [SELECT Id, SymphonyIPM__Business_Contact__c, SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c, SymphonyIPM__Business_Contact__r.SymphonyIPM__User__r.IsActive FROM SymphonyIPM__Patent__c WHERE SymphonyIPM__Business_Contact__c IN :personIds AND SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c!=null];
+           for(SymphonyIPM__Patent__c  objPatent : objBusinessContractjInventions)
+           {
+               if ((mapPatentShare.containsKey(objPatent.Id + '_' + objPatent.SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c)==false) && objPatent.SymphonyIPM__Business_Contact__r.SymphonyIPM__User__r.IsActive==true)
+               {
+                   SymphonyIPM__Patent__Share objPatentShare = new SymphonyIPM__Patent__Share();
+                   objPatentShare.ParentId = objPatent.Id;
+                   objPatentShare.UserOrGroupId = objPatent.SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c;
+                   objPatentShare.AccessLevel = 'Edit';
+                   objPatentToBeShared.add(objPatentShare);
+                   mapPatentShare.put(objPatent.Id + '_' + objPatent.SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c, objPatent.Id + '_' + objPatent.SymphonyIPM__Business_Contact__r.SymphonyIPM__User__c);
+               }
+           }
             if(objPatentToBeShared.size()>0)
             {
                 insert objPatentToBeShared;

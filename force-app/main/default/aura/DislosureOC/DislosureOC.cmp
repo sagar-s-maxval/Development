@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" 
+                access="global" controller="Disclosurecalloc" >
+	
+    
+     <aura:attribute name="recordId" type="String"   />
+    <aura:attribute name="lawfirms" type="String[]" default=""/>
+   <!-- <aura:attribute name="outsidecounsel" type="String[]" default=""/> -->
+     <aura:attribute name="outsidecounsel" type="String[]" default=""/>
+    <aura:attribute name="selectedValue" type="String" />
+     <aura:attribute name="selcounsel" type="String" />
+     <aura:attribute name="selvalue" type="String" />
+    <aura:handler name='init' value="{!this}" action="{!c.doinit}"/>
+    <lightning:select aura:id="selectedlaw"  label="Select a Firm" required="true" onchange="{!c.change}" >
+       
+        <aura:iteration items="{!v.lawfirms}" var="law">
+            <option value="{!law}" text="{!law}"></option>
+        </aura:iteration>
+    </lightning:select>
+    
+     <lightning:select aura:id="selectoutside" name="selectoutside" label="Select Outside Counsel" required="true"  onchange="{!c.changecounsel}" >
+       
+         <aura:iteration items="{!v.outsidecounsel}" var="out">
+            <option value="{!out}" text="{!out}"></option>
+        </aura:iteration>
+    </lightning:select>
+</aura:component>

@@ -1,0 +1,173 @@
+<aura:component controller="IDFController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:availableForFlowScreens" access="global" >
+    
+    
+    <aura:attribute name="vText" type="String"/>
+    <aura:attribute name="vLimit" type="Integer"/>
+    <aura:attribute name="isRichText" type="Boolean"/> 
+    
+    <aura:attribute name="Title" type="string" access="global" />
+    <aura:attribute name="Summary" type="string" access="global" />
+    
+    <aura:attribute name="today" type="String" default=""/>
+    <aura:attribute name="today2" type="String" default=""/>
+    <aura:attribute name="today3" type="String" default=""/>
+    <aura:attribute name="today4" type="String" default=""/>
+    
+    <aura:attribute name="check" type="boolean" access="global" default="true" />
+    <aura:attribute type="boolean" name="option2" access="global" default="false"/>
+    <aura:attribute name="selectcheck" type="boolean" access="global" />
+    
+    
+    
+    
+    <aura:attribute name="ManagingSegments" type="list" access="global"  /> <!-- Managing segment -->
+    
+    <aura:attribute name="selectedstage" type="string" access="global" />
+    
+    <aura:attribute name="selectedManagingSegment" type="string" access="global" /> <!-- Managing segment -->
+    <aura:attribute name="invcon" type="List" />
+    <aura:attribute name="DisStatus" type="string" />
+    <aura:attribute name="PathVal" type="string" />
+    <aura:attribute name="mencon" type="List" />
+    <aura:attribute name="pri" type="List" /> 
+    <aura:attribute name="selectedinv" type="string" access="global" />
+    <aura:attribute name="OtherContact" type="string" access="global" />
+    <aura:attribute name="selectedmen" type="string" access="global" />
+    <aura:attribute name="selectedpri" type="string" access="global" />
+    <aura:attribute name="ObjectName" type="string" default="SymphonyIPM__Invention_Disclosure_New__c" access="global"/>
+    <aura:attribute name="Type" type="String" default="Current_Stage_of_Invention__c" access="global"/>
+    <aura:attribute name="TechPathName" type="string" access="global"/>
+    <aura:attribute name="pathBoolean" type="boolean" default="false"/>
+    <aura:attribute name="options" type="list" default="[{'label':'Invention Program','value': 'option1'},{'label':'Business Program','value':'option2'}]"/>
+    <aura:attribute name="selectedtech" type="string" access="global" default=""/>
+    
+    
+    <!-- Handler -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"  />
+    
+    <!--Events-->
+    <aura:registerEvent name="IDFTitleEvent" type="c:IDFTitleEvent" />
+    <aura:registerEvent name="IDFSummaryEvent" type="c:IDFSummaryEvent" />
+    <aura:registerEvent name="IDFPathEvent" type="c:IDFPathEvent" />
+    <aura:registerEvent name="IDFCurrentStageOfInvention" type="c:IDFCurrentStageOfInvention" />
+    <aura:registerEvent name="IDFManagingSegment" type="c:IDFManagingSegment" /><!-- Managing Segment -->
+    <!--  <aura:registerEvent name="IDFPrimaryInventor" type="c:IDFPrimaryInventorEvent" /> -->
+    <!--- form starts here -->
+    <div class="slds-form-element">
+        <abbr class="slds-required" title="required">*</abbr><label style="color:black">Title of Invention</label>
+        <lightning:input class="makeBlue" name="input1" aura:id="titleId" value="{!v.Title}"  label="" required="false" onblur="{!c.AssignTitle}" />
+        <aura:if isTrue="{!greaterthan(v.Title.length, 255)}">
+            <div class="slds-text-color_error">You have reached the maximum size (255 characters) of the
+                input.
+            </div>
+        </aura:if>
+    </div>
+    <br/>
+    <!-- Summary Of the Invention Field Added-https://maxval.atlassian.net/jira/core/projects/UCR/timeline?selectedIssue=UCR-5 By MVSL1383-Sagar S--> 
+    <div class="slds-form-element">
+        <abbr class="slds-required" title="required">*</abbr><label style="color:black">Summary of the Invention</label>
+        <lightning:input class="makeBlue" name="input2" aura:id="SummaryId" value="{!v.Summary}"  label="" required="false" rows="5" onblur="{!c.AssignSummary}"  />
+        <aura:if isTrue="{!greaterthan(v.Summary.length, 1000)}">
+            <div class="slds-text-color_error">You have reached the maximum size (1000 characters) of the
+                input.
+            </div>
+        </aura:if>
+    </div>
+    <br/>
+    
+    <!--   <ui:inputDate aura:id="date" label="Date Submitted" value="{!v.today}" displayDatePicker="true" />
+    <br/> -->
+    
+    <div style="font-size:18px; color:black;" ALIGN="LEFT" ><B>Funding Source</B></div>
+    <!-- <lightning:input type="checkbox"
+                     aura:id="check1"
+                     checked="{!v.check}"                                      
+                     onchange="{!c.checking}"
+                     label="Invention Program"/>
+ <lightning:radioGroup aura:id="mygroup" name="radioButtonGroup"  options="{! v.options }" value="{! v.value }" onchange="{! c.checking }" />
+ 
+-->
+    <div style ="color:black;">If PRB/Central Budget funding is selected, then the IDF will be reviewed by a patent review board (PRB) and must receive a Proceed rating to move forward with the patent application process. If Business Segment funding is selected, then you must provide a GL for funding and the IDF will not be reviewed by a PRB.</div><br/> 
+    <div class="slds-form-element" >
+        <lightning:input class="makeBlue" type="radio" aura:id="check" name="InventionProgram" label="PRB/Central Budget"  checked="{!v.check}" onchange="{!c.checking}"/>
+        <lightning:input class="makeBlue" type="radio"  aura:id="option2" name="BusinessProgram" label="Business Segment"  checked="{!v.option2}" onchange="{!c.uncheckfirst}"/>
+    </div> 
+    
+    
+    
+    
+    <br/>
+    <!--Managing segment -->
+    
+    <div style="color:black" >   
+        <label style="font-weight: bold;"> Which business segment is the internal owner of this invention?</label>
+        
+        <label> If there is no specific owner, select the business segment to which you belong.</label><br/><br/>
+        
+        <label style="color:red">*</label><label> Business Segment</label> <!--c:cmphelper/-->
+        <lightning:select name="ManagingSegment" aura:id="ManagingSeg"  label=""  onchange="{!c.SetManagingSegment}" value="{!v.selectedManagingSegment}" >
+            <aura:if isTrue="{!v.pathBoolean}">
+                <option value="" >--None--</option>
+                <aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+                    <option value="{!optManagingSeg}" text="{!optManagingSeg}" selected="{!optManagingSeg==v.selectedManagingSegment}"></option>
+                </aura:iteration>
+                <aura:set attribute="else">
+                    <option value="">--None--</option>
+                    <aura:iteration items="{!v.ManagingSegments}" var="optManagingSeg">
+                        <option value="{!optManagingSeg}">{!optManagingSeg}</option>
+                    </aura:iteration>
+                </aura:set>
+            </aura:if>
+        </lightning:select>
+        <br/>
+    </div>
+    <!-- <c:cmpPrimayContact></c:cmpPrimayContact>-->
+    <!-- end -->
+    
+    
+    <!--    <lightning:select name="primaryinv" aura:id="priId" label="Primary Inventor" required="true" onchange="{!c.priInv}" value ="{!v.selectedpri}">
+        <aura:if isTrue="{!v.pathBoolean}">
+        <option value="" ></option>
+            <aura:iteration items="{!v.pri}" var="priinv">
+            <option value="{!priinv.Id}" text="{!priinv.Name}" selected="{!priinv.Id==v.selectedpri}"></option>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <option value=""></option> 
+                <aura:iteration items="{!v.pri}" var="priinv">
+                    <option value="{!priinv.Id}" text="{!priinv.Name}"></option>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>
+    </lightning:select>
+    <br/>
+   <lightning:select name="currentinventor" aura:id="invId" label="Primary Contact" onchange="{!c.currentinv}" value ="{!v.selectedinv}">
+       <aura:if isTrue="{!v.pathBoolean}">
+        <option value="" ></option>
+            <aura:iteration items="{!v.invcon}" var="inv">
+            <option value="{!inv.Id}" text="{!inv.Name}" selected="{!inv.Id==v.selectedinv}"></option>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <option value=""></option> 
+                <aura:iteration items="{!v.invcon}" var="inv">
+                    <option value="{!inv.Id}" text="{!inv.Name}"></option>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>    
+    </lightning:select>
+    <br/>
+    <lightning:select name="mentorname" aura:id="mentorId" label="Mentor" onchange="{!c.currentmen}" value ="{!v.selectedmen}">
+        <aura:if isTrue="{!v.pathBoolean}">
+        <option value="" ></option>
+            <aura:iteration items="{!v.mencon}" var="ment">
+            <option value="{!ment.Id}" text="{!ment.Name}" selected="{!ment.Id==v.selectedmen}"></option>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <option value=""></option> 
+                <aura:iteration items="{!v.mencon}" var="ment">
+                    <option value="{!ment.Id}" text="{!ment.Name}"></option>
+                </aura:iteration>
+            </aura:set>
+        </aura:if>
+    </lightning:select>
+    <br/> -->
+</aura:component>

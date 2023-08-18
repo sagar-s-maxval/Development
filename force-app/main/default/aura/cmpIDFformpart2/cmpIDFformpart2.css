@@ -1,0 +1,9 @@
+.THIS .tallTextArea textarea {
+ width:125px; height:50px
+}
+.THIS .makeBlack{
+    -webkit-text-fill-color : black;
+}
+.THIS.test   .slds-form-element__label{
+  -webkit-text-fill-color : black;
+}
