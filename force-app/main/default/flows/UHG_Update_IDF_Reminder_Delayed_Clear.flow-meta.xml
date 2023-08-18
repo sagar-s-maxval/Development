@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <environments>Default</environments>
+    <formulas>
+        <name>NullDate</name>
+        <dataType>Date</dataType>
+        <expression>NULL</expression>
+    </formulas>
+    <interviewLabel>Update IDF Reminder (Delayed Clear) {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update IDF Reminder (Delayed Clear)</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Clear_Reminder1</name>
+        <label>Clear Reminder</label>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
+        <inputAssignments>
+            <field>UHG_Reminder_Date_Time__c</field>
+            <value>
+                <elementReference>NullDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UHG_Reminder_Date__c</field>
+            <value>
+                <elementReference>NullDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UHG_Reminder_Type__c</field>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SymphonyIPM__Disclosure_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved for Filing</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>UHG_Reminder_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Needs More Info</stringValue>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Invention_Disclosure_New__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>One_Hour_Later</name>
+            <connector>
+                <targetReference>Clear_Reminder1</targetReference>
+            </connector>
+            <label>One Hour Later</label>
+            <offsetNumber>1</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>UHG_Reminder_Date_Time__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

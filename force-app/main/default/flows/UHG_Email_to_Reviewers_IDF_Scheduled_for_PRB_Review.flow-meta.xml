@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Reviewer_Email</name>
+        <label>Send Reviewer Email</label>
+        <locationX>499</locationX>
+        <locationY>887</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>IDFScheduledEmailTemplate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>ReviewerEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: Review {!$Record.SymphonyIPM__Related_Invention_Disclosure__r.Name} in preparation for {!$Record.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__r.Name} meeting on {!$Record.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Meeting_Date__c}</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Add_CC</name>
+        <label>Add CC</label>
+        <locationX>499</locationX>
+        <locationY>779</locationY>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>patents@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>invention@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Reviewer_Email</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Reviewer_Email</name>
+        <label>Add Reviewer Email</label>
+        <locationX>587</locationX>
+        <locationY>587</locationY>
+        <assignmentItems>
+            <assignToReference>ReviewerEmailAddresses</assignToReference>
+            <operator>RemoveAll</operator>
+            <value>
+                <elementReference>Loop_thru_Reviewers.SymphonyIPM__User__r.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ReviewerEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Loop_thru_Reviewers.SymphonyIPM__User__r.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_thru_Reviewers</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Email_revieiver_decision</name>
+        <label>Email revieiver decision</label>
+        <locationX>566</locationX>
+        <locationY>475</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Email_Review_Decision_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Reviewers</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_thru_Reviewers</targetReference>
+            </connector>
+            <label>Email Review Decision 2</label>
+        </rules>
+    </decisions>
+    <description>Added Decision</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>IDFHyperlink</name>
+        <dataType>String</dataType>
+        <expression>&quot;&lt;a href=&apos;https://uhg.lightning.force.com/lightning/r/SymphonyIPM__Invention_Disclosure_New__c/&quot;+{!$Record.SymphonyIPM__Related_Invention_Disclosure__r.Id}+&quot;/view&apos;&gt;&quot;+{!$Record.SymphonyIPM__Related_Invention_Disclosure__r.Name}+&quot;&lt;/a&gt;&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>ReplaceLineFeedsInReviewerNotes</name>
+        <dataType>String</dataType>
+        <expression>IF( ISBLANK({!$Record.SymphonyIPM__Related_Invention_Disclosure__r.UHG_Reviewer_Notes__c}),
+&quot;IP Legal did not identify any special issues for reviewers to consider.&quot;, 
+ &quot;IP Legal has noted the following items and requests that PRB reviewers pay particular attention to them:&lt;br/&gt;&quot; &amp; SUBSTITUTE(SUBSTITUTE(JSENCODE({!$Record.SymphonyIPM__Related_Invention_Disclosure__r.UHG_Reviewer_Notes__c}),&quot;\r\n&quot;,&quot;&lt;br/&gt;&quot;),&quot;\n&quot;,&quot;&lt;br/&gt;&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>ReplaceLineFeedsInUHGSummary</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE(JSENCODE({!$Record.SymphonyIPM__Related_Invention_Disclosure__r.UHG_Internal_Summary__c}), &quot;\r\n&quot;, &quot;&lt;br/&gt;&quot;), &quot;\n&quot;, &quot;&lt;br/&gt;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>UserFirstName</name>
+        <dataType>String</dataType>
+        <expression>IF({!$User.UHG_Preferred_First_Name__c}&lt;&gt;&quot;&quot;,{!$User.UHG_Preferred_First_Name__c},{!$User.FirstName})</expression>
+    </formulas>
+    <formulas>
+        <name>UserLastName</name>
+        <dataType>String</dataType>
+        <expression>IF(CONTAINS({!$User.LastName},&quot; (IC)&quot;),LEFT({!$User.LastName},LEN({!$User.LastName})-5),{!$User.LastName})</expression>
+    </formulas>
+    <formulas>
+        <name>UserTelephone</name>
+        <dataType>String</dataType>
+        <expression>IF({!$User.Phone}&lt;&gt;&quot;&quot;,&quot;T: &quot;+{!$User.Phone}+&quot;  |  &quot;,&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Email to Reviewers - IDF Scheduled for PRB Review {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Email to Reviewers - IDF Scheduled for PRB Review</label>
+    <loops>
+        <name>Loop_thru_Reviewers</name>
+        <label>Loop thru Reviewers</label>
+        <locationX>443</locationX>
+        <locationY>583</locationY>
+        <collectionReference>Get_Reviewers</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Add_Reviewer_Email</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Add_CC</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Reviewers</name>
+        <label>Get Reviewers</label>
+        <locationX>499</locationX>
+        <locationY>371</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Email_revieiver_decision</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND 3 AND 4</filterLogic>
+        <filters>
+            <field>SymphonyIPM__Hierarchy_Path__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__r.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>SymphonyIPM__Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reviewer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SymphonyIPM__Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Business User</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SymphonyIPM__Role__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>UHG IP Legal</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>SymphonyIPM__Hierarchy_Role__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>373</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_Reviewers</targetReference>
+        </connector>
+        <object>SymphonyIPM__PRC_Meeting_Details__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>IDFScheduledEmailTemplate</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;PRB Members,&lt;/p&gt;
+&lt;p&gt;Please review &lt;b&gt;{!IDFHyperlink}&lt;/b&gt;: &quot;{!$Record.SymphonyIPM__Related_Invention_Disclosure__r.SymphonyIPM__Title__c}&quot; in preparation for the {!$Record.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Path__r.Name} meeting on {!$Record.SymphonyIPM__PRC_Meeting__r.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;&lt;u&gt;Summary:&lt;/u&gt;&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInUHGSummary}&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;&lt;u&gt;Notes for reviewers:&lt;/u&gt;&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInReviewerNotes}&lt;/p&gt;
+&lt;p&gt;Please address any questions or comments you may have regarding this IDF in the backchannel Teams chat before or during the PRB Meeting.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UnitedHealth Group, Enterprise Legal - Intellectual Property&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>CCEmailAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ReviewerEmailAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

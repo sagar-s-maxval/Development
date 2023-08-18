@@ -1,0 +1,1695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Close_0</name>
+        <label>Close</label>
+        <locationX>1698</locationX>
+        <locationY>1030</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Close</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Conditional_Proceed_1</name>
+        <label>Conditional Proceed</label>
+        <locationX>1580</locationX>
+        <locationY>1036</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Conditional_Proceed</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Conditional_Proceed_1_0</name>
+        <label>Conditional Proceed without Mentor</label>
+        <locationX>1655</locationX>
+        <locationY>1111</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>Conditional_Proceed_Without_Mentors</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Defer</name>
+        <label>Defer</label>
+        <locationX>1330</locationX>
+        <locationY>998</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Defer</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Defer_0</name>
+        <label>Defer_WithoutMentors</label>
+        <locationX>1445</locationX>
+        <locationY>992</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>Defer_Without_Mentors</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Proceed_0</name>
+        <label>Proceed</label>
+        <locationX>1949</locationX>
+        <locationY>1031</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Proceed</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Publish_0</name>
+        <label>Publish</label>
+        <locationX>1829</locationX>
+        <locationY>1022</locationY>
+        <actionName>SendMail</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>ccAddresses</name>
+            <value>
+                <elementReference>CCEmailAddresses</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>messageBody</name>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Publish</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendTo</name>
+            <value>
+                <elementReference>AdditionalInventorEmails</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>tosub</name>
+            <value>
+                <stringValue>ISM: {!Singledisclosure.SymphonyIPM__Disclosure_Status__c} received for {!Singledisclosure.Name}: {!Singledisclosure.SymphonyIPM__Title__c} ({!$Flow.CurrentDate})</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Add_cc_address</name>
+        <label>Add cc address</label>
+        <locationX>1680</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>patents@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>invention@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>garrett.miedema@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>komal_khatri@optum.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>linhda.nguyen@uhg.com</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Disclosure_Status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_cc_address_to_mentors_email_list</name>
+        <label>Add Primary contact address to cc</label>
+        <locationX>1670</locationX>
+        <locationY>408</locationY>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>PrimaryContactDetails.SymphonyIPM__Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_other_contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Other_contact_address_to_cc</name>
+        <label>Add Other contact address to cc</label>
+        <locationX>2047</locationX>
+        <locationY>669</locationY>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OtherContactDetails.SymphonyIPM__Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_cc_address</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_additional_Inventor_Email</name>
+        <label>Assign additional Inventor Email</label>
+        <locationX>434</locationX>
+        <locationY>632</locationY>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorEmails</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AdditionalInventorEmail.SymphonyIPM__Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorFirstName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AdditionalInventorEmail.First_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Additional_Inventors</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_additional_inventor_nick_name</name>
+        <label>Assign additional inventor nick name</label>
+        <locationX>437</locationX>
+        <locationY>435</locationY>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorEmails</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AdditionalInventorEmail.SymphonyIPM__Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorFirstName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AdditionalInventorEmail.Nick_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Additional_Inventors</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_AdditionalInventorsCount</name>
+        <label>Assign AdditionalInventorsCount</label>
+        <locationX>802</locationX>
+        <locationY>237</locationY>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorsCount</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>AdditionalInventors</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Additional_Inventors</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_last_additional_inventor</name>
+        <label>Assigning last additional inventor</label>
+        <locationX>92</locationX>
+        <locationY>677</locationY>
+        <assignmentItems>
+            <assignToReference>AdditionalInventorFirstName</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>and </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_if_nick_name</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_mentors_email</name>
+        <label>Assign mentors email</label>
+        <locationX>1233</locationX>
+        <locationY>933</locationY>
+        <assignmentItems>
+            <assignToReference>CCEmailAddresses</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>MentorDetail.SymphonyIPM__Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loop_through_mentors_collection_variable</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_mentors_id_to_variable_0</name>
+        <label>Assign mentors id to variable</label>
+        <locationX>1006</locationX>
+        <locationY>552</locationY>
+        <assignmentItems>
+            <assignToReference>AvailableMentors</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Singledisclosure.MentorsIDs__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_the_first</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_the_first</name>
+        <label>Assign first string</label>
+        <locationX>795</locationX>
+        <locationY>547</locationY>
+        <assignmentItems>
+            <assignToReference>mentorsCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>TrimMentor</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Remove_last_parsed_value</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Increment_LoopCounter</name>
+        <label>Increment LoopCounter</label>
+        <locationX>694</locationX>
+        <locationY>966</locationY>
+        <assignmentItems>
+            <assignToReference>LoopCounter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_if_email_is_blank</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Remove_last_parsed_value</name>
+        <label>Remove last parsed vlaue</label>
+        <locationX>781</locationX>
+        <locationY>713</locationY>
+        <assignmentItems>
+            <assignToReference>AvailableMentors</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TrimRemainingMentors</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>check_parsed_mentor_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Remove_last_parsed_value_0</name>
+        <label>Remove last parsed vlaue</label>
+        <locationX>856</locationX>
+        <locationY>788</locationY>
+        <assignmentItems>
+            <assignToReference>mentorsCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>AvailableMentors</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loop_through_mentors_collection_variable</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Disclosure_Status</name>
+        <label>Check Disclosure Status</label>
+        <locationX>1672</locationX>
+        <locationY>778</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Defer_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Defer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Mentors__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Defer</targetReference>
+            </connector>
+            <label>Defer</label>
+        </rules>
+        <rules>
+            <name>Conditional_Proceed</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5 AND 6</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Mentors__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conditional_Proceed_1</targetReference>
+            </connector>
+            <label>Conditional Proceed</label>
+        </rules>
+        <rules>
+            <name>Proceed</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proceed 1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proceed 2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proceed 3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Proceed_0</targetReference>
+            </connector>
+            <label>Proceed</label>
+        </rules>
+        <rules>
+            <name>Publish</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Publish</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Publish_0</targetReference>
+            </connector>
+            <label>Publish</label>
+        </rules>
+        <rules>
+            <name>Close</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Close</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_0</targetReference>
+            </connector>
+            <label>Close</label>
+        </rules>
+        <rules>
+            <name>Conditional_Without_Mentor</name>
+            <conditionLogic>(1 OR 2 OR 3) AND 4 AND 5 AND 6</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 1</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 2</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Conditional Proceed 3</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Mentors__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conditional_Proceed_1_0</targetReference>
+            </connector>
+            <label>Conditional Without Mentor</label>
+        </rules>
+        <rules>
+            <name>Defer_Without_Mentor</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Mentors__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.SymphonyIPM__Disclosure_Status__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PRB Review Complete</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Singledisclosure.Final_Rating__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Defer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmails</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Defer_0</targetReference>
+            </connector>
+            <label>Defer Without Mentor</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_email_is_blank</name>
+        <label>Check if email is blank</label>
+        <locationX>581</locationX>
+        <locationY>907</locationY>
+        <defaultConnector>
+            <targetReference>Loop_Additional_Inventors</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmail.SymphonyIPM__Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_if_last_loop</targetReference>
+            </connector>
+            <label>Not blank</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_last_loop</name>
+        <label>Check if last loop and &gt; 1 loop</label>
+        <locationX>338</locationX>
+        <locationY>857</locationY>
+        <defaultConnector>
+            <targetReference>Check_if_nick_name</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Last_loop</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopCounter</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>AdditionalInventorsCount</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AdditionalInventorsCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_last_additional_inventor</targetReference>
+            </connector>
+            <label>Last loop</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_nick_name</name>
+        <label>Check if nick name is blank</label>
+        <locationX>236</locationX>
+        <locationY>580</locationY>
+        <defaultConnector>
+            <targetReference>Assign_additional_Inventor_Email</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nick_name</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AdditionalInventorEmail.Nick_Name__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_additional_inventor_nick_name</targetReference>
+            </connector>
+            <label>Nick name</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>check_mentor_email</name>
+        <label>check mentor email</label>
+        <locationX>1010</locationX>
+        <locationY>1116</locationY>
+        <defaultConnector>
+            <targetReference>loop_through_mentors_collection_variable</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>yes_present</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>MentorDetail.SymphonyIPM__Email__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_mentors_email</targetReference>
+            </connector>
+            <label>yes present</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_mentor_ids</name>
+        <label>Check mentor ids</label>
+        <locationX>1007</locationX>
+        <locationY>435</locationY>
+        <defaultConnector>
+            <targetReference>Check_primary_contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.MentorsIDs__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_mentors_id_to_variable_0</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_other_contact</name>
+        <label>Check other contact</label>
+        <locationX>1835</locationX>
+        <locationY>541</locationY>
+        <defaultConnector>
+            <targetReference>Add_cc_address</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Available2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Other_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_other_contact</targetReference>
+            </connector>
+            <label>Is Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>check_parsed_mentor_0</name>
+        <label>check if parsed mentors are available</label>
+        <locationX>989</locationX>
+        <locationY>712</locationY>
+        <defaultConnector>
+            <targetReference>Remove_last_parsed_value_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>yes_present_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AvailableMentors</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>,</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>AvailableMentors</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_the_first</targetReference>
+            </connector>
+            <label>yes avaliable</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_primary_contact</name>
+        <label>Check primary contact</label>
+        <locationX>1396</locationX>
+        <locationY>585</locationY>
+        <defaultConnector>
+            <targetReference>Check_other_contact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Available</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Singledisclosure.Primary_Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_primary_contact_email</targetReference>
+            </connector>
+            <label>Is Available</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>PRB_Meeting</name>
+        <label>PRB Meeting?</label>
+        <locationX>551</locationX>
+        <locationY>73</locationY>
+        <defaultConnector>
+            <targetReference>Get_Additional_Inventors</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>PRBMeeting</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <description>Added 2 templates to exclude mentors field - kiran - 05/02/2021
+Updated template - kiran 04/02/2021
+Updated CC email  - kiran - 03/02/2021</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>CleanPRBMeetingName</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE({!PRBMeeting.SymphonyIPM__Path__r.Name}, &quot; PRB&quot;, &quot;&quot;), &quot; IDF&quot;, &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>IDFHyperlink</name>
+        <dataType>String</dataType>
+        <expression>&quot;&lt;a href=http://uhg.my.salesforce.com/&quot;+{!Singledisclosure.Id}+&quot;&gt;&quot;+{!Singledisclosure.Name}+&quot;&lt;/a&gt;&quot;</expression>
+    </formulas>
+    <formulas>
+        <description>Replace lines in text area with &lt;br/&gt; tags.</description>
+        <name>ReplaceLineFeedsInRatingNotes</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE(JSENCODE({!Singledisclosure.Notes2__c}),&quot;\r\n&quot;,&quot;&lt;br/&gt;&quot;),&quot;\n&quot;,&quot;&lt;br/&gt;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SurveyHyperlink</name>
+        <dataType>String</dataType>
+        <expression>&quot;&lt;a href=&apos;https://1click.optum.com/Survey/OpenSurvey?ID=88684b9c-a755-46be-8666-8197e10c73db&amp;IDFNumber=&quot;+{!Singledisclosure.Name}+&quot;&amp;Title=&quot;+{!Singledisclosure.SymphonyIPM__Title__c}+&quot;&amp;Phase=Patent Review Board (PRB) experience&apos;&gt;Patent Process Survey&lt;/a&gt;&quot;</expression>
+    </formulas>
+    <formulas>
+        <name>TrimMentor</name>
+        <dataType>String</dataType>
+        <expression>TRIM(LEFT({!AvailableMentors}, FIND(&quot;,&quot;, {!AvailableMentors})-1))</expression>
+    </formulas>
+    <formulas>
+        <name>Trimnames</name>
+        <dataType>String</dataType>
+        <expression>CASE({!AdditionalInventorsCount},
+1,TRIM(SUBSTITUTE(SUBSTITUTE({!AdditionalInventorFirstName},&quot;[&quot;,&apos; &apos;),&quot;]&quot;,&apos; &apos;)),
+2,TRIM(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!AdditionalInventorFirstName},&quot;[&quot;,&apos; &apos;),&quot;]&quot;,&apos; &apos;),&quot;,and ,&quot;,&quot; and &quot;),&quot;,&quot;,&quot;, &quot;)),
+TRIM(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE({!AdditionalInventorFirstName},&quot;[&quot;,&apos; &apos;),&quot;]&quot;,&apos; &apos;),&quot;and ,&quot;,&quot;and &quot;),&quot;,&quot;,&quot;, &quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>TrimRemainingMentors</name>
+        <dataType>String</dataType>
+        <expression>TRIM((RIGHT({!AvailableMentors},LEN({!AvailableMentors})-FIND(&quot;,&quot;,{!AvailableMentors}))))</expression>
+    </formulas>
+    <formulas>
+        <name>UserFirstName</name>
+        <dataType>String</dataType>
+        <expression>IF({!$User.UHG_Preferred_First_Name__c}&lt;&gt;&quot;&quot;,{!$User.UHG_Preferred_First_Name__c},{!$User.FirstName})</expression>
+    </formulas>
+    <formulas>
+        <name>UserLastName</name>
+        <dataType>String</dataType>
+        <expression>IF(OR(CONTAINS({!$User.LastName},&quot; (IC)&quot;),CONTAINS({!$User.LastName},&quot; (BU)&quot;)),LEFT({!$User.LastName},LEN({!$User.LastName})-5),{!$User.LastName})</expression>
+    </formulas>
+    <formulas>
+        <name>UserTelephone</name>
+        <dataType>String</dataType>
+        <expression>IF({!$User.Phone}&lt;&gt;&quot;&quot;,&quot;T: &quot;+{!$User.Phone}+&quot;  |  &quot;,&quot;&quot;)</expression>
+    </formulas>
+    <interviewLabel>Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Email Summarizing PRB Outcome to Inventors</label>
+    <loops>
+        <name>Loop_Additional_Inventors</name>
+        <label>Loop Additional Inventors</label>
+        <locationX>598</locationX>
+        <locationY>407</locationY>
+        <collectionReference>AdditionalInventors</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_Additional_Inventor_Email</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_mentor_ids</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>loop_through_mentors_collection_variable</name>
+        <label>loop through mentors collection variable</label>
+        <locationX>783</locationX>
+        <locationY>857</locationY>
+        <collectionReference>mentorsCollection</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_Mentors_Email</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Check_primary_contact</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>TestCommen</name>
+        <label>TestCommen</label>
+        <locationX>1213</locationX>
+        <locationY>1154</locationY>
+        <inputAssignments>
+            <field>ActivityDate</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>TemplateforPRBReviewComplete_Defer</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Test</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>Recordid</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Additional_Inventor_Email</name>
+        <label>Get Additional Inventor Email</label>
+        <locationX>640</locationX>
+        <locationY>775</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Increment_LoopCounter</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Loop_Additional_Inventors.SymphonyIPM__Inventor__c</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Inventor__c</object>
+        <outputReference>AdditionalInventorEmail</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Email__c</queriedFields>
+        <queriedFields>First_Name__c</queriedFields>
+        <queriedFields>Nick_Name__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Additional_Inventors</name>
+        <label>Get Additional Inventors</label>
+        <locationX>602</locationX>
+        <locationY>229</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_AdditionalInventorsCount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SymphonyIPM__Invention_Disclosure_New__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Recordid</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Additional_Inventor__c</object>
+        <outputReference>AdditionalInventors</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Inventor__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Disclosure</name>
+        <label>Get Disclosure</label>
+        <locationX>132</locationX>
+        <locationY>228</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_prc_details</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Recordid</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Invention_Disclosure_New__c</object>
+        <outputReference>Singledisclosure</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Final_Rating__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>SymphonyIPM__Title__c</queriedFields>
+        <queriedFields>Primary_Contact__c</queriedFields>
+        <queriedFields>Primary_Inventor__c</queriedFields>
+        <queriedFields>MentorsIDs__c</queriedFields>
+        <queriedFields>Mentors__c</queriedFields>
+        <queriedFields>PRB_Decision__c</queriedFields>
+        <queriedFields>Inventors__c</queriedFields>
+        <queriedFields>SymphonyIPM__Disclosure_Status__c</queriedFields>
+        <queriedFields>Notes2__c</queriedFields>
+        <queriedFields>Hyperlink__c</queriedFields>
+        <queriedFields>Other_Contact__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Mentors_Email</name>
+        <label>Get Mentors Email</label>
+        <locationX>895</locationX>
+        <locationY>969</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>check_mentor_email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>loop_through_mentors_collection_variable</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Inventor__c</object>
+        <outputReference>MentorDetail</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Email__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_other_contact</name>
+        <label>Get other contact</label>
+        <locationX>2049</locationX>
+        <locationY>540</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_Other_contact_address_to_cc</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Singledisclosure.Other_Contact__c</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Inventor__c</object>
+        <outputReference>OtherContactDetails</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Email__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_prc_details</name>
+        <label>Get prc details</label>
+        <locationX>390</locationX>
+        <locationY>228</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_prc_meeting_date</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SymphonyIPM__Related_Invention_Disclosure__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Singledisclosure.Id</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__PRC_Meeting_Details__c</object>
+        <outputReference>Prcdetails</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__PRC_Meeting__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_prc_meeting_date</name>
+        <label>Get prc meeting date</label>
+        <locationX>498</locationX>
+        <locationY>228</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>PRB_Meeting</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Prcdetails.SymphonyIPM__PRC_Meeting__c</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__PRC_Meeting__c</object>
+        <outputReference>PRBMeeting</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Meeting_Date__c</queriedFields>
+        <queriedFields>SymphonyIPM__Path__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_primary_contact_email</name>
+        <label>Get primary contact email</label>
+        <locationX>1404</locationX>
+        <locationY>408</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Add_cc_address_to_mentors_email_list</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Singledisclosure.Primary_Contact__c</elementReference>
+            </value>
+        </filters>
+        <object>SymphonyIPM__Inventor__c</object>
+        <outputReference>PrimaryContactDetails</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>SymphonyIPM__Email__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+    </recordLookups>
+    <start>
+        <locationX>7</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Get_Disclosure</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>Conditional_Proceed_Without_Mentors</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:purple;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInRatingNotes}&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Next Steps:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Please contact &lt;a href=&quot;mailto:invention@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;invention@uhg.com&lt;/u&gt;&lt;/a&gt; to request mentors or you can &lt;a href=&quot;http://goto.uhg.com/mentors&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;find mentors&lt;/a&gt; on our &lt;a href=&quot;http://goto.uhg.com/invent&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;site&lt;/a&gt; and add them to your IDF. Then connect with any assigned mentors directly as needed.&lt;/li&gt;
+&lt;li&gt;After the IDF and any associated files in ISM have been updated, please select the Next button in the “Respond to Request for Information” card. If you have problems updating the IDF and any associated files please contact &lt;a href=&quot;mailto:patents@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;patents@uhg.com&lt;/u&gt;&lt;/a&gt; and &lt;a href=&quot;mailto:invention@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;invention@uhg.com&lt;/u&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Please highlight any updates in a different color so that reviewers can easily identify the updates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Defer_Without_Mentors</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:orange;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInRatingNotes}&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Next Steps:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The PRB would like to provide this team with another opportunity to present this invention in order to address the issues listed above.&lt;/li&gt;
+&lt;li&gt;Please contact &lt;/span&gt;&lt;a href=&quot;mailto:invention@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;invention@uhg.com&lt;/u&gt;&lt;/a&gt; to request mentors or you can &lt;a href=&quot;http://goto.uhg.com/mentors&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;find mentors&lt;/a&gt; on our &lt;a href=&quot;http://goto.uhg.com/invent&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;site&lt;/a&gt; and add them to your IDF. Then connect with any assigned mentors directly as needed.&lt;/li&gt;
+&lt;li&gt;After the IDF and any associated files in ISM have been updated, please select the Next button in the “Respond to Request for Information” card. If you have problems updating the IDF and any associated files please contact &lt;a href=&quot;mailto:patents@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;patents@uhg.com&lt;/u&gt;&lt;/a&gt;.
+&lt;ul&gt;&lt;li&gt;Please highlight any updates in a different color so that reviewers can easily identify the updates.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Once resubmitted, the IDF will be scheduled for an additional review by the PRB.&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TemplateforPRBReviewComplete_Close</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:red;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The PRB has decided not to pursue patent protection for this invention. As a reminder, you also have the option to provide a GL to fund the prior art search and patent application using business segment funding rather than getting approval from the PRB for central budget funding. The fees for the patent application process are approximately:
+&lt;ul&gt;
+&lt;li&gt;$2500 - patentability search,&lt;/li&gt;
+&lt;li&gt;$12000 to $15000 - if the search is favorable, application preparation and filing depending on the complexity of the invention, and&lt;/li&gt;
+&lt;li&gt;$2000 - provisional application preparation and filing if we need to quickly file something due to a bar date, such as a public disclosure or commercial use.&lt;/li&gt;
+&lt;/ul&gt;
+You also have the option to get approval from a business leader who supports filing a patent application on your invention despite receiving a close rating from the PRB.&lt;/p&gt;
+&lt;p&gt;We look forward to receiving additional IDFs from you in the future.&lt;/p&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TemplateforPRBReviewComplete_Conditional_Proceed</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Mentor(s): {!Singledisclosure.Mentors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:purple;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInRatingNotes}&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Next Steps:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Please connect with any assigned mentors directly as needed.&lt;/li&gt;
+&lt;li&gt;After the IDF and any associated files in ISM have been updated, please select the Next button in the “Respond to Request for Information” card. If you have problems updating the IDF and any associated files please contact &lt;a href=&quot;mailto:patents@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;patents@uhg.com&lt;/u&gt;&lt;/a&gt; and &lt;a href=&quot;mailto:invention@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;invention@uhg.com&lt;/u&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Please highlight any updates in a different color so that reviewers can easily identify the updates.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TemplateforPRBReviewComplete_Defer</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Mentor(s): {!Singledisclosure.Mentors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:orange;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;br/&gt;
+{!ReplaceLineFeedsInRatingNotes}&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Next Steps:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The PRB would like to provide this team with another opportunity to present this invention in order to address the issues listed above.&lt;/li&gt;
+&lt;li&gt;Please connect with any assigned mentors directly as needed.&lt;/li&gt;
+&lt;li&gt;After the IDF and any associated files in ISM have been updated, please select the Next button in the “Respond to Request for Information” card. If you have problems updating the IDF and any associated files please contact &lt;a href=&quot;mailto:patents@uhg.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;patents@uhg.com&lt;/u&gt;&lt;/a&gt;.
+&lt;ul&gt;&lt;li&gt;Please highlight any updates in a different color so that reviewers can easily identify the updates.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;li&gt;Once resubmitted, the IDF will be scheduled for an additional review by the PRB.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TemplateforPRBReviewComplete_Proceed</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c} &lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:green;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Congratulations! The PRB has decided to pursue patent protection for this invention. IP Legal will reach to you regarding next steps.&lt;/p&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TemplateforPRBReviewComplete_Publish</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;b style=&quot;font-family: Calibri, sans-serif;&quot;&gt;&lt;u&gt;Confidential: Attorney-Client Privileged Communication&lt;/u&gt;&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Hi {!Trimnames},&lt;/p&gt;
+&lt;p&gt;Thank you for presenting your invention to the {!CleanPRBMeetingName} PRB on {!PRBMeeting.SymphonyIPM__Meeting_Date__c}.&lt;/p&gt;
+&lt;p&gt;&lt;u&gt;Below is a summary of the PRB evaluation:&lt;/u&gt;&lt;br/&gt;
+{!IDFHyperlink}: &lt;b&gt;{!Singledisclosure.SymphonyIPM__Title__c}&lt;/b&gt;&lt;br/&gt;
+Inventor(s): {!Singledisclosure.Inventors__c}&lt;br/&gt;
+Decision: &lt;b style=&quot;color:gray;&quot;&gt;{!Singledisclosure.Final_Rating__c}&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The PRB has decided to pursue defensive publication for this invention rather than patent protection. IP Legal will reach to you regarding next steps.&lt;/p&gt;
+&lt;p style=&quot;color:red;&quot;&gt;&lt;b&gt;NEW&lt;/b&gt; – Please provide feedback on your Patent Review Board (PRB) experience here: {!SurveyHyperlink}.&lt;/p&gt;
+&lt;p&gt;Please feel free to reach out with any questions.&lt;/p&gt;
+&lt;p&gt;Best regards,&lt;br/&gt;
+{!UserFirstName}&lt;br/&gt;
+_______________________________________________&lt;br/&gt;
+{!UserFirstName} {!UserLastName}  |  {!$User.Title}&lt;br/&gt;
+UHG IP Legal / Patent Business Operations Team&lt;br/&gt;
+9900 Bren Road East, MN008-T615, Minnetonka, MN 55343&lt;br/&gt;
+{!UserTelephone}{!$User.Email}&lt;br/&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>AdditionalInventorEmail</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>AdditionalInventorEmails</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AdditionalInventorFirstName</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>AdditionalInventors</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Additional_Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>AdditionalInventorsCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>AvailableMentors</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>CCEmailAddresses</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FinalRating</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LoopCounter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Meetingdate_not_used</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Mentor</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>MentorDetail</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>mentorsCollection</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>MentorsDetails</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>Mentorsemail</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OtherContactDetails</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>PRBMeeting</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__PRC_Meeting__c</objectType>
+    </variables>
+    <variables>
+        <name>Prcdetails</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__PRC_Meeting_Details__c</objectType>
+    </variables>
+    <variables>
+        <name>Prcmeetingname_not_used</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PrimaryContactDetails</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Inventor__c</objectType>
+    </variables>
+    <variables>
+        <name>Recordid</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Singledisclosure</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SymphonyIPM__Invention_Disclosure_New__c</objectType>
+    </variables>
+</Flow>
